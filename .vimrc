@@ -78,6 +78,7 @@ Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
 Plug 'itchyny/lightline.vim'
 Plug 'mhinz/vim-startify'  " Landing page
+" Plug 'glepnir/dashboard-nvim'  " Another landing page
 Plug 'famiu/nvim-reload'  " Enable complete reloading of config
 " Plug 'mengelbrecht/lightline-bufferline'
 " Plug 'vim-airline/vim-airline'
@@ -87,7 +88,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'godlygeek/tabular'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'joshdick/onedark.vim'
+" Plug 'joshdick/onedark.vim'
 Plug 'sainnhe/edge'
 Plug 'sainnhe/sonokai'
 Plug 'sainnhe/everforest'
@@ -98,10 +99,11 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'folke/todo-comments.nvim'
 Plug 'Th3Whit3Wolf/one-nvim'  " Neovim colorscheme that supports tree-sitter
+Plug 'navarasu/onedark.nvim'  " Another onedark scheme
 " Plug 'numtostr/FTerm.nvim'  " Floating terminals
 Plug 'akinsho/nvim-toggleterm.lua'  " Terminals
 " Plug 'rakr/vim-one'
-" Plug 'romgrk/doom-one.vim
+Plug 'romgrk/doom-one.vim'
 " Plug 'ghifarit53/tokyonight-vim'
 " Plug 'sonph/onehalf', { 'rtp': 'vim' }
 " Plug 'arcticicestudio/nord-vim'
@@ -130,7 +132,7 @@ lua << EOF
     }
 
     require("toggleterm").setup{
-        direction = 'float', 
+        direction = 'float',
         size = 40,
         open_mapping = [[<c-\>]],
         float_opts = {
@@ -148,35 +150,31 @@ lua << EOF
     }
 EOF
 
+" ----- dashboard-nvim
+" let g:dashboard_default_executive = 'fzf'
+" -----
+
+" ----- vimade
 " Fade inactive buffers
 " let g:vimade = {}
 " let g:vimade.fadelevel = 0.5
 " let g:vimade.basebg = [75, 75, 75]
+" -----
 
-" Map keybindings to FZF preview.  First three are default.  Last one allows
-" filename to be yanked, useful for inserting links.
-" See https://github.com/junegunn/fzf.vim/issues/772
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-h': 'split',
-  \ 'ctrl-v': 'vsplit',
-  \ 'ctrl-y': {lines -> setreg('*', join(lines, "\n"))}}
-
-
-""" Markdown
+" ----- Markdown
 " Set syntax highlighting for markdown files.
 " See https://stackoverflow.com/questions/10964681/enabling-markdown-highlighting-in-vim
 " au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 " Fenced code block syntax highlighting
- " let g:markdown_fenced_languages = ['python', 'bash=sh']
+" let g:markdown_fenced_languages = ['python', 'bash=sh']
 let g:vim_markdown_math = 1 " LaTeX math
 let g:vim_markdown_frontmatter = 1 " YAML frontmatter
 let g:vim_markdown_strikethrough = 1 " Strikethrough
 let g:vim_markdown_autowrite = 1  " Autosave changes when following links
-""""
+" -----
 
-""" Pandoc markdown
+" ----- vim-pandoc
 let g:tex_conceal = "abdgm"
 let g:pandoc#syntax#conceal#urls = 1  " Conceal URLs in links
 " let g:pandoc#syntax#conceal#use = 0  " Globally toggle conceal features
@@ -192,6 +190,7 @@ let g:pandoc#biblio#bibs = ['/home/scott/Google Drive/notes/textbooks.bib']
 let g:pandoc#compiler#command = "python build_note.py"
 """
 
+" ----- Lightline
 let g:lightline = {
   \ 'colorscheme': 'one',
   \ }
@@ -199,11 +198,13 @@ let g:lightline.enable = {
             \ 'statusline': 1,
             \ 'tabline': 0,
             \ }
+" -----
 
-" " lightline-bufferline
+" ----- lightline-bufferline
 " let g:lightline#bufferline#enable_devicons = 1
 " let g:lightline#bufferline#show_number = 2
 " let g:lightline.component_raw = {'buffers': 1}  " Make bufferline clickable
+" -----
 
 """ Color schemes: more at https://vimcolorschemes.com/
 " set background=light
@@ -214,19 +215,20 @@ let g:lightline.enable = {
 "   - https://github.com/altercation/solarized/issues/102
 " Colors can be restored by resetting filetype manually, e.g. :setf pandoc
 
-"Github cormacrelf/vim-colors-github
+" ----- Github cormacrelf/vim-colors-github
 " let g:github_colors_soft = 1
 " let g:github_colors_lock_diffmark = 0
 " colorscheme github
 " let g:airline_theme = "github"
+" -----
 
 " ----- sainnhe/edge
-" let g:edge_style = 'aura'
-" let g:airline_theme = 'edge'
-" let g:lightline = {
-"   \ 'colorscheme': 'edge',
-"   \ }
-" colorscheme edge
+let g:edge_style = 'default'
+let g:airline_theme = 'edge'
+let g:lightline = {
+  \ 'colorscheme': 'edge',
+  \ }
+colorscheme edge
 " -----
 
 " ----- sainnhe/sonokai
@@ -245,21 +247,23 @@ let g:lightline.enable = {
 " colorscheme everforest
 " -----
 
-" ghifarit53/tokyonight-vim
+" ----- ghifarit53/tokyonight-vim
 " let g:airline_theme = "tokyonight"
 " let g:tokyonight_style = 'storm' " available: night, storm
 " colorscheme tokyonight
+" -----
 
-" NLKNguyen/papercolor-theme
+" ----- NLKNguyen/papercolor-theme
 " colorscheme PaperColor
 " let g:airline_theme="papercolor"
+" -----
 
-
-" solarized8
+" ----- solarized8
 " set background=light
 " colorscheme solarized8
+" -----
 
-" joshdick/onedark.vim
+" ----- joshdick/onedark.vim
 " if (has("autocmd"))
 "   augroup colorextend
 "     autocmd!
@@ -269,72 +273,97 @@ let g:lightline.enable = {
 "   augroup END
 " endif
 " colorscheme onedark
+" -----  
 
-" Th3Whit3Wolf/one-nvim
-colorscheme one-nvim
+" ----- Vim one rakr/vim-one
+" let g:airline_theme="one"
+" colorscheme one
+" -----
 
-" Airline config
+" ----- sonph/onehalf
+" set background=dark
+" colorscheme onehalfdark
+" let g:airline_theme='onehalfdark'
+" -----
+
+" ----- romgrk/doom-one.vim
+" let g:airline_theme="one"
+" colorscheme doom-one
+" -----
+
+" ----- Th3Whit3Wolf/one-nvim
+" colorscheme one-nvim
+" -----
+
+" ----- navarasu/onedark.nvim
+" colorscheme onedark
+" -----
+
+" ----- arcticicestudios/nord-vim
+" let g:airline_theme = 'nord'
+" colorscheme nord
+" -----
+
+" ----- Airline config
 " let g:airline_powerline_fonts = 1  " Use powerline fonts
 " let g:airline_theme = "onedark"
 " let g:airline#extensions#tabline#enabled = 1  " Enable tabline
 " let g:airline#extensions#tabline#show_buffers = 0  " Disable buffers
 " let g:airline#extensions#bufferline#enabled = 0  " Disable bufferline
+" -----
 
-" CtrlSpace
+" ----- CtrlSpace
 let g:CtrlSpaceDefaultMappingKey = "<C-space> "  " Set default mapping for ctrl-space
+" -----
 
-"" Vim one rakr/vim-one
-"let g:airline_theme="one"
-"colorscheme one
-
-" soph/onehalf
-" set background=dark
-" colorscheme onehalfdark
-" let g:airline_theme='onehalfdark'
-
-" romgrk/doom-one.vim
-" let g:airline_theme="one"
-" colorscheme doom-one
-
-
-" arcticicestudios/nord-vim
-" let g:airline_theme = 'nord'
-" colorscheme nord
-
-
-
-" Transparent background. Must be called AFTER colorscheme.
+" ----- Transparent background. Must be called AFTER colorscheme.
 " See https://stackoverflow.com/questions/37712730/set-vim-background-transparent
 " hi Normal guibg=NONE ctermbg=NONE
 " hi NonText guibg=NONE
+" -----
 
-"""
-""Press Space to turn off highlighting and clear any message already displayed.
-""From https://vim.fandom.com/wiki/Highlight_all_search_pattern_matches
-":nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-"""
+" ----- Press Space to turn off highlighting and clear any message already displayed.
+"       From https://vim.fandom.com/wiki/Highlight_all_search_pattern_matches
+" :nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+" -----
 
-" Maps leader to the spacebar
+" ----- Maps leader to the spacebar
 let maplocalleader = ","
 let leader = " "
 let localleader = ","
 let mapleader = " "
+" -----
 
-" Maps quit
+" ----- Maps quit
 noremap <leader>q :q<cr>
+" -----
 
-" Write buffer
+" ----- Write buffer
 noremap <leader>w :w<cr>
+" -----
 
-" Reload vimrc config
+" ----- Reload vimrc config
 " noremap <leader>R :source ~/.vimrc<cr>  " Without nvim-reload
 noremap <leader>R :Reload<cr>
+" -----
 
-" Maps quit all
+" ----- Maps quit all
 noremap <leader><c-q> :qa<cr>
+" -----
 
-" Deselects currently highlighted searches
+" ----- Deselects currently highlighted searches
 nnoremap <Leader><BS> :noh<cr>
+" -----
+
+" ----- fzf.vim
+" Map keybindings to FZF preview.  First three are default.  Last one allows
+" filename to be yanked, useful for inserting links.
+" See https://github.com/junegunn/fzf.vim/issues/772
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-h': 'split',
+  \ 'ctrl-v': 'vsplit',
+  \ 'ctrl-y': {lines -> setreg('*', join(lines, "\n"))}}
 
 " FZF keybindings: checking whether :Files or :Commands exist doesn't work
 " because plugins aren't loaded until after .vimrc.  See :help startup or
@@ -361,9 +390,7 @@ if has_key(plugs, 'fzf.vim')
     " Fuzzy autocomplete
     imap <c-x><c-f> <plug>(fzf-complete-path)
  endif
-
-""
-""
+" -----
 
 " call github_colors#togglebg_map('<f5>')  "Toggle the background color
 
@@ -387,17 +414,17 @@ nnoremap <leader><M-o>A<cr><Tab>
 " vnoremap > BulletDemoteVisual
 " vnoremap < BulletPromoteVisual
 
-" Move lines around
+" ----- Move lines around
 nnoremap <A-j> :m .+1<CR>
 nnoremap <A-k> :m .-2<CR>
 inoremap <A-j> <Esc>:m .+1<CR>
 inoremap <A-k> <Esc>:m .-2<CR>
 vnoremap <A-j> :m '>+1<CR>gv
 vnoremap <A-k> :m '<-2<CR>gv
+" -----
 
-" Function to strip all trailing whitespace.
-" See https://vi.stackexchange.com/questions/454/
-"
+" ----- Strip trailing whitespace
+" Function, See https://vi.stackexchange.com/questions/454/
 fun! TrimWhitespace()
     let l:save = winsaveview()
     keeppatterns %s/\s\+$//e
@@ -406,3 +433,4 @@ endfun
 
 " Define command so that we can call it in Ex mode
 command! TrimWhitespace call TrimWhitespace()
+" -----

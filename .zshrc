@@ -124,6 +124,7 @@ fi
 
 # Custom aliases
 # alias vi="nvim.appimage"
+alias nvim="nvim.appimage"
 alias vi="nvim"
 # alias vi="neovide"
 # alias vi="nvim-qt"
@@ -163,4 +164,5 @@ fi
 export HICAT_JACOBIAN_PATH="~/hicat_data/jacobians"
 
 # 'config' commmand for working with bare dotfile repo
+# See https://www.atlassian.com/git/tutorials/dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
