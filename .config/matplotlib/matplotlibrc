@@ -1,0 +1,25 @@
+### Backend
+# backend      : qt5agg
+
+### Axes
+#axes.grid : True
+
+### Fonts
+# text.usetex : True
+font.family : sans-serif
+# font.serif : Computer Modern Roman
+# font.family : Palatino Linotype
+font.size : 20
+mathtext.fontset : cm
+
+### Figures and animations
+figure.figsize : 6.0, 6.0
+
+### Saving
+savefig.bbox : tight
+savefig.format : pdf
+
+### Images
+image.cmap   : viridis
+image.origin : lower
+image.interpolation : none
