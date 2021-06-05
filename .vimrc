@@ -33,16 +33,18 @@ set linebreak  " Don't split words when softwrapping
 set termguicolors  " True color mode
 " set guifont=JetBrains\ Mono:h18
 " set guifont=Fira\ Code:h18
-if exists('+guifont') " For neovide.  h18 -> 18 pt font
-    set guifont=Iosevka\ Fixed:h18  
-    " set guifont=Victor\ Mono:h18
-    " set guifont=JetBrains\ Mono:h17  
-    " set guifont=Inconsolata:h20
-    " set guifont=Input\ Mono\ Condensed:h18
-    " set guifont=Monoid:h16
-    " set guifont=Noto\ Mono:h18
-    " set guifont=Source\ Code\ Pro:h18
-    " set guifont=Ubuntu\ Mono:h21
+
+" For neovide and goneovim.  h18 -> 18 pt font
+if exists('+guifont')
+    set guifont=Iosevka\ Fixed:h14
+    " set guifont=Victor\ Mono:h14
+    " set guifont=JetBrains\ Mono:h14
+    " set guifont=Inconsolata:h17
+    " set guifont=Input\ Mono\ Condensed:h12
+    " set guifont=Monoid:h12
+    " set guifont=Noto\ Mono:h14
+    " set guifont=Source\ Code\ Pro:h14
+    " set guifont=Ubuntu\ Mono:h17
 endif
 " For neovim-qt:  set the font and use the TUI tabline rather than the GUI tabline
 " GuiFont! (with the exclamation point) fixes the error [font] is not a fixed-pitch font!
@@ -71,11 +73,13 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 call plug#begin('~/.vim/plugged')
-" Plug 'preservim/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-" Plug 'justinmk/vim-sneak'
+Plug 'justinmk/vim-sneak'
 Plug 'itchyny/lightline.vim'
+Plug 'mhinz/vim-startify'  " Landing page
+Plug 'famiu/nvim-reload'  " Enable complete reloading of config
+" Plug 'mengelbrecht/lightline-bufferline'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 Plug '~/.fzf'
@@ -83,14 +87,21 @@ Plug 'junegunn/fzf.vim'
 Plug 'godlygeek/tabular'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'rakr/vim-one'
 Plug 'joshdick/onedark.vim'
-Plug 'romgrk/doom-one.vim'
 Plug 'sainnhe/edge'
 Plug 'sainnhe/sonokai'
 Plug 'sainnhe/everforest'
 Plug 'dkarter/bullets.vim'  " Utilities for bulleted lists
 Plug 'vim-ctrlspace/vim-ctrlspace'  " Smart buffer/tab management
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'folke/todo-comments.nvim'
+Plug 'Th3Whit3Wolf/one-nvim'  " Neovim colorscheme that supports tree-sitter
+" Plug 'numtostr/FTerm.nvim'  " Floating terminals
+Plug 'akinsho/nvim-toggleterm.lua'  " Terminals
+" Plug 'rakr/vim-one'
+" Plug 'romgrk/doom-one.vim
 " Plug 'ghifarit53/tokyonight-vim'
 " Plug 'sonph/onehalf', { 'rtp': 'vim' }
 " Plug 'arcticicestudio/nord-vim'
@@ -101,13 +112,41 @@ Plug 'vim-ctrlspace/vim-ctrlspace'  " Smart buffer/tab management
 " Plug 'plasticboy/vim-markdown'
 " Plug 'TaDaa/vimade'            " Fade inactive buffers
 " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-" Plug 'kyazdani42/nvim-web-devicons'
-" Plug 'romgrk/barbar.nvim'
+Plug 'romgrk/barbar.nvim'  " Nicer tabline
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 " Plug 'cormacrelf/vim-colors-github'
 " Plug 'voldikss/vim-floaterm'   " Floating terminal
-" Plug 'ryanoasis/vim-devicons'  " Nice icons- always has to be loaded last
+Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'akinsho/nvim-bufferline.lua'
+Plug 'ryanoasis/vim-devicons'  " Nice icons- always has to be loaded last
 call plug#end()
+
+
+lua << EOF
+    require("todo-comments").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+    }
+
+    require("toggleterm").setup{
+        direction = 'float', 
+        size = 40,
+        open_mapping = [[<c-\>]],
+        float_opts = {
+            -- The border key is *almost* the same as 'nvim_win_open'
+            -- see :h nvim_win_open for details on borders however
+            -- the 'curved' border is a custom border type
+            -- not natively supported but implemented in this plugin.
+            border = 'shadow',
+            winblend = 3,
+            highlights = {
+                border = "Normal",
+                background = "Normal",
+    }
+  }
+    }
+EOF
 
 " Fade inactive buffers
 " let g:vimade = {}
@@ -140,7 +179,7 @@ let g:vim_markdown_autowrite = 1  " Autosave changes when following links
 """ Pandoc markdown
 let g:tex_conceal = "abdgm"
 let g:pandoc#syntax#conceal#urls = 1  " Conceal URLs in links
-" let g:pandoc#syntax#conceal#use = 0
+" let g:pandoc#syntax#conceal#use = 0  " Globally toggle conceal features
 let g:pandoc#modules#disabled = ["spell", "folding"]
 let g:pandoc#syntax#codeblocks#embeds#langs = [
             \'yaml',
@@ -150,6 +189,7 @@ let g:pandoc#syntax#codeblocks#embeds#langs = [
             \]
 let g:pandoc#biblio#sources = "g"
 let g:pandoc#biblio#bibs = ['/home/scott/Google Drive/notes/textbooks.bib']
+let g:pandoc#compiler#command = "python build_note.py"
 """
 
 let g:lightline = {
@@ -157,8 +197,13 @@ let g:lightline = {
   \ }
 let g:lightline.enable = {
             \ 'statusline': 1,
-            \ 'tabline': 1
+            \ 'tabline': 0,
             \ }
+
+" " lightline-bufferline
+" let g:lightline#bufferline#enable_devicons = 1
+" let g:lightline#bufferline#show_number = 2
+" let g:lightline.component_raw = {'buffers': 1}  " Make bufferline clickable
 
 """ Color schemes: more at https://vimcolorschemes.com/
 " set background=light
@@ -215,15 +260,18 @@ let g:lightline.enable = {
 " colorscheme solarized8
 
 " joshdick/onedark.vim
-if (has("autocmd"))
-  augroup colorextend
-    autocmd!
-    " Make pandoc markdown headers bold (linked in the plugin syntax file to
-    " Title group)
-    autocmd ColorScheme * call onedark#extend_highlight("Title", { "gui": "bold" })
-  augroup END
-endif
-colorscheme onedark
+" if (has("autocmd"))
+"   augroup colorextend
+"     autocmd!
+"     " Make pandoc markdown headers bold (linked in the plugin syntax file to
+"     " Title group)
+"     autocmd ColorScheme * call onedark#extend_highlight("Title", { "gui": "bold" })
+"   augroup END
+" endif
+" colorscheme onedark
+
+" Th3Whit3Wolf/one-nvim
+colorscheme one-nvim
 
 " Airline config
 " let g:airline_powerline_fonts = 1  " Use powerline fonts
@@ -231,7 +279,9 @@ colorscheme onedark
 " let g:airline#extensions#tabline#enabled = 1  " Enable tabline
 " let g:airline#extensions#tabline#show_buffers = 0  " Disable buffers
 " let g:airline#extensions#bufferline#enabled = 0  " Disable bufferline
-" let g:CtrlSpaceDefaultMappingKey = "<C-space> "  " Set default mapping for ctrl-space
+
+" CtrlSpace
+let g:CtrlSpaceDefaultMappingKey = "<C-space> "  " Set default mapping for ctrl-space
 
 "" Vim one rakr/vim-one
 "let g:airline_theme="one"
@@ -277,7 +327,8 @@ noremap <leader>q :q<cr>
 noremap <leader>w :w<cr>
 
 " Reload vimrc config
-noremap <leader>R :source ~/.vimrc<cr>
+" noremap <leader>R :source ~/.vimrc<cr>  " Without nvim-reload
+noremap <leader>R :Reload<cr>
 
 " Maps quit all
 noremap <leader><c-q> :qa<cr>
