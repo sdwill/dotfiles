@@ -34,18 +34,22 @@ set termguicolors  " True color mode
 " set guifont=JetBrains\ Mono:h18
 " set guifont=Fira\ Code:h18
 
-" For neovide and goneovim.  h18 -> 18 pt font
-if exists('+guifont')
-    set guifont=Iosevka\ Fixed:h14
-    " set guifont=Victor\ Mono:h14
-    " set guifont=JetBrains\ Mono:h14
-    " set guifont=Inconsolata:h17
-    " set guifont=Input\ Mono\ Condensed:h12
-    " set guifont=Monoid:h12
-    " set guifont=Noto\ Mono:h14
-    " set guifont=Source\ Code\ Pro:h14
-    " set guifont=Ubuntu\ Mono:h17
-endif
+" " For neovide and goneovim.  h18 -> 18 pt font
+" if exists('+guifont')
+"     " set guifont=Iosevka\ Term:h18
+"     " set guifont=iA\ Writer\ Mono\ S:h18
+"     " set guifont=Victor\ Mono:h18
+"     set guifont=JetBrains\ Mono:h18
+"     " set guifont=Cascadia\ Mono:h18
+"     " set guifont=Inconsolata:h20
+"     " set guifont=Inconsolata\ Condensed:h20
+"     " set guifont=Input\ Mono:h18
+"     " set guifont=Monoid:h16
+"     " set guifont=Noto\ Mono:h14
+"     " set guifont=Source\ Code\ Pro:h14
+"     " set guifont=Ubuntu\ Mono:h20
+"     " set guifont=JuliaMono:h18
+" endif
 " For neovim-qt:  set the font and use the TUI tabline rather than the GUI tabline
 " GuiFont! (with the exclamation point) fixes the error [font] is not a fixed-pitch font!
 " GuiFont! Iosevka\ Term:h14
@@ -77,14 +81,16 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
 Plug 'itchyny/lightline.vim'
-Plug 'mhinz/vim-startify'  " Landing page
+Plug 'mhinz/vim-startify'           " Landing page
 " Plug 'glepnir/dashboard-nvim'  " Another landing page
-Plug 'famiu/nvim-reload'  " Enable complete reloading of config
+" Plug 'famiu/nvim-reload'            " Enable complete reloading of config
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'mengelbrecht/lightline-bufferline'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'godlygeek/tabular'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
@@ -92,37 +98,42 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'sainnhe/edge'
 Plug 'sainnhe/sonokai'
 Plug 'sainnhe/everforest'
-Plug 'dkarter/bullets.vim'  " Utilities for bulleted lists
+Plug 'dkarter/bullets.vim'          " Utilities for bulleted lists
 Plug 'vim-ctrlspace/vim-ctrlspace'  " Smart buffer/tab management
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'folke/todo-comments.nvim'
-Plug 'Th3Whit3Wolf/one-nvim'  " Neovim colorscheme that supports tree-sitter
-Plug 'navarasu/onedark.nvim'  " Another onedark scheme
+Plug 'Th3Whit3Wolf/one-nvim'        " Neovim colorscheme that supports tree-sitter
+Plug 'navarasu/onedark.nvim'        " Another onedark scheme
 " Plug 'numtostr/FTerm.nvim'  " Floating terminals
 Plug 'akinsho/nvim-toggleterm.lua'  " Terminals
-" Plug 'rakr/vim-one'
+Plug 'rakr/vim-one'
 Plug 'romgrk/doom-one.vim'
 " Plug 'ghifarit53/tokyonight-vim'
 " Plug 'sonph/onehalf', { 'rtp': 'vim' }
 " Plug 'arcticicestudio/nord-vim'
-" Plug 'lifepillar/vim-solarized8'
+Plug 'lifepillar/vim-solarized8'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'vimwiki/vimwiki'
 " Plug 'lervag/wiki.vim'
 " Plug 'plasticboy/vim-markdown'
 " Plug 'TaDaa/vimade'            " Fade inactive buffers
 " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-Plug 'romgrk/barbar.nvim'  " Nicer tabline
+" Plug 'romgrk/barbar.nvim'           " Nicer tabline (doesn't work with goyo)
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-" Plug 'cormacrelf/vim-colors-github'
-" Plug 'voldikss/vim-floaterm'   " Floating terminal
+Plug 'cormacrelf/vim-colors-github'
+" Plug 'voldikss/vim-floaterm'      " Floating terminal
 Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'akinsho/nvim-bufferline.lua'
-Plug 'ryanoasis/vim-devicons'  " Nice icons- always has to be loaded last
+Plug 'ryanoasis/vim-devicons'       " Nice icons- always has to be loaded last
+Plug 'francoiscabrol/ranger.vim'    " Integrate with ranger
+Plug 'rbgrouleff/bclose.vim'        " Ranger dependency when using neovim
+Plug 'junegunn/goyo.vim'            " Distraction-free writing (having a problem with it resetting line numbers though...
+" Plug 'Pocco81/TrueZen.nvim'         " Better zen mode? (Tabline vanishes on exit, plus an E492)
+" Plug 'folke/zen-mode.nvim'              " Yet another zen mode
+" Plug 'preservim/vim-colors-pencil'  " Color scheme for writing
 call plug#end()
-
 
 lua << EOF
     require("todo-comments").setup {
@@ -145,10 +156,73 @@ lua << EOF
             highlights = {
                 border = "Normal",
                 background = "Normal",
+            }
+        }
     }
-  }
-    }
+    require('telescope').setup {
+        extensions = {
+            fzf = {
+                fuzzy = true,                    -- false will only do exact matching
+                override_generic_sorter = false, -- override the generic sorter
+                override_file_sorter = true,     -- override the file sorter
+                case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                           -- the default case_mode is "smart_case"
+            }
+        }
+}
+    -- To get fzf loaded and working with telescope, you need to call
+    -- load_extension, somewhere after setup function:
+    require('telescope').load_extension('fzf')
 EOF
+    " require("zen-mode").setup {
+    "     -- your configuration comes here
+    "     -- or leave it empty to use the default settings
+    "     -- refer to the configuration section below
+    "     window = {
+    "         backdrop = 1.05, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
+    "         -- height and width can be:
+    "         -- * an absolute number of cells when > 1
+    "         -- * a percentage of the width / height of the editor when <= 1
+    "         width = 80, -- width of the Zen window
+    "         height = 0.85, -- height of the Zen window
+    "         -- by default, no options are changed for the Zen window
+    "         -- uncomment any of the options below, or add other vim.wo options you want to apply
+    "         options = {
+    "             -- signcolumn = "no", -- disable signcolumn
+    "             number = false, -- disable number column
+    "             relativenumber = false, -- disable relative numbers
+    "             cursorline = false, -- disable cursorline
+    "             -- cursorcolumn = false, -- disable cursor column
+    "             -- foldcolumn = "0", -- disable fold column
+    "             -- list = false, -- disable whitespace characters
+    "         },
+    "         },
+    "         plugins = {
+    "             -- disable some global vim options (vim.o...)
+    "             -- comment the lines to not apply the options
+    "             options = {
+    "                 enabled = true,
+    "                 ruler = false, -- disables the ruler text in the cmd line area
+    "                 showcmd = false, -- disables the command in the last line of the screen
+    "             },
+    "             gitsigns = { enabled = false }, -- disables git signs
+    "             tmux = { enabled = false }, -- disables the tmux statusline
+    "             -- this will change the font size on kitty when in zen mode
+    "             -- to make this work, you need to set the following kitty options:
+    "             -- - allow_remote_control socket-only
+    "             -- - listen_on unix:/tmp/kitty
+    "             kitty = {
+    "                 enabled = false,
+    "                 font = "+4", -- font size increment
+    "             },
+    "         },
+    "         -- callback where you can add custom code when the Zen window opens
+    "         on_open = function(win)
+    "         end,
+    "         -- callback where you can add custom code when the Zen window closes
+    "         on_close = function()
+    "         end,
+    " }
 
 " ----- dashboard-nvim
 " let g:dashboard_default_executive = 'fzf'
@@ -175,7 +249,8 @@ let g:vim_markdown_autowrite = 1  " Autosave changes when following links
 " -----
 
 " ----- vim-pandoc
-let g:tex_conceal = "abdgm"
+let g:tex_conceal = "abdg"
+" let g:tex_conceal = "abdgm"
 let g:pandoc#syntax#conceal#urls = 1  " Conceal URLs in links
 " let g:pandoc#syntax#conceal#use = 0  " Globally toggle conceal features
 let g:pandoc#modules#disabled = ["spell", "folding"]
@@ -191,12 +266,14 @@ let g:pandoc#compiler#command = "python build_note.py"
 """
 
 " ----- Lightline
+  " \ 'colorscheme': 'one',
+    " \ 'colorscheme': 'github',
 let g:lightline = {
   \ 'colorscheme': 'one',
   \ }
 let g:lightline.enable = {
             \ 'statusline': 1,
-            \ 'tabline': 0,
+            \ 'tabline': 1,
             \ }
 " -----
 
@@ -207,7 +284,7 @@ let g:lightline.enable = {
 " -----
 
 """ Color schemes: more at https://vimcolorschemes.com/
-" set background=light
+set background=light
 " NOTE: setting any of these colorschemes will cause bold/italics in Markdown
 " to disappear after reloading .vimrc.
 " See:
@@ -215,20 +292,25 @@ let g:lightline.enable = {
 "   - https://github.com/altercation/solarized/issues/102
 " Colors can be restored by resetting filetype manually, e.g. :setf pandoc
 
+" ----- preservim/vim-colors-pencil
+" let g:pencil_spell_undercurl = 0
+" colorscheme pencil
+" -----
+
 " ----- Github cormacrelf/vim-colors-github
-" let g:github_colors_soft = 1
-" let g:github_colors_lock_diffmark = 0
-" colorscheme github
+let g:github_colors_soft = 1
+let g:github_colors_lock_diffmark = 0
+colorscheme github
 " let g:airline_theme = "github"
 " -----
 
 " ----- sainnhe/edge
-let g:edge_style = 'default'
-let g:airline_theme = 'edge'
-let g:lightline = {
-  \ 'colorscheme': 'edge',
-  \ }
-colorscheme edge
+" let g:edge_style = 'default'
+" let g:airline_theme = 'edge'
+" let g:lightline = {
+"   \ 'colorscheme': 'edge',
+"   \ }
+" colorscheme edge
 " -----
 
 " ----- sainnhe/sonokai
@@ -273,7 +355,7 @@ colorscheme edge
 "   augroup END
 " endif
 " colorscheme onedark
-" -----  
+" -----
 
 " ----- Vim one rakr/vim-one
 " let g:airline_theme="one"
@@ -343,12 +425,12 @@ noremap <leader>w :w<cr>
 " -----
 
 " ----- Reload vimrc config
-" noremap <leader>R :source ~/.vimrc<cr>  " Without nvim-reload
-noremap <leader>R :Reload<cr>
+noremap <leader>R :source ~/.vimrc<cr>
+" noremap <leader>R :Reload<cr>
 " -----
 
 " ----- Maps quit all
-noremap <leader><c-q> :qa<cr>
+" noremap <leader><c-q> :qa<cr>
 " -----
 
 " ----- Deselects currently highlighted searches
@@ -384,8 +466,14 @@ if has_key(plugs, 'fzf.vim')
     " commands, similarly to the behavior in Spacemacs
     nnoremap <silent> <leader><Space> :Help<CR>
 
-    " List all buffers
+    " Buffers
     nnoremap <silent> <leader>b :Buffers<CR>
+
+    " Commands
+    nnoremap <silent> <leader>c :Commands<CR>
+
+    " Lines in current file
+    nnoremap <silent> <leader>l :Lines<CR>
 
     " Fuzzy autocomplete
     imap <c-x><c-f> <plug>(fzf-complete-path)
@@ -402,9 +490,9 @@ nnoremap o :InsertNewBullet<cr>
 vnoremap gN :RenumberSelection<cr>
 nnoremap gN :RenumberList<cr>
 nnoremap <leader>x :ToggleCheckbox<cr>
-nnoremap <leader>o :InsertNewBullet<cr><Esc>>>
+" nnoremap <leader>o :InsertNewBullet<cr><Esc>>>
 " nnoremap <leader><M-o> :InsertNewBullet<cr><Esc>>> :call pandoc#keyboard#checkboxes#Delete()<cr>A
-nnoremap <leader><M-o>A<cr><Tab>
+" nnoremap <leader><M-o>A<cr><Tab>
 " Disable the promotion/demotion keybindings because they automatically force
 " sub-bullets to use *, which I don't like
 " inoremap <C-t> BulletDemote
@@ -434,3 +522,32 @@ endfun
 " Define command so that we can call it in Ex mode
 command! TrimWhitespace call TrimWhitespace()
 " -----
+
+" ----- Bind F9 to make command for pandoc
+map <silent><F9> :make %:r<cr>
+" noremap <F8>:exe ':silent !google-chrome'<cr>
+
+" Display the current HTML file in Firefox (if it exists).
+" This requires the working directory to be notes/
+map <F8> :!firefox build/%:r.html &<cr>
+" -----
+
+" ----- Focus mode
+map <silent><leader>g :Goyo<cr>
+" map <leader>g :TZAtaraxis <cr>
+" map <leader>g :ZenMode<cr>
+" -----
+
+" ----- Goyo: reapply colorscheme when exiting
+" Goyo calls 'colorscheme [x]' when leaving, which causes the same issues as
+" switching colorschemes in general, i.e. the highlighting disappears for many
+" syntax elements.  To work around this, we just disable and re-enable syntax
+" highlighting.
+function! s:goyo_leave()
+    syntax clear
+    syntax on
+endfunction
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+" -----
+
+

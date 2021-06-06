@@ -123,8 +123,6 @@ if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
 fi
 
 # Custom aliases
-# alias vi="nvim.appimage"
-alias nvim="nvim.appimage"
 alias vi="nvim"
 # alias vi="neovide"
 # alias vi="nvim-qt"
