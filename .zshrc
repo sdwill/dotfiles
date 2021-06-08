@@ -2,7 +2,11 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/scott/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
+
+# ----- Some other useful environment variables
+export CONDA="anaconda3"  # $CONDA on desktop
+export HICAT_JACOBIAN_PATH="~/hicat_data/jacobians"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -74,7 +78,7 @@ plugins=(
   sublime
   vscode
   z
-  tmux
+  # tmux
   vi-mode
   themes
   colored-man-pages
@@ -111,7 +115,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # source /usr/share/powerlevel9k/powerlevel9k.zsh-theme
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Hide the username from prompt- this line has to come AFTER loading powerline since it is also a
 # powerline setting
@@ -122,6 +126,11 @@ if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
         source /etc/profile.d/vte.sh
 fi
 
+# Add stuff to path
+export PATH="$PATH:$HOME/Documents/julia-1.5.3/bin"  # Julia
+export PATH="$PATH:$HOME/local/nvim/bin/nvim"        # Neovim
+export PATH="$PATH:$HOME/local/brew/bin/brew"        # Homebrew
+
 # Custom aliases
 alias vi="nvim"
 # alias vi="neovide"
@@ -129,20 +138,17 @@ alias vi="nvim"
 
 alias kitty="~/.local/kitty.app/bin/kitty"
 
-# Add Julia to path
-export PATH="$PATH:/home/scott/Documents/julia-1.5.3/bin"
-
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/scott/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('$HOME/$CONDA/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/scott/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/scott/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/$CONDA/etc/profile.d/conda.sh" ]; then
+        . "$HOME/$CONDA/etc/profile.d/conda.sh"
     else
-        export PATH="/home/scott/miniconda3/bin:$PATH"
+        export PATH="$HOME/$CONDA/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -159,7 +165,6 @@ if [ -n "${NVIM_LISTEN_ADDRESS+x}" ]; then
   export COLORTERM="truecolor"
 fi
 
-export HICAT_JACOBIAN_PATH="~/hicat_data/jacobians"
 
 # 'config' commmand for working with bare dotfile repo
 # See https://www.atlassian.com/git/tutorials/dotfiles
