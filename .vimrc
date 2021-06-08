@@ -89,7 +89,8 @@ Plug 'mhinz/vim-startify'           " Landing page
 " Plug 'mengelbrecht/lightline-bufferline'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
-Plug '~/.fzf'
+" Plug '~/.fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'godlygeek/tabular'
@@ -532,7 +533,7 @@ map <silent><S-F9> :!python build_note.py --to pdf %<cr>
 
 " Display the current HTML file in Firefox (if it exists).
 " This requires the working directory to be notes/
-map <F8> :!firefox build/%:r.html &<cr>
+map <F8> :!open -a firefox build/%:r.html &<cr>
 " -----
 
 " ----- Focus mode

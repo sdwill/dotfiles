@@ -128,8 +128,8 @@ fi
 
 # Add stuff to path
 export PATH="$PATH:$HOME/Documents/julia-1.5.3/bin"  # Julia
-export PATH="$PATH:$HOME/local/nvim/bin/nvim"        # Neovim
-export PATH="$PATH:$HOME/local/brew/bin/brew"        # Homebrew
+export PATH="$PATH:$HOME/local/nvim/bin"        # Neovim
+export PATH="$PATH:$HOME/local/brew/bin"        # Homebrew
 
 # Custom aliases
 alias vi="nvim"
