@@ -35,8 +35,9 @@ set termguicolors  " True color mode
 " set guifont=Fira\ Code:h18
 
 " " For neovide and goneovim.  h18 -> 18 pt font
-" if exists('+guifont')
-"     " set guifont=Iosevka\ Term:h18
+if exists('+guifont')
+    " set guifont=Fira\ Code:h18
+    set guifont=Iosevka\ Term,JetBrainsMono\ Nerd\ Font:h20
 "     " set guifont=iA\ Writer\ Mono\ S:h18
 "     " set guifont=Victor\ Mono:h18
 "     set guifont=JetBrains\ Mono:h18
@@ -49,7 +50,7 @@ set termguicolors  " True color mode
 "     " set guifont=Source\ Code\ Pro:h14
 "     " set guifont=Ubuntu\ Mono:h20
 "     " set guifont=JuliaMono:h18
-" endif
+endif
 " For neovim-qt:  set the font and use the TUI tabline rather than the GUI tabline
 " GuiFont! (with the exclamation point) fixes the error [font] is not a fixed-pitch font!
 " GuiFont! Iosevka\ Term:h14
@@ -122,7 +123,8 @@ Plug 'lifepillar/vim-solarized8'
 " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 " Plug 'romgrk/barbar.nvim'           " Nicer tabline (doesn't work with goyo)
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-Plug 'cormacrelf/vim-colors-github'
+" Plug 'cormacrelf/vim-colors-github'
+Plug 'sdwill/vim-colors-github'  " My own fork with tuned colors
 " Plug 'voldikss/vim-floaterm'      " Floating terminal
 Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'akinsho/nvim-bufferline.lua'
@@ -249,8 +251,7 @@ let g:vim_markdown_autowrite = 1  " Autosave changes when following links
 " -----
 
 " ----- vim-pandoc
-let g:tex_conceal = "abdg"
-" let g:tex_conceal = "abdgm"
+let g:tex_conceal = ""
 let g:pandoc#syntax#conceal#urls = 1  " Conceal URLs in links
 " let g:pandoc#syntax#conceal#use = 0  " Globally toggle conceal features
 let g:pandoc#modules#disabled = ["spell", "folding"]
@@ -269,7 +270,7 @@ let g:pandoc#compiler#command = "python build_note.py"
   " \ 'colorscheme': 'one',
     " \ 'colorscheme': 'github',
 let g:lightline = {
-  \ 'colorscheme': 'one',
+  \ 'colorscheme': 'github',
   \ }
 let g:lightline.enable = {
             \ 'statusline': 1,
@@ -524,7 +525,9 @@ command! TrimWhitespace call TrimWhitespace()
 " -----
 
 " ----- Bind F9 to make command for pandoc
-map <silent><F9> :make %:r<cr>
+" map <silent><F9> :make %:r<cr>
+map <silent><F9> :!python build_note.py %<cr>
+map <silent><S-F9> :!python build_note.py --to pdf %<cr>
 " noremap <F8>:exe ':silent !google-chrome'<cr>
 
 " Display the current HTML file in Firefox (if it exists).
