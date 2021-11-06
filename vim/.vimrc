@@ -1,4 +1,4 @@
-set tabstop=4       " Number of spaces that a tab counts for
+set tabstop=4       " Number of spaces that a tab ccunts for
 set softtabstop=4   " ???
 set shiftwidth=4    " Spaces for autoindents
 set expandtab       " Turn tabs into spaces
@@ -34,29 +34,24 @@ set termguicolors  " True color mode
 " set guifont=JetBrains\ Mono:h18
 " set guifont=Fira\ Code:h18
 
-" " For neovide and goneovim.  h18 -> 18 pt font
+" For neovide and goneovim.  h18 -> 18 pt font
 if exists('+guifont')
-    " set guifont=Fira\ Code:h18
-    set guifont=Iosevka\ Term,JetBrainsMono\ Nerd\ Font:h20
-"     " set guifont=iA\ Writer\ Mono\ S:h18
-"     " set guifont=Victor\ Mono:h18
-"     set guifont=JetBrains\ Mono:h18
-"     " set guifont=Cascadia\ Mono:h18
-"     " set guifont=Inconsolata:h20
-"     " set guifont=Inconsolata\ Condensed:h20
-"     " set guifont=Input\ Mono:h18
-"     " set guifont=Monoid:h16
-"     " set guifont=Noto\ Mono:h14
-"     " set guifont=Source\ Code\ Pro:h14
-"     " set guifont=Ubuntu\ Mono:h20
-"     " set guifont=JuliaMono:h18
+    " set guifont=Fira\ Code,JetBrainsMono\ Nerd\ Font:h16
+    " set guifont=IBM\ Plex\ Mono,JetBrainsMono\ Nerd\ Font:h18
+    " set guifont=JetBrains\ Mono:h14
+    set guifont=Fantasque\ Sans\ Mono:h20
+    " set guifont=Roboto\ Mono:h18
+    " set guifont=Iosevka\ Term,JetBrainsMono\ Nerd\ Font:h18
+    " set guifont=iA\ Writer\ Mono\ S,JetBrainsMono\ Nerd\ Font:h18
+    " set guifont=Victor\ Mono,JetBrainsMono\ Nerd\ Font:h19
+    " set guifont=Cascadia\ Mono:h18
+    " set guifont=Monoid,JetBrainsMono\ Nerd\ Font:h18
+    " set guifont=Hack,JetBrainsMono\ Nerd\ Font:h18
+    " set guifont=Noto\ Mono,JetBrainsMono\ Nerd\ Font:h18
+    " set guifont=Ubuntu\ Mono:h20
+    " set guifont=JuliaMono:h18
 endif
-" For neovim-qt:  set the font and use the TUI tabline rather than the GUI tabline
-" GuiFont! (with the exclamation point) fixes the error [font] is not a fixed-pitch font!
-" GuiFont! Iosevka\ Term:h14
-" GuiFont! Cascadia\ Mono:h14
-" GuiFont! JuliaMono:h13
-" GuiTabline 0
+
 " set cursorline      " Highlight the current line
 syntax on
 set splitbelow  " Open horizontal splits below
@@ -89,52 +84,64 @@ Plug 'mhinz/vim-startify'           " Landing page
 " Plug 'mengelbrecht/lightline-bufferline'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
-Plug '~/.fzf'
+Plug 'vim-latex/vim-latex'
+" Plug '~/.fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'godlygeek/tabular'
+" Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+" Plug 'godlygeek/tabular'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-" Plug 'joshdick/onedark.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'ful1e5/onedark.nvim'
+Plug 'KeitaNakamura/neodark.vim'
 Plug 'sainnhe/edge'
 Plug 'sainnhe/sonokai'
 Plug 'sainnhe/everforest'
+Plug 'embark-theme/vim'
 Plug 'dkarter/bullets.vim'          " Utilities for bulleted lists
-Plug 'vim-ctrlspace/vim-ctrlspace'  " Smart buffer/tab management
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+" Plug 'vim-ctrlspace/vim-ctrlspace'  " Smart buffer/tab management
+" Plug 'nvim-lua/popup.nvim'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim'
 Plug 'folke/todo-comments.nvim'
-Plug 'Th3Whit3Wolf/one-nvim'        " Neovim colorscheme that supports tree-sitter
-Plug 'navarasu/onedark.nvim'        " Another onedark scheme
+" Plug 'Th3Whit3Wolf/one-nvim'        " Neovim colorscheme that supports tree-sitter
+" Plug 'navarasu/onedark.nvim'        " Another onedark scheme
 " Plug 'numtostr/FTerm.nvim'  " Floating terminals
 Plug 'akinsho/nvim-toggleterm.lua'  " Terminals
 Plug 'rakr/vim-one'
 Plug 'romgrk/doom-one.vim'
-" Plug 'ghifarit53/tokyonight-vim'
-" Plug 'sonph/onehalf', { 'rtp': 'vim' }
-" Plug 'arcticicestudio/nord-vim'
+Plug 'rafamadriz/neon'
+Plug 'jsit/toast.vim'
+Plug 'glepnir/zephyr-nvim'
+Plug 'ajmwagar/vim-deus'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'ghifarit53/tokyonight-vim'  " Also possibly see folke/tokyonight.nvim
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'arcticicestudio/nord-vim'
 Plug 'lifepillar/vim-solarized8'
-" Plug 'NLKNguyen/papercolor-theme'
+" Plug 'cormacrelf/vim-colors-github'
+Plug 'sdwill/vim-colors-github'  " My own fork with tuned colors
+Plug 'preservim/vim-colors-pencil'  " Color scheme for writing
+Plug 'junegunn/goyo.vim'            " Distraction-free writing (having a problem with it resetting line numbers though...
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'francoiscabrol/ranger.vim'    " Integrate with ranger
+Plug 'Pocco81/AutoSave.nvim'  " Autosave!
+Plug 'equalsraf/neovim-gui-shim'  " Shim for neovim-qt gui features
 " Plug 'vimwiki/vimwiki'
 " Plug 'lervag/wiki.vim'
 " Plug 'plasticboy/vim-markdown'
 " Plug 'TaDaa/vimade'            " Fade inactive buffers
 " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-" Plug 'romgrk/barbar.nvim'           " Nicer tabline (doesn't work with goyo)
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-" Plug 'cormacrelf/vim-colors-github'
-Plug 'sdwill/vim-colors-github'  " My own fork with tuned colors
+" Plug 'romgrk/barbar.nvim'           " Nicer tabline (doesn't work with goyo)
 " Plug 'voldikss/vim-floaterm'      " Floating terminal
-Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'akinsho/nvim-bufferline.lua'
-Plug 'ryanoasis/vim-devicons'       " Nice icons- always has to be loaded last
-Plug 'francoiscabrol/ranger.vim'    " Integrate with ranger
-Plug 'rbgrouleff/bclose.vim'        " Ranger dependency when using neovim
-Plug 'junegunn/goyo.vim'            " Distraction-free writing (having a problem with it resetting line numbers though...
+" Plug 'rbgrouleff/bclose.vim'        " Ranger dependency when using neovim
 " Plug 'Pocco81/TrueZen.nvim'         " Better zen mode? (Tabline vanishes on exit, plus an E492)
 " Plug 'folke/zen-mode.nvim'              " Yet another zen mode
-" Plug 'preservim/vim-colors-pencil'  " Color scheme for writing
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'ryanoasis/vim-devicons'       " Nice icons- always has to be loaded last
 call plug#end()
 
 lua << EOF
@@ -161,21 +168,45 @@ lua << EOF
             }
         }
     }
-    require('telescope').setup {
-        extensions = {
-            fzf = {
-                fuzzy = true,                    -- false will only do exact matching
-                override_generic_sorter = false, -- override the generic sorter
-                override_file_sorter = true,     -- override the file sorter
-                case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                           -- the default case_mode is "smart_case"
-            }
+    local autosave = require("autosave")
+
+    autosave.setup(
+        {
+            enabled = true,
+            execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
+            events = {"InsertLeave", "TextChanged"},
+            conditions = {
+                exists = true,
+                filetype_is_not = {},
+                modifiable = true
+            },
+            write_all_buffers = false,
+            on_off_commands = true,
+            clean_command_line_interval = 2500
         }
-}
-    -- To get fzf loaded and working with telescope, you need to call
-    -- load_extension, somewhere after setup function:
-    require('telescope').load_extension('fzf')
+    )
+    -- # --- rafamadriz/neon
+    -- vim.g.n -----eon_style = "doom"
+    -- vim.g.neon_italic_comment = false
+    -- vim.g.neon_bold = true
+    -- vim.cmd[[colorscheme neon]]
+    -- # ---
 EOF
+    " require("bufferline").setup{}
+    " require('telescope').setup {
+    "     extensions = {
+    "         fzf = {
+    "             fuzzy = true,                    -- false will only do exact matching
+    "             override_generic_sorter = false, -- override the generic sorter
+    "             override_file_sorter = true,     -- override the file sorter
+    "             case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+    "                                        -- the default case_mode is "smart_case"
+    "         }
+    "     }
+    " }
+    " -- To get fzf loaded and working with telescope, you need to call
+    " -- load_extension, somewhere after setup function:
+    " require('telescope').load_extension('fzf')
     " require("zen-mode").setup {
     "     -- your configuration comes here
     "     -- or leave it empty to use the default settings
@@ -225,6 +256,7 @@ EOF
     "         on_close = function()
     "         end,
     " }
+" -----
 
 " ----- dashboard-nvim
 " let g:dashboard_default_executive = 'fzf'
@@ -243,11 +275,13 @@ EOF
 " au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 " Fenced code block syntax highlighting
-" let g:markdown_fenced_languages = ['python', 'bash=sh']
+let g:markdown_fenced_languages = ['python', 'bash=sh']
+let g:tex_conceal = ""  " Don't conceal LaTeX
 let g:vim_markdown_math = 1 " LaTeX math
 let g:vim_markdown_frontmatter = 1 " YAML frontmatter
 let g:vim_markdown_strikethrough = 1 " Strikethrough
 let g:vim_markdown_autowrite = 1  " Autosave changes when following links
+let g:vim_markdown_folding_disabled = 1  " Disable folding by default
 " -----
 
 " ----- vim-pandoc
@@ -269,13 +303,22 @@ let g:pandoc#compiler#command = "python build_note.py"
 " ----- Lightline
   " \ 'colorscheme': 'one',
     " \ 'colorscheme': 'github',
-let g:lightline = {
-  \ 'colorscheme': 'github',
-  \ }
+let g:lightline = {}
 let g:lightline.enable = {
             \ 'statusline': 1,
             \ 'tabline': 1,
             \ }
+
+" ----- Automatically reload the lightline theme
+" See https://github.com/itchyny/lightline.vim/issues/241
+function! LightlineReload()
+  call lightline#init()
+  call lightline#colorscheme()
+  call lightline#update()
+endfunction
+
+command! LightlineReload call LightlineReload()
+" -----
 " -----
 
 " ----- lightline-bufferline
@@ -285,7 +328,6 @@ let g:lightline.enable = {
 " -----
 
 """ Color schemes: more at https://vimcolorschemes.com/
-set background=light
 " NOTE: setting any of these colorschemes will cause bold/italics in Markdown
 " to disappear after reloading .vimrc.
 " See:
@@ -299,24 +341,25 @@ set background=light
 " -----
 
 " ----- Github cormacrelf/vim-colors-github
-let g:github_colors_soft = 1
-let g:github_colors_lock_diffmark = 0
-colorscheme github
+" set background=light
+" let g:github_colors_soft = 1
+" let g:github_colors_lock_diffmark = 0
 " let g:airline_theme = "github"
+" let g:lightline.colorscheme = 'github'
+" colorscheme github
 " -----
 
 " ----- sainnhe/edge
-" let g:edge_style = 'default'
-" let g:airline_theme = 'edge'
-" let g:lightline = {
-"   \ 'colorscheme': 'edge',
-"   \ }
-" colorscheme edge
+set background=dark
+let g:edge_style = 'neon'
+let g:airline_theme = 'edge'
+let g:lightline.colorscheme = 'edge'
+colorscheme edge
 " -----
 
 " ----- sainnhe/sonokai
-" let g:sonokai_style = 'atlantis'
-" let g:sonokai_enable_italic = 1
+" let g:sonokai_style = 'andromeda'
+" let g:sonokai_enable_italic = 0
 " let g:sonokai_disable_italic_comment = 1
 " let g:lightline.colorscheme = 'sonokai'
 " let g:sonokai_transparent_background = 0
@@ -325,29 +368,33 @@ colorscheme github
 " -----
 
 " ----- sainnhe/everforest
-" let g:everforest_background = 'hard'
+" let g:everforest_background = 'soft'  " 'hard', 'medium', 'soft'
 " let g:lightline.colorscheme = 'everforest'
 " colorscheme everforest
 " -----
 
 " ----- ghifarit53/tokyonight-vim
+" set background=dark
 " let g:airline_theme = "tokyonight"
+" let g:lightline.colorscheme = 'tokyonight'
 " let g:tokyonight_style = 'storm' " available: night, storm
 " colorscheme tokyonight
 " -----
 
 " ----- NLKNguyen/papercolor-theme
+" set background=light
 " colorscheme PaperColor
 " let g:airline_theme="papercolor"
 " -----
 
 " ----- solarized8
 " set background=light
+" let g:lightline.colorscheme = 'solarized'
 " colorscheme solarized8
 " -----
 
 " ----- joshdick/onedark.vim
-" if (has("autocmd"))
+" set background=dark if (has("autocmd"))
 "   augroup colorextend
 "     autocmd!
 "     " Make pandoc markdown headers bold (linked in the plugin syntax file to
@@ -355,37 +402,73 @@ colorscheme github
 "     autocmd ColorScheme * call onedark#extend_highlight("Title", { "gui": "bold" })
 "   augroup END
 " endif
+" let g:onedark_color_overrides = {
+" \ "white": {"gui": "#C3CBD9", "cterm": "235", "cterm16": "0" },
+" \}
+" let g:lightline.colorscheme = 'one'
 " colorscheme onedark
 " -----
 
+" ----- KeitaNakamura/neodark.vim
+" set background=dark
+" let g:neodark#use_custom_terminal_theme = 1
+" let g:neodark#background = '#282C34'
+" colorscheme neodark
+" -----
+
 " ----- Vim one rakr/vim-one
+" set background=dark
 " let g:airline_theme="one"
+" let g:lightline.colorscheme = 'one'
 " colorscheme one
 " -----
 
 " ----- sonph/onehalf
 " set background=dark
 " colorscheme onehalfdark
+" let g:lightline.colorscheme = 'one'
 " let g:airline_theme='onehalfdark'
 " -----
 
 " ----- romgrk/doom-one.vim
 " let g:airline_theme="one"
+" let g:doom_one_terminal_colors = v:true
 " colorscheme doom-one
 " -----
 
 " ----- Th3Whit3Wolf/one-nvim
+" set background=dark
+" let g:lightline.colorscheme = 'one'
 " colorscheme one-nvim
 " -----
 
 " ----- navarasu/onedark.nvim
+" set background=dark
+" let g:lightline.colorscheme = 'one'
 " colorscheme onedark
 " -----
 
+" ----- ajmwagar/vim-deus
+" set background=dark
+" colorscheme deus
+" -----
+
+" ----- jsit/toast.nvim
+" set backgrcund=dark
+" colorscheme toast
+" -----
+
+" ----- glepnir/zephyr-nvim
+" colorscheme zephyr
+" ----- 
+
+
 " ----- arcticicestudios/nord-vim
 " let g:airline_theme = 'nord'
+" let g:lightline.colorscheme = 'nord'
 " colorscheme nord
 " -----
+
 
 " ----- Airline config
 " let g:airline_powerline_fonts = 1  " Use powerline fonts
@@ -396,7 +479,7 @@ colorscheme github
 " -----
 
 " ----- CtrlSpace
-let g:CtrlSpaceDefaultMappingKey = "<C-space> "  " Set default mapping for ctrl-space
+" let g:CtrlSpaceDefaultMappingKey = "<C-space> "  " Set default mapping for ctrl-space
 " -----
 
 " ----- Transparent background. Must be called AFTER colorscheme.
@@ -422,11 +505,26 @@ noremap <leader>q :q<cr>
 " -----
 
 " ----- Write buffer
-noremap <leader>w :w<cr>
+if !exists('g:vscode')
+    noremap <leader>w :w<cr>
+endif 
 " -----
 
 " ----- Reload vimrc config
-noremap <leader>R :source ~/.vimrc<cr>
+"
+" function! ReloadConfig()
+"     scurce ~/.vimrc
+"     call LightlineReload()
+"     syntax clear
+"     syntax on
+" endfunction
+
+if !exists('g:vscode')
+    noremap <leader>R :source ~/.vimrc<cr> :LightlineReload<cr>
+else
+    noremap <leader>R :source ~/.vimrc<cr>
+endif
+" noremap <leader>R :ReloadConfig
 " noremap <leader>R :Reload<cr>
 " -----
 
@@ -452,10 +550,12 @@ let g:fzf_action = {
 " because plugins aren't loaded until after .vimrc.  See :help startup or
 " https://vi.stackexchange.com/questions/10939/how-to-see-if-a-plugin-is-active
 " vim-plug defines a plugs dictionary that contains keys for all loaded
-" plugins, which we can check instead without relying on them being loaded.
-if has_key(plugs, 'fzf.vim')
+" plugins, which we can check instead withcut relying on them being loaded.
+if has_key(plugs, 'fzf.vim') && !exists('g:vscode')
     " let $FZF_DEFAULT_OPTS="--ansi --preview-window --layout reverse --preview='bat --theme=TwoDark --color=always --style=header,grid"
-    " let $FZF_DEFAULT_OPTS="--preview='bat --color=always' --preview-window 'right:60%' --layout reverse"
+    " let $BAT_THEME='OneHalfDark'
+    let $BAT_THEME='Solarized (light)'
+    let $FZF_DEFAULT_OPTS="--preview='bat --color=always' --preview-window 'right:60%' --layout reverse"
     " Ctrl+P to fuzzy-find files, similarly to VSCode/Sublime
     nmap <silent> <C-P> :Files<CR>
 
@@ -469,6 +569,7 @@ if has_key(plugs, 'fzf.vim')
 
     " Buffers
     nnoremap <silent> <leader>b :Buffers<CR>
+    " nnoremap <silent> <leader>B :Buffers<CR>
 
     " Commands
     nnoremap <silent> <leader>c :Commands<CR>
@@ -486,10 +587,12 @@ if has_key(plugs, 'fzf.vim')
 let g:bullets_checkbox_markers = ' -x'
 let g:bullets_set_mappings = 0
 
-inoremap <M-cr> <Esc>:InsertNewBullet<cr>
-nnoremap o :InsertNewBullet<cr>
-vnoremap gN :RenumberSelection<cr>
-nnoremap gN :RenumberList<cr>
+if !exists('g:vscode')
+    inoremap <M-cr> <Esc>:InsertNewBullet<cr>
+    nnoremap o :InsertNewBullet<cr>
+    vnoremap gN :RenumberSelection<cr>
+    nnoremap gN :RenumberList<cr>
+endif
 nnoremap <leader>x :ToggleCheckbox<cr>
 " nnoremap <leader>o :InsertNewBullet<cr><Esc>>>
 " nnoremap <leader><M-o> :InsertNewBullet<cr><Esc>>> :call pandoc#keyboard#checkboxes#Delete()<cr>A
@@ -536,9 +639,11 @@ map <F8> :!firefox build/%:r.html &<cr>
 " -----
 
 " ----- Focus mode
-map <silent><leader>g :Goyo<cr>
-" map <leader>g :TZAtaraxis <cr>
-" map <leader>g :ZenMode<cr>
+if !exists('g:vscode')
+    map<silent><leader>g :Goyo<cr>
+    " map <leader>g :TZAtaraxis <cr>
+    " map <leader>g :ZenMode<cr>
+endif
 " -----
 
 " ----- Goyo: reapply colorscheme when exiting
@@ -553,4 +658,29 @@ endfunction
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 " -----
 
+" ----- vim-latex
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+" TIP: if you write your \label's as \label{fig:something}, then if you
+" type in \ref{fig: and press <C-n> you will automatically cycle through
+" all the figure labels. Very useful!
+set iskeyword+=:
+" -----
 
+" Found here: https://www.reddit.com/r/vim/comments/44e1ig/airline_and_bufferline/
+nnoremap gb :ls<CR>:buffer<Space>
+
+if !exists('g:vscode')
+" Always reload syntax highlighting at the end
+" I could do this as part of the config reload but I think doing it here
+" achieves the same outcome
+    syntax clear 
+    syntax on
+endif
+
+if exists('g:vscode')
+    nmap j gj
+    nmap k gk
+endif

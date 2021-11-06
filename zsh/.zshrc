@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/scott/.oh-my-zsh"
+export ZSH="/home/scott/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -75,7 +75,6 @@ plugins=(
   vscode
   z
   tmux
-  vi-mode
   themes
   colored-man-pages
 )
@@ -164,3 +163,11 @@ export HICAT_JACOBIAN_PATH="~/hicat_data/jacobians"
 # 'config' commmand for working with bare dotfile repo
 # See https://www.atlassian.com/git/tutorials/dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
+# texlive path, see http://www.tug.org/texlive/quickinstall.html
+export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
+alias sutlmgr='sudo /usr/local/texlive/2021/bin/x86_64-linux/tlmgr'
+export NVIM_QT_RUNTIME_PATH="~/Documents/repos/neovim-qt/src/gui/runtime"
+
+# Add ~/bin to PATH
+export PATH="/home/scott/bin:$PATH"

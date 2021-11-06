@@ -135,3 +135,6 @@ unset __conda_setup
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 source "$HOME/.cargo/env"
+
+# Add texlive 2021 to path
+export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
