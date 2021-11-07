@@ -1,22 +1,21 @@
 source ~/.vim/general.vim
 source ~/.vim/guifont.vim
-source ~/.vim/vim_plug.vim
 source ~/.vim/keybindings.vim
+source ~/.vim/vim_plug.vim
 
-source ~/.vim/plugins/dashboard_nvim.vim
+" source ~/.vim/plugins/dashboard_nvim.vim
 source ~/.vim/plugins/markdown.vim
-source ~/.vim/plugins/vim_pandoc.vim
+" source ~/.vim/plugins/vim_pandoc.vim
 source ~/.vim/plugins/lightline.vim
-source ~/.vim/plugins/lightline_bufferline.vim
-source ~/.vim/plugins/fzf.vim
+" source ~/.vim/plugins/lightline_bufferline.vim
 source ~/.vim/plugins/bullets.vim
 source ~/.vim/plugins/goyo.vim
 source ~/.vim/plugins/vim-latex.vim
+source ~/.vim/plugins/fzf.vim
+" luafile ~/.vim/plugins/telescope.lua
 source ~/.vim/plugins/todo-comments.lua
 source ~/.vim/plugins/toggleterm.lua
 source ~/.vim/plugins/autosave.lua
-
-luafile ~/.vim/plugins/telescope.lua
 " source ~/.vim/plugins/bufferline.lua
 " source ~/.vim/plugins/zen-mode.lua
 
