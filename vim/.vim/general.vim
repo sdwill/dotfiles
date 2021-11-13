@@ -46,3 +46,12 @@ set splitright  " Open vertical splits to the right
 if exists('&inccommand')
   set inccommand=split
 endif
+
+" ----- Enable strikethrough and undercurl in kitty, xterm, alacritty, and tmux
+" See https://stackoverflow.com/questions/59956790/terminal-vim-strikethrough
+if &term =~ 'xterm\|kitty\|alacritty\|tmux'
+    let &t_Ts = "\e[9m"   " Strikethrough
+    let &t_Te = "\e[29m"
+    let &t_Cs = "\e[4:3m" " Undercurl
+    let &t_Ce = "\e[4:0m"
+endif
