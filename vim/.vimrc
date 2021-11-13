@@ -3,9 +3,14 @@ source ~/.vim/guifont.vim
 source ~/.vim/keybindings.vim
 source ~/.vim/vim_plug.vim
 
+let g:wiki_root = '~/Documents/notes'
+let g:wiki_filetypes = ['md']
+let g:wiki_link_extension = '.md'
+
+
 " source ~/.vim/plugins/dashboard_nvim.vim
 source ~/.vim/plugins/markdown.vim
-" source ~/.vim/plugins/vim_pandoc.vim
+source ~/.vim/plugins/vim_pandoc.vim
 source ~/.vim/plugins/lightline.vim
 " source ~/.vim/plugins/lightline_bufferline.vim
 source ~/.vim/plugins/bullets.vim
@@ -16,6 +21,8 @@ source ~/.vim/plugins/fzf.vim
 source ~/.vim/plugins/todo-comments.lua
 source ~/.vim/plugins/toggleterm.lua
 source ~/.vim/plugins/autosave.lua
+source ~/.vim/plugins/ncm2.vim
+source ~/.vim/plugins/wiki.vim
 " source ~/.vim/plugins/bufferline.lua
 " source ~/.vim/plugins/zen-mode.lua
 
@@ -41,14 +48,14 @@ source ~/.vim/plugins/autosave.lua
 " source ~/.vim/plugins/neodark.vim
 " source ~/.vim/plugins/vim-one.vim
 " source ~/.vim/plugins/onehalf.vim
-" source ~/.vim/plugins/doom-one.vim
+source ~/.vim/plugins/doom-one.vim
 " source ~/.vim/plugins/one-nvim.vim
 " source ~/.vim/plugins/navarasu-onedark.vim
 " source ~/.vim/plugins/vim-deus.vim
 " source ~/.vim/plugins/toast.vim
 " source ~/.vim/plugins/zephyr.vim
 " source ~/.vim/plugins/nord-vim.vim
-source ~/.vim/plugins/neon.lua
+" source ~/.vim/plugins/neon.lua
 " -----
 
 " ----- Transparent background. Must be called AFTER colorscheme.

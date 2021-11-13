@@ -22,7 +22,22 @@ Plug 'akinsho/nvim-toggleterm.lua'  " Terminals
 " Plug 'voldikss/vim-floaterm'      " Floating terminal
 Plug 'equalsraf/neovim-gui-shim'  " Shim for neovim-qt gui features
 " Plug 'vimwiki/vimwiki'
-" Plug 'lervag/wiki.vim'
+" -----
+Plug 'lervag/wiki.vim'
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" IMPORTANT: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+
+" NOTE: you need to install completion sources to get completions. Check
+" our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
+Plug 'ncm2/ncm2-path'
+" -----
+
 " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 " Plug 'rbgrouleff/bclose.vim'        " Ranger dependency when using neovim
@@ -55,9 +70,9 @@ Plug 'junegunn/fzf.vim'
 
 " ----- Syntax highlighting
 Plug 'vim-latex/vim-latex'
-" Plug 'vim-pandoc/vim-pandoc'
-" Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'plasticboy/vim-markdown'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+" Plug 'plasticboy/vim-markdown'
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 " -----
 
@@ -90,6 +105,7 @@ Plug 'sdwill/vim-colors-github'     " My own fork of cormacrelf/vim-colors-githu
 Plug 'preservim/vim-colors-pencil'  " Color scheme for writing
 Plug 'Th3Whit3Wolf/one-nvim'        " Neovim colorscheme that supports tree-sitter
 Plug 'navarasu/onedark.nvim'        " Another onedark scheme
+" TODO: nightfox, onenord
 " -----
 
 Plug 'kyazdani42/nvim-web-devicons'
