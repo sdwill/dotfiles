@@ -3,10 +3,6 @@ source ~/.vim/guifont.vim
 source ~/.vim/keybindings.vim
 source ~/.vim/vim_plug.vim
 
-let g:wiki_root = '~/Documents/notes'
-let g:wiki_filetypes = ['md']
-let g:wiki_link_extension = '.md'
-
 
 " source ~/.vim/plugins/dashboard_nvim.vim
 source ~/.vim/plugins/markdown.vim
