@@ -1,5 +1,5 @@
 require("toggleterm").setup{
-    direction = 'float',
+    direction = 'tab',
     size = 40,
     open_mapping = [[<c-\>]],
     float_opts = {
@@ -7,8 +7,10 @@ require("toggleterm").setup{
         -- see :h nvim_win_open for details on borders however
         -- the 'curved' border is a custom border type
         -- not natively supported but implemented in this plugin.
-        border = 'shadow',
+        border = 'curved',
         winblend = 3,
+        width = 100,
+        height = 100,
         highlights = {
             border = "Normal",
             background = "Normal",
