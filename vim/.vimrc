@@ -1,3 +1,6 @@
+" Remove ALL autocommands for the current group.
+" See https://stackoverflow.com/questions/18024842/vimrc-file-takes-longer-and-longer-to-reload
+:autocmd!
 source ~/.vim/general.vim
 source ~/.vim/guifont.vim
 source ~/.vim/keybindings.vim
