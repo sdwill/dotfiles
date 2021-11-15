@@ -26,6 +26,7 @@ Plug 'equalsraf/neovim-gui-shim'  " Shim for neovim-qt gui features
 Plug 'lervag/wiki.vim'
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
+Plug 'junegunn/vim-easy-align'  " Align tables
 
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -41,7 +42,7 @@ Plug 'ncm2/ncm2-path'
 " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 " Plug 'rbgrouleff/bclose.vim'        " Ranger dependency when using neovim
-" Plug 'francoiscabrol/ranger.vim'    " Integrate with ranger
+Plug 'francoiscabrol/ranger.vim'    " Integrate with ranger
 " Plug 'famiu/nvim-reload'            " Enable complete reloading of config
 " Plug 'godlygeek/tabular'
 " Plug 'TaDaa/vimade'            " Fade inactive buffers

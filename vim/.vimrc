@@ -19,6 +19,7 @@ source ~/.vim/plugins/toggleterm.lua
 source ~/.vim/plugins/autosave.lua
 source ~/.vim/plugins/ncm2.vim
 source ~/.vim/plugins/wiki.vim
+source ~/.vim/plugins/vim-easy-align.vim
 " source ~/.vim/plugins/bufferline.lua
 " source ~/.vim/plugins/zen-mode.lua
 
