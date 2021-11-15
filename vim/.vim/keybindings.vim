@@ -40,16 +40,6 @@ endfun
 command! TrimWhitespace call TrimWhitespace()
 " -----
 
-" ----- Bind F9 to make command for pandoc
-" map <silent><F9> :make %:r<cr>
-map <silent><F9> :!python build_note.py %<cr>
-map <silent><S-F9> :!python build_note.py --to pdf %<cr>
-" noremap <F8>:exe ':silent !google-chrome'<cr>
-
-" Display the current HTML file in Firefox (if it exists).
-" This requires the working directory to be notes/
-map <F8> :!firefox build/%:r.html &<cr>
-" -----
 
 " ----- Focus mode
 if !exists('g:vscode')

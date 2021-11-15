@@ -23,3 +23,14 @@ call matchadd('TrueStrikethrough', '\~\~\zs.\+\ze\~\~')
 " call matchadd('Conceal',  '\~\~\ze.\+\~\~', 10, -1, {'conceal':''})
 " call matchadd('Conceal',  '\~\~.\+\zs\~\~\ze', 10, -1, {'conceal':''})
 " -----
+"
+" ----- Build current note
+" map <silent><F9> :make %:r<cr>
+map <silent><leader>pb >:!python build_note.py %<cr>
+" map <silent><S-F9> :!python build_note.py --to pdf %<cr>
+" noremap <F8>:exe ':silent !google-chrome'<cr>
+
+" Display the current HTML file in Firefox (if it exists).
+" This requires the working directory to be notes/
+map <leader>pd :!open build/%:r.html &<cr>
+" -----
