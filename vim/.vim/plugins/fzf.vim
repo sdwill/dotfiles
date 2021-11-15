@@ -17,15 +17,16 @@ if has_key(plugs, 'fzf.vim') && !exists('g:vscode')
     " let $FZF_DEFAULT_OPTS="--ansi --preview-window --layout reverse --preview='bat --theme=TwoDark --color=always --style=header,grid"
     " let $BAT_THEME='OneHalfDark'
     let $BAT_THEME='Solarized (light)'
-    " let $FZF_DEFAULT_COMMAND="fd --type=file --color=always"
-    let $FZF_PREVIEW_COMMAND="bat --style=numbers,changes --wrap never --color always {} || cat {} || tree -C {}"
-    let $FZF_DEFAULT_OPTS="--preview='bat --color=always' --preview-window 'right:60%' --layout reverse"
+    let $FZF_DEFAULT_COMMAND = 'rg --hidden -l ""'
+    " let $FZF_DEFAULT_COMMAND="fd --type=file --color=always --hidden"
+    let $FZF_PREVIEW_COMMAND="bat --style=numbers,changes --wrap never {} || cat {} || tree -C {}"
+    let $FZF_DEFAULT_OPTS="--preview='bat --color=always' --preview-window 'right:60%' --layout reverse --ansi"
     " Ctrl+P to fuzzy-find files, similarly to VSCode/Sublime
     nmap <silent> <C-P> :Files<CR>
 
     " Ctrl+F to search all text in directory. Ctrl+Shift+F cannot be distinguised
     " from Ctrl+F in a terminal
-    nnoremap <silent> <C-F> :Rg<CR>
+        nnoremap <silent> <C-F> :Rg<CR>
 
     " Press Space-Space in normal mode to do an FZF search for all available
     " commands, similarly to the behavior in Spacemacs
