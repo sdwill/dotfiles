@@ -17,7 +17,7 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 autocmd User WikiBufferInitialized call ncm2#register_source({
       \ 'name': 'wiki',
       \ 'priority': 9,
-      \ 'scope': ['md'],
+      \ 'scope': ['pandoc'],
       \ 'word_pattern': '\w+',
       \ 'complete_pattern': '\[\[',
       \ 'on_complete': ['ncm2#on_complete#delay', 200,

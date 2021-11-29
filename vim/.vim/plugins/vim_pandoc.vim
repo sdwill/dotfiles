@@ -34,3 +34,6 @@ map <silent><leader>pb >:!python build_note.py %<cr>
 " This requires the working directory to be notes/
 map <leader>pd :!open build/%:r.html &<cr>
 " -----
+
+" ----- Let pandoc TOC persist after navigation
+let g:pandoc#toc#close_after_navigating = 0

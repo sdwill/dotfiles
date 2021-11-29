@@ -7,11 +7,11 @@
 "     syntax on
 " endfunction
 
-if !exists('g:vscode')
-    noremap <leader>R :source ~/.vimrc<cr> :LightlineReload<cr>
-else
-    noremap <leader>R :source ~/.vimrc<cr>
-endif
+" if !exists('g:vscode')
+"     noremap <leader>R :source ~/.vimrc<cr> :LightlineReload<cr>
+" else
+noremap <leader>R :source ~/.vimrc<cr>
+" endif
 " noremap <leader>R :ReloadConfig
 " noremap <leader>R :Reload<cr>
 " -----

@@ -1,7 +1,7 @@
 let g:lightline = {}
 let g:lightline.enable = {
             \ 'statusline': 1,
-            \ 'tabline': 1,
+            \ 'tabline': 0,
             \ }
 
 " ----- Automatically reload the lightline theme

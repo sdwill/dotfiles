@@ -3,6 +3,7 @@
 " -----
 set tabstop=4       " Number of spaces that a tab ccunts for
 set softtabstop=4   " ???
+set breakindent     " Soft-wrapped lines are indented to parent indenting level
 set shiftwidth=4    " Spaces for autoindents
 set expandtab       " Turn tabs into spaces
 set number relativenumber

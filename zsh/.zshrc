@@ -171,3 +171,5 @@ export NVIM_QT_RUNTIME_PATH="~/Documents/repos/neovim-qt/src/gui/runtime"
 
 # Add ~/bin to PATH
 export PATH="/home/scott/bin:$PATH"
+export VISUAL="/usr/local/bin/nvim"
+export EDITOR="/usr/local/bin/nvim"

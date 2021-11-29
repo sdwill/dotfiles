@@ -21,19 +21,28 @@ Plug 'akinsho/nvim-toggleterm.lua'  " Terminals
 " Plug 'numtostr/FTerm.nvim'  " Floating terminals
 " Plug 'voldikss/vim-floaterm'      " Floating terminal
 Plug 'equalsraf/neovim-gui-shim'  " Shim for neovim-qt gui features
+Plug 'Asheq/close-buffers.vim'  " Close all invisible buffers
+Plug 'gcmt/taboo.vim'  " Assign custom tab names
 " Plug 'vimwiki/vimwiki'
 " -----
 Plug 'lervag/wiki.vim'
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'junegunn/vim-easy-align'  " Align tables
+Plug 'zef/vim-cycle'
+Plug 'gpanders/vim-medieval'  " Execute code blocks in markdown files
+Plug 'tpope/vim-fugitive'  " Git integration
+
+" -----
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-orgmode/orgmode'
+" -----
 
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
 
 " IMPORTANT: :help Ncm2PopupOpen for more information
 set completeopt=noinsert,menuone,noselect
-
 " NOTE: you need to install completion sources to get completions. Check
 " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
 Plug 'ncm2/ncm2-path'
@@ -41,36 +50,40 @@ Plug 'ncm2/ncm2-path'
 
 " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-" Plug 'rbgrouleff/bclose.vim'        " Ranger dependency when using neovim
+Plug 'rbgrouleff/bclose.vim'        " Ranger dependency when using neovim
 Plug 'francoiscabrol/ranger.vim'    " Integrate with ranger
 " Plug 'famiu/nvim-reload'            " Enable complete reloading of config
 " Plug 'godlygeek/tabular'
 " Plug 'TaDaa/vimade'            " Fade inactive buffers
+Plug 'liuchengxu/vim-which-key'
 " -----
 
 " ----- Status lines
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'mengelbrecht/lightline-bufferline'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
+Plug 'nvim-lualine/lualine.nvim'
+" Plug 'kdheepak/tabline.nvim'
 " Plug 'akinsho/nvim-bufferline.lua'
 " Plug 'romgrk/barbar.nvim'           " Nicer tabline (doesn't work with goyo)
 " -----
 
 " ----- Finders
 " Plug 'vim-ctrlspace/vim-ctrlspace'  " Smart buffer/tab management
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
 " Plug '~/.fzf'
-" Plug 'nvim-lua/popup.nvim'
-" Plug 'nvim-lua/plenary.nvim'
-" Plug 'nvim-telescope/telescope.nvim'
-" Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 " -----
 
 " ----- Syntax highlighting
-Plug 'vim-latex/vim-latex'
+" Plug 'vim-latex/vim-latex'
+Plug 'lervag/vimtex'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 " Plug 'plasticboy/vim-markdown'
@@ -78,6 +91,7 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 " -----
 
 " ----- Zen modes
+Plug 'szw/vim-maximizer'  " Toggle maximization for a single window
 Plug 'junegunn/goyo.vim'            " Distraction-free writing (having a problem with it resetting line numbers though...
 " Plug 'Pocco81/TrueZen.nvim'         " Better zen mode? (Tabline vanishes on exit, plus an E492)
 " Plug 'folke/zen-mode.nvim'              " Yet another zen mode
@@ -106,7 +120,8 @@ Plug 'sdwill/vim-colors-github'     " My own fork of cormacrelf/vim-colors-githu
 Plug 'preservim/vim-colors-pencil'  " Color scheme for writing
 Plug 'Th3Whit3Wolf/one-nvim'        " Neovim colorscheme that supports tree-sitter
 Plug 'navarasu/onedark.nvim'        " Another onedark scheme
-" TODO: nightfox, onenord
+Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }"
+Plug 'EdenEast/nightfox.nvim'
 " -----
 
 Plug 'kyazdani42/nvim-web-devicons'

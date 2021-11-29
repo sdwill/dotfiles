@@ -1,5 +1,5 @@
 require("toggleterm").setup{
-    direction = 'tab',
+    direction = 'float',
     size = 40,
     open_mapping = [[<c-\>]],
     float_opts = {
@@ -9,7 +9,7 @@ require("toggleterm").setup{
         -- not natively supported but implemented in this plugin.
         border = 'curved',
         winblend = 3,
-        width = 100,
+        width = 200,
         height = 100,
         highlights = {
             border = "Normal",
