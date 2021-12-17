@@ -1,5 +1,4 @@
 " ----- joshdick/onedark.vim
-set background=dark 
 if (has("autocmd"))
   augroup colorextend
     autocmd!
@@ -11,6 +10,5 @@ endif
 let g:onedark_color_overrides = {
 \ "white": {"gui": "#C3CBD9", "cterm": "235", "cterm16": "0" },
 \}
-" let g:lightline.colorscheme = 'one'
 colorscheme onedark
 " -----

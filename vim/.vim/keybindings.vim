@@ -10,6 +10,11 @@ let localleader = ","
 let mapleader = " "
 " -----
 
+" ----- Insert timestamps
+nmap <leader>t O<C-R>=strftime("[%Y-%m-%d %I:%M %p]")<CR><space>
+imap <M-t> <C-R>=strftime("[%Y-%m-%d %I:%M %p]")<CR>
+" -----
+
 " ----- Maps quit
 noremap <leader>q :q<cr>
 " -----
@@ -56,16 +61,14 @@ command! TrimWhitespace call TrimWhitespace()
 
 " ----- Focus mode
 if !exists('g:vscode')
-    map<silent><leader>g :Goyo<cr>
+    " map<silent><leader>g :Goyo<cr>
     " map <leader>g :TZAtaraxis <cr>
-    " map <leader>g :ZenMode<cr>
+    map <leader>g :ZenMode<cr>
 endif
 " -----
 
-if exists('g:vscode')
-    nmap j gj
-    nmap k gk
-endif
+nmap <silent>j gj
+nmap <silent>k gk
 
 " Found here: https://www.reddit.com/r/vim/comments/44e1ig/airline_and_bufferline/
 nnoremap gb :ls<CR>:buffer<Space>

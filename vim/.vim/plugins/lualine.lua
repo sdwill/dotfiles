@@ -30,15 +30,17 @@ local bubbles_theme = {
     c = { fg = colors.black, bg = colors.black },
   },
 }
-vim.cmd[[
-  set guioptions-=e " Use showtabline in gui vim
-  set sessionoptions+=tabpages,globals " store tabpages and globals in session
-]]
+
+-- vim.cmd[[
+--   set guioptions-=e " Use showtabline in gui vim
+--   set sessionoptions+=tabpages,globals " store tabpages and globals in session
+-- ]]
 
 require('lualine').setup {
   options = {
     -- theme = bubbles_theme,
     -- theme = 'sonokai',
+    -- theme = 'onedark',
     theme = 'auto',
     component_separators = '|',
     section_separators = { left = '', right = '' },
@@ -63,32 +65,32 @@ require('lualine').setup {
     lualine_y = {},
     lualine_z = { 'location' },
   },
-  tabline = {
-    lualine_a = {
-        {
-            'tabs',
-            mode = 2,
-            max_length = vim.o.columns, -- maximum width of tabs component
-            tabs_color = {
-                -- Same values like general color option can be used here.
-                active = 'lualine_{section}_normal',   -- color for active tab
-                -- inactive = 'lualine_{section}_inactive', -- color for inactive tab
-            },
-        }
-    },
-    lualine_b = {'branch'},
-    lualine_c = {
-        {
-          'filename',
-          file_status = true,  -- displays file status (readonly status, modified status)
-          path = 0,            -- 0 = just filename, 1 = relative path, 2 = absolute path
-          -- shorting_target = 40 -- Shortens path to leave 40 space in the window
-                               -- for other components. Terrible name any suggestions?
-        }
-    },
-    lualine_y = {},
-    lualine_z = {},
-  },
+  -- tabline = {
+  --   lualine_a = {
+  --       {
+  --           'tabs',
+  --           mode = 2,
+  --           max_length = vim.o.columns, -- maximum width of tabs component
+  --           tabs_color = {
+  --               -- Same values like general color option can be used here.
+  --               active = 'lualine_{section}_normal',   -- color for active tab
+  --               -- inactive = 'lualine_{section}_inactive', -- color for inactive tab
+  --           },
+  --       }
+  --   },
+  --   lualine_b = {'branch'},
+  --   lualine_c = {
+  --       {
+  --         'filename',
+  --         file_status = true,  -- displays file status (readonly status, modified status)
+  --         path = 0,            -- 0 = just filename, 1 = relative path, 2 = absolute path
+  --         -- shorting_target = 40 -- Shortens path to leave 40 space in the window
+  --                              -- for other components. Terrible name any suggestions?
+  --       }
+  --   },
+  --   lualine_y = {},
+  --   lualine_z = {},
+  -- },
   extensions = {},
 }
 

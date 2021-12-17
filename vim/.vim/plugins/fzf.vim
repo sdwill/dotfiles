@@ -24,23 +24,31 @@ if has_key(plugs, 'fzf.vim') && !exists('g:vscode')
     " Ctrl+P to fuzzy-find files, similarly to VSCode/Sublime
     nmap <silent> <C-P> :Files<CR>
 
+    " --- Reconfigure :Rg to search hidden files
+    " See https://vi.stackexchange.com/questions/26421/cant-search-for-strings-within-hidden-files-with-fzfs-rg-command-in-vim
+    command! -bang -nargs=* Rg
+      \ call fzf#vim#grep(
+      \   'rg --hidden --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+      \   fzf#vim#with_preview(), <bang>0)
+    " ---
+
     " Ctrl+F to search all text in directory. Ctrl+Shift+F cannot be distinguised
     " from Ctrl+F in a terminal
-        nnoremap <silent> <C-F> :Rg<CR>
+    nnoremap <silent> <C-F> :Rg<CR>
 
     " Press Space-Space in normal mode to do an FZF search for all available
     " commands, similarly to the behavior in Spacemacs
-    nnoremap <silent> <leader><Space> :Help<CR>
+    " nnoremap <silent> <leader><Space> :Help<CR>
 
     " Buffers
-    nnoremap <silent> <leader>b :Buffers<CR>
+    " nnoremap <silent> <leader>b :Buffers<CR>
     " nnoremap <silent> <leader>B :Buffers<CR>
 
     " Commands
-    nnoremap <silent> <leader>c :Commands<CR>
+    " nnoremap <silent> <leader>c :Commands<CR>
 
     " Lines in current file
-    nnoremap <silent> <leader>l :Lines<CR>
+    " nnoremap <silent> <leader>l :Lines<CR>
 
     " Fuzzy autocomplete
     imap <c-x><c-f> <plug>(fzf-complete-path)

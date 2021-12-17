@@ -1,4 +1,7 @@
 require('telescope').setup {
+    defaults = {
+       file_ignore_patterns = { ".git" } 
+    },
     extensions = {
         fzf = {
             fuzzy = true,                    -- false will only do exact matching
@@ -25,6 +28,9 @@ require('telescope').setup {
         find_files = {
             hidden = true
         },
+        live_grep = {
+            hidden = true
+        },
         file_browser = {
             hidden = true
         }
@@ -38,10 +44,10 @@ require('telescope').load_extension('fzf')
 vim.api.nvim_set_keymap('n', '<leader><Space>', ':Telescope<CR>', {noremap = true, silent = true}) 
 
 -- File search
-vim.api.nvim_set_keymap('n', '<C-P>', ':Telescope find_files<CR>', {noremap = false, silent = true})  
+-- vim.api.nvim_set_keymap('n', '<C-P>', ':Telescope git_files<CR>', {noremap = false, silent = true})  
 
 -- Ctrl+F to search all text in directory. Ctrl+Shift+F cannot be distinguised from Ctrl+F in a terminal
-vim.api.nvim_set_keymap('n', '<C-F>', ':Telescope live_grep<CR>', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<C-F>', ':Telescope live_grep<CR>', {noremap = true, silent = true})
 
 -- Search open buffers, available commands, and lines in current file
 vim.api.nvim_set_keymap('n', '<leader>b', ':Telescope buffers<CR>', {noremap = true, silent = true})

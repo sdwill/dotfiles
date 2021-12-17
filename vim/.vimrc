@@ -1,6 +1,7 @@
-" Remove ALL autocommands for the current group.
+" ----- Remove ALL autocommands for the current group.
 " See https://stackoverflow.com/questions/18024842/vimrc-file-takes-longer-and-longer-to-reload
 :autocmd!
+" -----
 source ~/.vim/general.vim
 source ~/.vim/guifont.vim
 source ~/.vim/keybindings.vim
@@ -18,7 +19,7 @@ source ~/.vim/plugins/vim-maximizer.vim
 " source ~/.vim/plugins/vim-latex.vim
 source ~/.vim/plugins/vimtex.vim
 
-" source ~/.vim/plugins/fzf.vim
+source ~/.vim/plugins/fzf.vim
 source ~/.vim/plugins/telescope.lua
 source ~/.vim/plugins/todo-comments.lua
 source ~/.vim/plugins/toggleterm.lua
@@ -29,8 +30,8 @@ source ~/.vim/plugins/vim-easy-align.vim
 source ~/.vim/plugins/orgmode.lua
 source ~/.vim/plugins/taboo.vim
 " source ~/.vim/plugins/vim-medieval.vim
-" source ~/.vim/plugins/bufferline.lua
-" source ~/.vim/plugins/zen-mode.lua
+" vimrc/.vim/plugins/bufferline.lua
+source ~/.vim/plugins/zen-mode.lua
 
 " source ~/.vim/plugins/vimade.vim
 " source ~/.vim/plugins/airline.vim

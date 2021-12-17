@@ -16,4 +16,3 @@ custom_highlights = {}, -- Overwrite default highlight groups
 })
 
 vim.cmd("colorscheme onenord")
-vim.cmd("let g:lightline.colorscheme = 'nord'")

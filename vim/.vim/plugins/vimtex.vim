@@ -22,7 +22,14 @@ let g:vimtex_view_method = 'skim'
 " supported backends and further explanation is provided in the documentation,
 " see ":help vimtex-compiler".
 let g:vimtex_compiler_method = 'latexmk'
-" let g:vimtex_latexmk_continuous = 0
+
+" The default mapping toggles "continuous" mode, which I absolutely do not
+" want because it recompiles every time I make even the tiniest change.
+" Remap this to "single shot" compilation mode instead.
+nnoremap <localleader>bb :VimtexCompileSS<cr>
+
+" Disable automatic quickfix popup
+let g:vimtex_quickfix_mode = 0
 
 " Set up server for forward and reverse search.
 " See https://jdhao.github.io/2021/02/20/inverse_search_setup_neovim_vimtex/

@@ -20,10 +20,9 @@ Plug 'Pocco81/AutoSave.nvim'  " Autosave!
 Plug 'akinsho/nvim-toggleterm.lua'  " Terminals
 " Plug 'numtostr/FTerm.nvim'  " Floating terminals
 " Plug 'voldikss/vim-floaterm'      " Floating terminal
-Plug 'equalsraf/neovim-gui-shim'  " Shim for neovim-qt gui features
+" Plug 'equalsraf/neovim-gui-shim'  " Shim for neovim-qt gui features
 Plug 'Asheq/close-buffers.vim'  " Close all invisible buffers
 Plug 'gcmt/taboo.vim'  " Assign custom tab names
-" Plug 'vimwiki/vimwiki'
 " -----
 Plug 'lervag/wiki.vim'
 Plug 'ncm2/ncm2'
@@ -72,8 +71,8 @@ Plug 'nvim-lualine/lualine.nvim'
 
 " ----- Finders
 " Plug 'vim-ctrlspace/vim-ctrlspace'  " Smart buffer/tab management
-" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 " Plug '~/.fzf'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -92,9 +91,11 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " ----- Zen modes
 Plug 'szw/vim-maximizer'  " Toggle maximization for a single window
-Plug 'junegunn/goyo.vim'            " Distraction-free writing (having a problem with it resetting line numbers though...
+" Plug 'junegunn/goyo.vim'            " Distraction-free writing (having a problem with it resetting line numbers though...
 " Plug 'Pocco81/TrueZen.nvim'         " Better zen mode? (Tabline vanishes on exit, plus an E492)
-" Plug 'folke/zen-mode.nvim'              " Yet another zen mode
+Plug 'folke/zen-mode.nvim'              " Yet another zen mode
+" Plug 'henriquehbr/lua-helpers'
+" Plug 'henriquehbr/ataraxis.lua'
 " -----
 
 " ----- Color schemes

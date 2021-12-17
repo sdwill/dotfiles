@@ -21,6 +21,4 @@ nightfox.setup({
   hlgroups = {}, -- Override highlight groups
 })
 
--- vim.cmd("let g:lightline.colorscheme = 'nightfox'")
-vim.cmd("let g:lightline.colorscheme = 'nord'")
 nightfox.load()

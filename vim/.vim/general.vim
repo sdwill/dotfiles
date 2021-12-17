@@ -4,6 +4,22 @@
 set tabstop=4       " Number of spaces that a tab ccunts for
 set softtabstop=4   " ???
 set breakindent     " Soft-wrapped lines are indented to parent indenting level
+" set breakindentopt="list:-1"
+set breakindentopt=list:-1  " Better softwrapping for lists
+" --- Improve softwrapping for checkboxes
+" See https://www.reddit.com/r/vim/comments/gc3cp2/autowrapping_text_with_a_checkbox/
+set formatlistpat=^\\s*                     " Optional leading whitespace
+set formatlistpat+=[                        " Start character class
+set formatlistpat+=\\[({]\\?                " |  Optionally match opening punctuation
+set formatlistpat+=\\(                      " |  Start group
+set formatlistpat+=[0-9\ xX]\\+             " |  |  Numbers
+set formatlistpat+=\\\|                     " |  |  or
+set formatlistpat+=[a-zA-Z]\\+              " |  |  Letters
+set formatlistpat+=\\)                      " |  End group
+set formatlistpat+=[\\]:.)}                 " |  Closing punctuation
+set formatlistpat+=]                        " End character class
+set formatlistpat+=\\s\\+                   " One or more spaces
+" ---
 set shiftwidth=4    " Spaces for autoindents
 set expandtab       " Turn tabs into spaces
 set number relativenumber
