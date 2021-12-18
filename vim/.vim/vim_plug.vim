@@ -25,12 +25,25 @@ Plug 'Asheq/close-buffers.vim'  " Close all invisible buffers
 Plug 'gcmt/taboo.vim'  " Assign custom tab names
 " -----
 Plug 'lervag/wiki.vim'
-Plug 'ncm2/ncm2'
+" Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'junegunn/vim-easy-align'  " Align tables
 Plug 'zef/vim-cycle'
 Plug 'gpanders/vim-medieval'  " Execute code blocks in markdown files
 Plug 'tpope/vim-fugitive'  " Git integration
+
+" ---- LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'glepnir/lspsaga.nvim'
+Plug 'williamboman/nvim-lsp-installer'
+" -----
 
 " -----
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -38,14 +51,15 @@ Plug 'nvim-orgmode/orgmode'
 " -----
 
 " enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
+" autocmd BufEnter * call ncm2#enable_for_buffer()
 
 " IMPORTANT: :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
+" set completeopt=noinsert,menuone,noselect
 " NOTE: you need to install completion sources to get completions. Check
 " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
-Plug 'ncm2/ncm2-path'
+" Plug 'ncm2/ncm2-path'
 " -----
+set completeopt=menu,menuone,noselect
 
 " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}

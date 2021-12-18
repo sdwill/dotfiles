@@ -129,7 +129,8 @@ alias vi="nvim"
 alias kitty="~/.local/kitty.app/bin/kitty"
 
 # Add Julia to path
-export PATH="$PATH:/home/scott/Documents/julia-1.5.3/bin"
+# export PATH="$PATH:/home/scott/Documents/julia-1.5.3/bin"
+export PATH="$PATH:$HOME/Downloads/julia/julia-1.6.4/bin"
 
 
 # >>> conda initialize >>>
@@ -138,10 +139,10 @@ __conda_setup="$('/home/scott/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/n
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/scott/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/scott/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/scott/miniconda3/bin:$PATH"
+        export PATH="$HOME/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -170,6 +171,6 @@ alias sutlmgr='sudo /usr/local/texlive/2021/bin/x86_64-linux/tlmgr'
 export NVIM_QT_RUNTIME_PATH="~/Documents/repos/neovim-qt/src/gui/runtime"
 
 # Add ~/bin to PATH
-export PATH="/home/scott/bin:$PATH"
-export VISUAL="/usr/local/bin/nvim"
-export EDITOR="/usr/local/bin/nvim"
+export PATH="$HOME/bin:$PATH"
+export VISUAL="$HOME/bin/nvim"
+export EDITOR="$HOME/bin/nvim"

@@ -24,7 +24,7 @@ source ~/.vim/plugins/telescope.lua
 source ~/.vim/plugins/todo-comments.lua
 source ~/.vim/plugins/toggleterm.lua
 source ~/.vim/plugins/autosave.lua
-source ~/.vim/plugins/ncm2.vim
+" source ~/.vim/plugins/ncm2.vim
 source ~/.vim/plugins/wiki.vim
 source ~/.vim/plugins/vim-easy-align.vim
 source ~/.vim/plugins/orgmode.lua
@@ -36,6 +36,15 @@ source ~/.vim/plugins/zen-mode.lua
 " source ~/.vim/plugins/vimade.vim
 " source ~/.vim/plugins/airline.vim
 source ~/.vim/plugins/lualine.lua
+
+" ----- Native LSP
+source ~/.vim/plugins/nvim-lspconfig.lua
+source ~/.vim/plugins/nvim-cmp.lua
+source ~/.vim/plugins/nvim-cmp.vim
+source ~/.vim/plugins/lspsaga.lua
+source ~/.vim/lsp/lua-ls.lua
+" -----
+
 " source ~/.vim/plugins/ctrlspace.vim
 
 " ----- Color schemes: more at https://vimcolorschemes.com/
