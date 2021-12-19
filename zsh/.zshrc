@@ -71,10 +71,7 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  sublime
   vscode
-  z
-  tmux
   themes
   colored-man-pages
 )
@@ -126,7 +123,7 @@ alias vi="nvim"
 # alias vi="neovide"
 # alias vi="nvim-qt"
 
-alias kitty="~/.local/kitty.app/bin/kitty"
+# alias kitty="~/.local/kitty.app/bin/kitty"
 
 # Add Julia to path
 # export PATH="$PATH:/home/scott/Documents/julia-1.5.3/bin"
@@ -151,7 +148,7 @@ unset __conda_setup
 conda activate base
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source "$HOME/.cargo/env"
+# source "$HOME/.cargo/env"
 
 # Set true color inside Neovim so that bat works properly.
 # See https://github.com/sharkdp/bat/issues/634
