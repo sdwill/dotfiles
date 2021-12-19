@@ -41,8 +41,10 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
-Plug 'glepnir/lspsaga.nvim'
 Plug 'williamboman/nvim-lsp-installer'
+Plug 'ray-x/lsp_signature.nvim'
+Plug 'RishabhRD/popfix'
+Plug 'RishabhRD/nvim-lsputils'
 " -----
 
 " -----
@@ -137,6 +139,7 @@ Plug 'Th3Whit3Wolf/one-nvim'        " Neovim colorscheme that supports tree-sitt
 Plug 'navarasu/onedark.nvim'        " Another onedark scheme
 Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }"
 Plug 'EdenEast/nightfox.nvim'
+Plug 'rose-pine/neovim'
 " -----
 
 Plug 'kyazdani42/nvim-web-devicons'

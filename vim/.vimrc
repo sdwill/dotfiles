@@ -41,8 +41,9 @@ source ~/.vim/plugins/lualine.lua
 source ~/.vim/plugins/nvim-lspconfig.lua
 source ~/.vim/plugins/nvim-cmp.lua
 source ~/.vim/plugins/nvim-cmp.vim
-source ~/.vim/plugins/lspsaga.lua
+" source ~/.vim/plugins/lspsaga.lua
 source ~/.vim/lsp/lua-ls.lua
+source ~/.vim/lsp/nvim-lsputils.lua
 " -----
 
 " source ~/.vim/plugins/ctrlspace.vim
@@ -59,8 +60,9 @@ set background=dark
 " source ~/.vim/plugins/vim-colors-github.vim
 " source ~/.vim/plugins/edge.vim
 " source ~/.vim/plugins/sonokai.vim
-source ~/.vim/plugins/everforest.vim
-" source ~/.vim/plugins/tokyonight-vim.vim
+" source ~/.vim/plugins/everforest.vim
+" source ~/.vim/plugins/rose-pine.lua
+source ~/.vim/plugins/tokyonight-vim.vim
 " source ~/.vim/plugins/papercolor-theme.vim
 " source ~/.vim/plugins/solarized8.vim
 " source ~/.vim/plugins/joshdick-onedark.vim
