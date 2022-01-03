@@ -8,7 +8,7 @@ set breakindent     " Soft-wrapped lines are indented to parent indenting level
 set breakindentopt=list:-1  " Better softwrapping for lists
 " --- Improve softwrapping for checkboxes
 " See https://www.reddit.com/r/vim/comments/gc3cp2/autowrapping_text_with_a_checkbox/
-set formatlistpat=^\\s*                     " Optional leading whitespace
+set formatlistpat=^\s*                   " Optional leading whitespace
 set formatlistpat+=[                        " Start character class
 set formatlistpat+=\\[({]\\?                " |  Optionally match opening punctuation
 set formatlistpat+=\\(                      " |  Start group

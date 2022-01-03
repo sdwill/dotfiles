@@ -26,9 +26,9 @@ Plug 'gcmt/taboo.vim'  " Assign custom tab names
 " -----
 Plug 'lervag/wiki.vim'
 " Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
+" Plug 'roxma/nvim-yarp'
 Plug 'junegunn/vim-easy-align'  " Align tables
-Plug 'zef/vim-cycle'
+" Plug 'zef/vim-cycle'
 Plug 'gpanders/vim-medieval'  " Execute code blocks in markdown files
 Plug 'tpope/vim-fugitive'  " Git integration
 
@@ -43,8 +43,12 @@ Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'ray-x/lsp_signature.nvim'
-Plug 'RishabhRD/popfix'
-Plug 'RishabhRD/nvim-lsputils'
+" Plug 'RishabhRD/popfix'
+" Plug 'RishabhRD/nvim-lsputils'
+"
+Plug 'neovim/nvim-lspconfig'
+Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
+Plug 'ray-x/navigator.lua'
 " -----
 
 " -----
@@ -87,9 +91,8 @@ Plug 'nvim-lualine/lualine.nvim'
 
 " ----- Finders
 " Plug 'vim-ctrlspace/vim-ctrlspace'  " Smart buffer/tab management
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-" Plug '~/.fzf'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -99,8 +102,8 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 " ----- Syntax highlighting
 " Plug 'vim-latex/vim-latex'
 Plug 'lervag/vimtex'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
+" Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
 " Plug 'plasticboy/vim-markdown'
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 " -----
@@ -115,8 +118,7 @@ Plug 'folke/zen-mode.nvim'              " Yet another zen mode
 " -----
 
 " ----- Color schemes
-Plug 'joshdick/onedark.vim'
-Plug 'ful1e5/onedark.nvim'
+" Plug 'joshdick/onedark.vim'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'sainnhe/edge'
 Plug 'sainnhe/sonokai'
@@ -129,7 +131,7 @@ Plug 'jsit/toast.vim'
 Plug 'glepnir/zephyr-nvim'
 Plug 'ajmwagar/vim-deus'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'ghifarit53/tokyonight-vim'  " Also possibly see folke/tokyonight.nvim
+Plug 'folke/tokyonight.nvim'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'arcticicestudio/nord-vim'
 Plug 'lifepillar/vim-solarized8'
@@ -139,7 +141,7 @@ Plug 'Th3Whit3Wolf/one-nvim'        " Neovim colorscheme that supports tree-sitt
 Plug 'navarasu/onedark.nvim'        " Another onedark scheme
 Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }"
 Plug 'EdenEast/nightfox.nvim'
-Plug 'rose-pine/neovim'
+Plug 'rebelot/kanagawa.nvim'
 " -----
 
 Plug 'kyazdani42/nvim-web-devicons'

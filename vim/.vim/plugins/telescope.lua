@@ -14,7 +14,7 @@ require('telescope').setup {
     defaults = {
         color_devicons = true,
         layout_config = {
-            width = 0.7,
+            width = 0.95,
             horizontal = {
                 preview_width = 0.6
             }
@@ -44,11 +44,11 @@ require('telescope').load_extension('fzf')
 vim.api.nvim_set_keymap('n', '<leader><Space>', ':Telescope<CR>', {noremap = true, silent = true}) 
 
 -- File search
--- vim.api.nvim_set_keymap('n', '<C-P>', ':Telescope git_files<CR>', {noremap = false, silent = true})  
+vim.api.nvim_set_keymap('n', '<C-P>', ':Telescope git_files<CR>', {noremap = false, silent = true})  
 
 -- Ctrl+F to search all text in directory. Ctrl+Shift+F cannot be distinguised from Ctrl+F in a terminal
--- vim.api.nvim_set_keymap('n', '<C-F>', ':Telescope live_grep<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-F>', ':Telescope live_grep<CR>', {noremap = true, silent = true})
 
 -- Search open buffers, available commands, and lines in current file
-vim.api.nvim_set_keymap('n', '<leader>b', ':Telescope buffers<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>c', ':Telescope commands<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope buffers<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fc', ':Telescope commands<CR>', {noremap = true, silent = true})

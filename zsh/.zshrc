@@ -2,18 +2,16 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/scott/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# ZSH_THEME="refined"
+ZSH_THEME="refined"
 # ZSH_THEME="tjkirch"
 # ZSH_THEME="bira"
-ZSH_THEME="robbyrussell"
-# ZSH_THEME="agnoster_modified"
-# ZSH_THEME="powerlevel9k/powerlevel9k"
+# ZSH_THEME="robbyrussell"
 # POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs newline anaconda)
 # POWERLEVEL9K_COLOR_SCHEME="dark"
 
@@ -119,36 +117,14 @@ if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
 fi
 
 # Custom aliases
+export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 alias vi="nvim"
-# alias vi="neovide"
-# alias vi="nvim-qt"
 
 # alias kitty="~/.local/kitty.app/bin/kitty"
 
 # Add Julia to path
 # export PATH="$PATH:/home/scott/Documents/julia-1.5.3/bin"
-export PATH="$PATH:$HOME/Downloads/julia/julia-1.6.4/bin"
-
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/scott/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="$HOME/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-conda activate base
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# source "$HOME/.cargo/env"
+# export PATH="$PATH:$HOME/Downloads/julia/julia-1.6.4/bin"
 
 # Set true color inside Neovim so that bat works properly.
 # See https://github.com/sharkdp/bat/issues/634
@@ -158,16 +134,43 @@ fi
 
 export HICAT_JACOBIAN_PATH="~/hicat_data/jacobians"
 
-# 'config' commmand for working with bare dotfile repo
-# See https://www.atlassian.com/git/tutorials/dotfiles
-alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
-
 # texlive path, see http://www.tug.org/texlive/quickinstall.html
 export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
 alias sutlmgr='sudo /usr/local/texlive/2021/bin/x86_64-linux/tlmgr'
-export NVIM_QT_RUNTIME_PATH="~/Documents/repos/neovim-qt/src/gui/runtime"
+# export NVIM_QT_RUNTIME_PATH="~/Documents/repos/neovim-qt/src/gui/runtime"
 
 # Add ~/bin to PATH
 export PATH="$HOME/bin:$PATH"
-export VISUAL="$HOME/bin/nvim"
-export EDITOR="$HOME/bin/nvim"
+
+# Make neovim the default terminal editor
+export VISUAL=$(which nvim)
+export EDITOR=$(which nvim)
+
+# Add FZF completions
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Add sphinx to path
+export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
+
+# Add conda to path
+# export PATH="$HOME/anaconda3/bin:$PATH"  # commented out by conda initialize
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/swill/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/swill/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/swill/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/swill/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+conda config --set changeps1 False
+conda deactivate  # Remove the bash prmpt
+
+

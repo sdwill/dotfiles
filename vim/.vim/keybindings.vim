@@ -70,9 +70,6 @@ endif
 nmap <silent>j gj
 nmap <silent>k gk
 
-" Found here: https://www.reddit.com/r/vim/comments/44e1ig/airline_and_bufferline/
-nnoremap gb :ls<CR>:buffer<Space>
-
 " ----- Deselects currently highlighted searches
 nnoremap <Leader><BS> :noh<cr>
 " -----

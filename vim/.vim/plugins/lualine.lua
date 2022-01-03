@@ -36,12 +36,13 @@ local bubbles_theme = {
 --   set sessionoptions+=tabpages,globals " store tabpages and globals in session
 -- ]]
 
-require('lualine').setup {
-  options = {
+require('lualine').setup({
     -- theme = bubbles_theme,
     -- theme = 'sonokai',
     -- theme = 'onedark',
-    theme = 'auto',
+    -- theme = 'auto',
+  options = {
+    theme = 'tokyonight',
     component_separators = '|',
     section_separators = { left = '', right = '' },
   },
@@ -92,7 +93,7 @@ require('lualine').setup {
   --   lualine_z = {},
   -- },
   extensions = {},
-}
+})
 
 -- require'tabline'.setup {
 --   -- Defaults configuration options

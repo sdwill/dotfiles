@@ -1,7 +1,7 @@
 local nightfox = require('nightfox')
 
 nightfox.setup({
-  fox = "nordfox", -- Which fox style should be applied
+  fox = "nightfox", -- Which fox style should be applied
   transparent = false, -- Disable setting the background color
   alt_nc = false, -- Non current window bg to alt color see `hl-NormalNC`
   terminal_colors = true, -- Configure the colors used when opening :terminal
