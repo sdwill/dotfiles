@@ -9,7 +9,7 @@ source ~/.vim/vim_plug.vim
 
 " source ~/.vim/plugins/dashboard_nvim.vim
 " source ~/.vim/plugins/markdown.vim
-" source ~/.vim/plugins/vim_pandoc.vim
+source ~/.vim/plugins/vim_pandoc.vim
 " source ~/.vim/plugins/lightline.vim
 " source ~/.vim/plugins/lightline_bufferline.vim
 source ~/.vim/plugins/bullets.vim
