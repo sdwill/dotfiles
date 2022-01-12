@@ -7,6 +7,7 @@ let g:pandoc#syntax#codeblocks#embeds#langs = [
             \'latex=tex',
             \'python',
             \'bash=sh',
+            \'vim',
             \]
 let g:pandoc#biblio#sources = "g"
 let g:pandoc#biblio#bibs = ['/home/scott/Google Drive/notes/textbooks.bib']
