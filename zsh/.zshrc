@@ -8,7 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="refined"
+ZSH_THEME="refined-conda"
 # ZSH_THEME="tjkirch"
 # ZSH_THEME="bira"
 # ZSH_THEME="robbyrussell"
@@ -171,7 +171,5 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-conda config --set changeps1 False
-conda deactivate  # Remove the bash prmpt
-
+conda config --set changeps1 False  # Don't change prompt
 
