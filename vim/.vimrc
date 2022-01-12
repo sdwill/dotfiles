@@ -20,6 +20,7 @@ source ~/.vim/plugins/vimtex.vim
 
 " source ~/.vim/plugins/fzf.vim
 source ~/.vim/plugins/telescope.lua
+source ~/.vim/plugins/telescope-file-browser.lua
 source ~/.vim/plugins/todo-comments.lua
 source ~/.vim/plugins/toggleterm.lua
 source ~/.vim/plugins/autosave.lua
