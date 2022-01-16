@@ -43,8 +43,16 @@ require('telescope').load_extension('fzf')
 -- Bring up the main Telescope dashboard
 vim.api.nvim_set_keymap('n', '<leader><Space>', ':Telescope<CR>', {noremap = true, silent = true})
 
+-- From telescope wiki on Github, but modified to be a local function
+_G.project_files = function()
+  local opts = {} -- define here if you want to define something
+  local ok = pcall(require"telescope.builtin".git_files, opts)
+  if not ok then require"telescope.builtin".find_files(opts) end
+end
+
 -- File search
-vim.api.nvim_set_keymap('n', '<C-P>', ':Telescope git_files<CR>', {noremap = false, silent = true})
+-- vim.api.nvim_set_keymap('n', '<C-P>', ':Telescope git_files<CR>', {noremap = false, silent = true})
+vim.api.nvim_set_keymap('n', '<C-P>', "<CMD>lua project_files()<CR>", {noremap = false, silent = true})
 
 -- Ctrl+F to search all text in directory. Ctrl+Shift+F cannot be distinguised from Ctrl+F in a terminal
 vim.api.nvim_set_keymap('n', '<C-F>', ':Telescope live_grep<CR>', {noremap = true, silent = true})
