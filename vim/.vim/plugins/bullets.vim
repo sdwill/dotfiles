@@ -9,6 +9,10 @@ if !exists('g:vscode')
     nnoremap gN :RenumberList<cr>
 endif
 nnoremap <leader>x :ToggleCheckbox<cr>
+
+" Don't toggle child checkboxes, because it clobbers timestamped notes inside
+" checklist items
+let g:bullets_nested_checkboxes = 0
 " nnoremap <leader>o :InsertNewBullet<cr><Esc>>>
 " nnoremap <leader><M-o> :InsertNewBullet<cr><Esc>>> :call pandoc#keyboard#checkboxes#Delete()<cr>A
 " nnoremap <leader><M-o>A<cr><Tab>
