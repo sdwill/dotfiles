@@ -19,7 +19,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "Iosevka" :size 14))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 14))
       ;; doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -31,20 +31,24 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Documents/notes")
 
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
 
 ;; Disable autocompletion of dictionary words from company-ispell
 ;; See https://www.reddit.com/r/emacs/comments/p2iwbv/turn_off_companyispell/
-(defun prog-mode-hook-setup ()
-  (run-with-idle-timer
-   1
-   nil
-   (lambda ()
-     (when (memq 'company-ispell company-backends)
-       (setq company-backends (delete 'company-ispell company-backends))))))
-(add-hook 'prog-mode-hook 'prog-mode-hook-setup)
+;; (defun prog-mode-hook-setup ()
+;;   (run-with-idle-timer
+;;    1
+;;    nil
+;;    (lambda ()
+;;      (when (memq 'company-ispell company-backends)
+;;        (setq company-backends (delete 'company-ispell company-backends))))))
+;; (add-hook 'prog-mode-hook 'prog-mode-hook-setup)
+
+;; Alternative implementation of above
+;; See https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/
+(defun zz/adjust-org-company-backends ()
+  (remove-hook 'after-change-major-mode-hook '+company-init-backends-h)
+  (setq-local company-backends nil))
+(add-hook! org-mode (zz/adjust-org-company-backends))
 
 ;; Autosave when leaving insert mode
 ;; See https://emacs.stackexchange.com/questions/50925/saving-file-everytime-leaving-insert-mode-in-evil-mode
@@ -52,6 +56,43 @@
           (lambda ()
             (call-interactively #'evil-write)))
 
+;; Start in maximized window
+;; See https://emacs.stackexchange.com/a/3017/23435
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+;; Hide org markup
+(after! org (setq org-hide-emphasis-markers t))
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(global-display-line-numbers-mode)
+(setq display-line-numbers-type 'relative)
+
+;; Log done tasks in LOGBOOK
+(after! org
+  (setq org-log-done t)
+  (setq org-log-into-drawer t))
+
+;; Map a keybaord shortcut to insert inactive timestamp
+(map! :localleader "d i" (cmd! (org-time-stamp '(16) t)))
+
+(setq org-log-note-headings
+      '((done . "CLOSING NOTE %t")
+       (state . "State %-12s from %-12S %t")
+       (note . "%t")
+       (reschedule . "Rescheduled from %S on %t")
+       (delschedule . "Not scheduled, was %S on %t")
+       (redeadline . "New deadline from %S on %t")
+       (deldeadline . "Removed deadline, was %S on %t")
+       (refile . "Refiled on %t")
+       (clock-out . "")))
+
+;; When splitting window, prompt for which buffer to open
+;; See https://tecosaur.github.io/emacs-config/config.html
+(setq evil-vsplit-window-right t
+      evil-split-window-below t)
+(defadvice! prompt-for-buffer (&rest _)
+  :after '(evil-window-split evil-window-vsplit)
+  (consult-buffer))
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
