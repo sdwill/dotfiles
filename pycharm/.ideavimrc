@@ -1,0 +1,180 @@
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+
+" -----
+" General settings
+" -----
+set tabstop=4       " Number of spaces that a tab ccunts for
+set softtabstop=4   " ???
+set breakindent     " Soft-wrapped lines are indented to parent indenting level
+" set breakindentopt="list:-1"
+set breakindentopt=list:-1  " Better softwrapping for lists
+" --- Improve softwrapping for checkboxes
+" See https://www.reddit.com/r/vim/comments/gc3cp2/autowrapping_text_with_a_checkbox/
+set formatlistpat=^\s*                   " Optional leading whitespace
+set formatlistpat+=[                        " Start character class
+set formatlistpat+=\\[({]\\?                " |  Optionally match opening punctuation
+set formatlistpat+=\\(                      " |  Start group
+set formatlistpat+=[0-9\ xX]\\+             " |  |  Numbers
+set formatlistpat+=\\\|                     " |  |  or
+set formatlistpat+=[a-zA-Z]\\+              " |  |  Letters
+set formatlistpat+=\\)                      " |  End group
+set formatlistpat+=[\\]:.)}                 " |  Closing punctuation
+set formatlistpat+=]                        " End character class
+set formatlistpat+=\\s\\+                   " One or more spaces
+" ---
+set shiftwidth=4    " Spaces for autoindents
+set expandtab       " Turn tabs into spaces
+set number relativenumber
+set t_Co=256
+set wildmenu    " Enhanced tab completion in menus
+set ignorecase  " Case-insensitive search
+set smartcase   " Search becomes case sensitive if capital letter
+set smartindent " Smart auto-indent (???)
+set smarttab    " ???
+set showcmd     " Show typed command in status bar
+set wildmenu    " Completion with menu (???)
+set showmatch   " Show matching bracket
+set bs=indent,eol,start " Allow backspacing over everything in insert mode
+set mouse=a     " Enable mouse everywhere
+set hlsearch " Highlight search matches
+"--- These three settings are required by vim-ctrlspace
+set nocompatible
+set hidden
+set encoding=utf-8
+"---
+filetype plugin on
+set scrolloff=10  " Keep cursor 10 lines from screen border when scrolling
+set wildignore+=.git,.hg,.svn,.idea,.pytest_cache,__pycache__,.DS_Store,tags
+set clipboard=unnamedplus  " Yank/paste from system clipboard by default
+set linebreak  " Don't split words when softwrapping
+" if exists('+termguicolors')
+"   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+"   set termguicolors
+" endif
+set termguicolors  " True color mode
+" set guifont=JetBrains\ Mono:h18
+" set guifont=Fira\ Code:h18
+
+" set cursorline      " Highlight the current line
+syntax on
+set splitbelow  " Open horizontal splits below
+set splitright  " Open vertical splits to the right
+
+" Live preview of search/replace. Only works with neovim
+if exists('&inccommand')
+  set inccommand=split
+endif
+
+"" Source your .vimrc
+"source ~/.vimrc
+
+"" -- Suggested options --
+" Do incremental searching.
+set incsearch
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+map \b <Action>(ToggleLineBreakpoint)
+
+map <C-\> <Action>(ActivateTerminalToolWindow)
+
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+" ----- Maps leader to the spacebar
+let maplocalleader = ","
+let leader = " "
+let localleader = ","
+let mapleader = " "
+" -----
+
+" ----- Insert timestamps
+nmap <leader>t O<C-R>=strftime("[%Y-%m-%d %I:%M %p]")<CR><space>
+imap <M-t> <C-R>=strftime("[%Y-%m-%d %I:%M %p]")<CR>
+" -----
+
+" ----- Maps quit
+noremap <leader>q :q<cr>
+" -----
+
+" ----- Write buffer
+if !exists('g:vscode')
+    noremap <leader>w :w<cr>
+endif
+" -----
+" ----- Move lines around
+nnoremap <A-j> :m .+1<CR>
+nnoremap <A-k> :m .-2<CR>
+inoremap <A-j> <Esc>:m .+1<CR>
+inoremap <A-k> <Esc>:m .-2<CR>
+vnoremap <A-j> :m '>+1<CR>gv
+vnoremap <A-k> :m '<-2<CR>gv
+" -----
+
+" ----- Jump to specific tabs by numbers
+nnoremap <leader>1 1gt
+nnoremap <leader>2 2gt
+nnoremap <leader>3 3gt
+nnoremap <leader>4 4gt
+nnoremap <leader>5 5gt
+nnoremap <leader>6 6gt
+nnoremap <leader>7 7gt
+nnoremap <leader>8 8gt
+nnoremap <leader>9 9gt
+nnoremap <leader>0 :tablast<cr>
+" -----
+
+" ----- Strip trailing whitespace
+" Function, See https://vi.stackexchange.com/questions/454/
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
+" Define command so that we can call it in Ex mode
+command! TrimWhitespace call TrimWhitespace()
+" -----
+
+
+" ----- Focus mode
+if !exists('g:vscode')
+    " map<silent><leader>g :Goyo<cr>
+    " map <leader>g :TZAtaraxis <cr>
+    map <leader>g :ZenMode<cr>
+endif
+" -----
+
+nmap <silent>j gj
+nmap <silent>k gk
+
+" ----- Deselects currently highlighted searches
+nnoremap <Leader><BS> :noh<cr>
+" -----
+
+" Easily open .vimrc file
+" From https://vi.stackexchange.com/questions/13105/keymap-for-open-vimrc-edit-save-and-reload
+nnoremap <F3> :tabe ~/.vimrc<CR>
+
+" Get path to current file, relative to working directory.  Add a forward
+" slash in the beginning for use with wiki.vim, so that the path is relative
+" to the wiki root
+nnoremap <silent><F4> :let @+ = "/" . expand("%")<cr>
+" autocmd BufWritePost .vimrc source $MYVIMRC
+
+" ----- Quit all files
+" noremap <leader><c-q> :qa<cr>
+" -----
+
+" call github_colors#togglebg_map('<f5>')  "Toggle the background color
+set clipboard+=ideaput
