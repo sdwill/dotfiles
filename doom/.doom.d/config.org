@@ -1,8 +1,16 @@
+#+TITLE: Doom config
+
+* Basic stuff
+** Set name and identity
+#+begin_src emacs-lisp :tangle yes
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Scott D. Will"
       user-mail-address "scott.d.will@nasa.gov")
+#+end_src
 
+** Set Doom font
+#+begin_src emacs-lisp :tangle yes
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -15,12 +23,19 @@
 ;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "JetBrains Mono" :size 14))
       ;; doom-variable-pitch-font (font-spec :family "sans" :size 13))
+#+end_src
 
+** Set Doom theme
+#+begin_src emacs-lisp :tangle yes
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
+#+end_src
 
+** Disable autocompletion of dictionary words from company-ispell
+- Implementation 1: see [[https://www.reddit.com/r/emacs/comments/p2iwbv/turn_off_companyispell/][here]]
+#+begin_src emacs-lisp :tangle yes
 ;; (defun prog-mode-hook-setup ()
 ;;   (run-with-idle-timer
 ;;    1
@@ -29,35 +44,60 @@
 ;;      (when (memq 'company-ispell company-backends)
 ;;        (setq company-backends (delete 'company-ispell company-backends))))))
 ;; (add-hook 'prog-mode-hook 'prog-mode-hook-setup)
+#+end_src
 
+- Implementation 2: see [[https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/][here]]
+#+begin_src emacs-lisp :tangle yes
 (defun zz/adjust-org-company-backends ()
   (remove-hook 'after-change-major-mode-hook '+company-init-backends-h)
   (setq-local company-backends nil))
 (add-hook! org-mode (zz/adjust-org-company-backends))
-
+#+end_src
+** Start in maximized window
+- [[https://emacs.stackexchange.com/a/3017/23435][Source]]
+#+begin_src emacs-lisp :tangle yes
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+#+end_src
 
+** Relative line numbers
+#+begin_src emacs-lisp :tangle yes
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (global-display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
-
+#+end_src
+* Org-mode
+** Base directory
+#+begin_src emacs-lisp :tangle yes
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Documents/notes")
+#+end_src
 
+** Basic setup
+*** Log DONE tasks in logbook
+#+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-log-done 'time)
   (setq org-log-into-drawer t))
+#+end_src
 
+*** Always show durations in HH:MM format
+#+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-duration-format 'h:mm))
+#+end_src
 
+*** Map keybinding to insert inactive timestamp at current date/time
+#+begin_src emacs-lisp :tangle yes
 (after! org
   (map! :localleader
         (:prefix ("d")
          (:desc "Insert current date+time" "i" (cmd! (org-time-stamp '(16) t))))))
+#+end_src
 
+*** Set headings for log notes
+#+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-log-note-headings
         '((done . "closing note %t")
@@ -69,17 +109,32 @@
           (deldeadline . "removed deadline, was %s on %t")
           (refile . "refiled on %t")
           (clock-out . ""))))
+#+end_src
 
+*** Set up TODO keywords
+#+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "WIP(w)" "AWAIT(a)" "BLOCKED(b)" "IDEA(i)" "|" "DONE(d)" "CANCELED(c)")
           (sequence "MEETING(m)" "|" "ENDED(e)" "CANCELED(c)" "SKIPPED(s)")
           (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)")))
   )
+#+end_src
 
+*** Hide markup
+#+begin_src emacs-lisp :tangle no
+(after! org (setq org-hide-emphasis-markers t))
+#+end_src
+
+*** Always start in folded view
+#+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-startup-folded t))
+#+end_src
 
+** Agenda
+*** Agenda files
+#+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-agenda-files
         '("~/Documents/notes/journal/2022/"
@@ -88,7 +143,10 @@
           "~/Documents/notes/projects/ldfc.org"
           "~/gdrive/notes/personal.org"
           )))
-
+#+end_src
+*** =org-super-agenda=
+- Set up custom agenda views
+#+begin_src emacs-lisp :tangle yes
 (use-package! org-super-agenda
   :after org-agenda
   :init
@@ -173,9 +231,16 @@
           ))
   :config
   (org-super-agenda-mode))
+#+end_src
 
+- Stop org-super-agenda from clobbering evil mode keybinds, see [[https://github.com/alphapapa/org-super-agenda/issues/50][here]]
+#+begin_src emacs-lisp :tangle yes
 (setq org-super-agenda-header-map (make-sparse-keymap))
+  #+end_src
+*** Get agenda as dynamic block
+- [[https://emacs.stackexchange.com/questions/58925/capture-org-agenda-and-show-some-entry-text-into-dynamic-block][Reference]]
 
+  #+begin_src emacs-lisp :tangle yes
 (defun org-dblock-write:sjm/org-insert-agenda (params)
   "Writes agenda items with some some text from the entry as context
 to dynamic block.
@@ -252,10 +317,17 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
     (when (string-match "\\S-" txt)
       (forward-line 1)
       (insert txt "\n\n")))))
+#+end_src
 
+** Capture
+*** Capture location
+#+begin_src emacs-lisp :tangle yes
 (after! org
   (setq +org-capture-todo-file "~/Documents/notes/journal/2022/todo.org"))
+#+end_src
 
+*** Capture templates
+#+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-capture-templates
         '(
@@ -275,11 +347,21 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
 ;;         ("o" "Centralized templates for projects") ("ot" "Project todo" entry #'+org-capture-central-project-todo-file "* TODO %? %i %a" :heading "Tasks" :prepend nil)
 ;;         ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %? %i %a" :heading "Notes" :prepend t)
 ;;         ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %? %i %a" :heading "Changelog" :prepend t)))
+#+end_src
 
+#+RESULTS:
+| t | Todo | entry | (file+headline +org-capture-todo-file Inbox) | * TODO %? |
+
+** Clocking
+*** Allow clocks to persist through an Emacs restart ([[https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/][source]])
+#+begin_src emacs-lisp :tangle yes
 (after! org-clock
   (setq org-clock-persist t)
   (org-clock-persistence-insinuate))
+#+end_src
 
+*** Create clock table grouped by tag (*not currently working*) ([[https://gist.github.com/ironchicken/6b5424bc2024b3d0a58a8a130f73c2ee][source]])
+#+begin_src emacs-lisp :tangle yes
 (defun clocktable-by-tag/shift-cell (n)
   (let ((str ""))
     (dotimes (i n)
@@ -321,21 +403,43 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
     (mapcar (lambda (tag)
               (clocktable-by-tag/insert-tag (plist-put (plist-put params :match tag) :tags tag)))
             tags)))
-
+#+end_src
+** File handling
+*** Open docx files with Word
+- See [[https://www.reddit.com/r/emacs/comments/96mdyj/creating_a_hyperlink_that_leads_to_a_word_document/][here]]
+- Replace ~open~ with ~xdg-open~ on Linux
+#+begin_src emacs-lisp :tangle yes
 (after! org
   (push '("\\.docx?\\'" . "open %s") org-file-apps))
+#+end_src
 
+* LaTeX
+** Don't raise/lower subscripts, see [[https://github.com/ymarco/doom-emacs-config/blob/master/latex-config.el][here]]
+  #+begin_src emacs-lisp :tangle yes
 (setq font-latex-fontify-script nil)
+  #+end_src
 
+* Evil-mode
+** Save when leaving insert mode ([[https://emacs.stackexchange.com/questions/50925/saving-file-everytime-leaving-insert-mode-in-evil-mode][source]])
+#+begin_src emacs-lisp :tangle yes
 ;; (add-hook 'evil-insert-state-exit-hook
 ;;           (lambda ()
 ;;             (call-interactively #'evil-write)))
-
+#+end_src
+** When splitting window, prompt for which buffer to open ([[https://tecosaur.github.io/emacs-config/config.html][source]])
+  #+begin_src emacs-lisp :tangle yes
 (after! evil
   (setq evil-vsplit-window-right t
         evil-split-window-below t)
   (defadvice! prompt-for-buffer (&rest _)
     :after '(evil-window-split evil-window-vsplit) (projectile-find-file)))
+  #+end_src
 
+** Map SPC-DEL to =:nohighlight= (*not currently working*)
+  #+begin_src emacs-lisp :tangle yes
 ;; (after! evil
 ;;   (map! :n :leader "DEL" #'evil-ex-nohighlight))
+  #+end_src
+
+
+* TODO Test task
