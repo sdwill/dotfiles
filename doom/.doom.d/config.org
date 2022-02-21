@@ -435,11 +435,14 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
     :after '(evil-window-split evil-window-vsplit) (projectile-find-file)))
   #+end_src
 
-** Map SPC-DEL to =:nohighlight= (*not currently working*)
+** Map SPC-DEL to =:nohighlight=
   #+begin_src emacs-lisp :tangle yes
-;; (after! evil
-;;   (map! :n :leader "DEL" #'evil-ex-nohighlight))
+(after! evil
+  (map! :leader "DEL" (cmd! (evil-ex-nohighlight))))
   #+end_src
-
-
-* TODO Test task
+* vterm
+** Remap toggle keybinding
+#+begin_src emacs-lisp :tangle yes
+(after! vterm
+  (map! :leader "\\" (cmd! (+vterm/toggle nil))))
+#+end_src
