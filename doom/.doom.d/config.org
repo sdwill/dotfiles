@@ -115,8 +115,8 @@
 #+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "WIP(w)" "AWAIT(a)" "BLOCKED(b)" "IDEA(i)" "|" "DONE(d)" "CANCELED(c)")
-          (sequence "MEETING(m)" "|" "ENDED(e)" "CANCELED(c)" "SKIPPED(s)")
+        '((sequence "TODO(t)" "NEXT(n)" "WIP(w!)" "AWAIT(a@)" "BLOCKED(b@)" "IDEA(i)" "|" "DONE(d@)" "CANCELED(c@)")
+          (sequence "MEETING(m)" "|" "ENDED(e)" "CANCELED(c@)" "SKIPPED(s@)")
           (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)")))
   )
 #+end_src
@@ -137,11 +137,10 @@
 #+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-agenda-files
-        '("~/Documents/notes/journal/2022/"
+        '("~/Documents/notes/journal/2022/todo.org"
           "~/Documents/notes/projects/irad_fy22.org"
           "~/Documents/notes/projects/rst.org"
           "~/Documents/notes/projects/ldfc.org"
-          "~/gdrive/notes/personal.org"
           )))
 #+end_src
 *** =org-super-agenda=
@@ -171,7 +170,6 @@
                             :order 1)
                             (:name "IRAD"
                              :tag "irad"
-                             :todo ("NEXT" "WIP")
                              :order 2)
                             (:name "RST"
                              :tag "rst"
@@ -333,6 +331,8 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
         '(
           ("t" "Todo" entry (file+headline +org-capture-todo-file "Inbox")
            "* TODO %?\n%U" :empty-lines 1)
+          ("m" "Meeting" entry (file+headline +org-capture-todo-file "Inbox")
+           "* MEETING %?\n%U" :empty-lines 1)
           ("p" "Personal" entry (file+headline "~/gdrive/notes/personal.org" "Inbox")
            "* TODO %?\n%U" :empty-lines 1)
           )))
