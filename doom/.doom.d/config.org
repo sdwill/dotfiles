@@ -331,8 +331,12 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
         '(
           ("t" "Todo" entry (file+headline +org-capture-todo-file "Inbox")
            "* TODO %?\n%U" :empty-lines 1)
+          ("T" "Todo (interrupt)" entry (file+headline +org-capture-todo-file "Inbox")
+           "* TODO %?\n%U" :empty-lines 1 :clock-in t :clock-resume t)
           ("m" "Meeting" entry (file+headline +org-capture-todo-file "Inbox")
            "* MEETING %?\n%U" :empty-lines 1)
+          ("M" "Meeting (interrupt)" entry (file+headline +org-capture-todo-file "Inbox")
+           "* MEETING %?\n%U" :empty-lines 1 :clock-in t :clock-resume t)
           ("p" "Personal" entry (file+headline "~/gdrive/notes/personal.org" "Inbox")
            "* TODO %?\n%U" :empty-lines 1)
           )))
