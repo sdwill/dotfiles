@@ -21,7 +21,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "JetBrains Mono" :size 14))
+(setq doom-font (font-spec :family "Roboto Mono" :size 14))
       ;; doom-variable-pitch-font (font-spec :family "sans" :size 13))
 #+end_src
 
@@ -30,7 +30,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-nord-light)
 #+end_src
 
 ** Disable autocompletion of dictionary words from company-ispell
@@ -65,6 +65,12 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (global-display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
+#+end_src
+** Set fold properties so that consult/search can properly expand headlines
+- [2022-08-15 Mon 11:27] See https://github.com/minad/consult/issues/563
+
+#+begin_src emacs-lisp :tangle yes
+(setq org-fold-core-style 'text-properties)
 #+end_src
 * Org-mode
 ** Base directory
@@ -139,10 +145,14 @@
   (setq org-agenda-files
         '("~/Documents/notes/journal/2022/todo.org"
           "~/Documents/notes/projects/irad_fy22.org"
+          "~/Documents/notes/projects/apra_fy23.org"
           "~/Documents/notes/projects/rst.org"
           "~/Documents/notes/projects/ldfc.org"
+          "~/Documents/notes/projects/exospec.org"
+          "~/Documents/notes/journal/2022/inbox.org"
           )))
 #+end_src
+
 *** =org-super-agenda=
 - Set up custom agenda views
 #+begin_src emacs-lisp :tangle yes
@@ -164,7 +174,7 @@
                         (org-super-agenda-groups
                          '(
                            (:name "Today"
-                            :time-grid t
+                            :time-grid nil
                             ;; :date today
                             ;; :scheduled today
                             :order 1)
@@ -316,12 +326,41 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
       (forward-line 1)
       (insert txt "\n\n")))))
 #+end_src
+*** Color agenda blocks and make height proportional to duration
+See [[https://orgmode.org/worg/org-hacks.html][org hacks]]
+#+begin_src emacs-lisp :tangle yes
+(defun org-agenda-log-mode-colorize-block ()
+  "Set different line spacing based on clock time duration."
+  (save-excursion
+    (let* ((colors (cl-case (alist-get 'background-mode (frame-parameters))
+                                 ('light
+                                  (list "#F6B1C3" "#FFFF9D" "#BEEB9F" "#ADD5F7"))
+                                 ('dark
+                                  (list "#aa557f" "DarkGreen" "DarkSlateGray" "DarkSlateBlue"))))
+           pos
+           duration)
+      (nconc colors colors)
+      (goto-char (point-min))
+      (while (setq pos (next-single-property-change (point) 'duration))
+        (goto-char pos)
+        (when (and (not (equal pos (point-at-eol)))
+                   (setq duration (org-get-at-bol 'duration)))
+          ;; larger duration bar height
+          (let ((line-height ( / duration 30))
+                (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
+            (overlay-put ov 'face `(:background ,(car colors) :foreground "black"))
+            (setq colors (cdr colors))
+            (overlay-put ov 'line-height line-height)
+            (overlay-put ov 'line-spacing (1- line-height))))))))
+
+(add-hook 'org-agenda-finalize-hook #'org-agenda-log-mode-colorize-block)
+#+end_src
 
 ** Capture
 *** Capture location
 #+begin_src emacs-lisp :tangle yes
 (after! org
-  (setq +org-capture-todo-file "~/Documents/notes/journal/2022/todo.org"))
+  (setq +org-capture-todo-file "~/Documents/notes/journal/2022/inbox.org"))
 #+end_src
 
 *** Capture templates
@@ -329,14 +368,14 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
 (after! org
   (setq org-capture-templates
         '(
-          ("t" "Todo" entry (file+headline +org-capture-todo-file "Inbox")
+          ("t" "Todo" entry (file +org-capture-todo-file)
            "* TODO %?\n%U" :empty-lines 1)
-          ("T" "Todo (interrupt)" entry (file+headline +org-capture-todo-file "Inbox")
-           "* TODO %?\n%U" :empty-lines 1 :clock-in t :clock-resume t)
-          ("m" "Meeting" entry (file+headline +org-capture-todo-file "Inbox")
+          ("T" "Todo (interrupt)" entry (file +org-capture-todo-file)
+           "* TODO %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
+          ("m" "Meeting" entry (file +org-capture-todo-file)
            "* MEETING %?\n%U" :empty-lines 1)
-          ("M" "Meeting (interrupt)" entry (file+headline +org-capture-todo-file "Inbox")
-           "* MEETING %?\n%U" :empty-lines 1 :clock-in t :clock-resume t)
+          ("M" "Meeting (interrupt)" entry (file +org-capture-todo-file)
+           "* MEETING %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
           ("p" "Personal" entry (file+headline "~/gdrive/notes/personal.org" "Inbox")
            "* TODO %?\n%U" :empty-lines 1)
           )))
@@ -352,10 +391,6 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
 ;;         ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %? %i %a" :heading "Notes" :prepend t)
 ;;         ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %? %i %a" :heading "Changelog" :prepend t)))
 #+end_src
-
-#+RESULTS:
-| t | Todo | entry | (file+headline +org-capture-todo-file Inbox) | * TODO %? |
-
 ** Clocking
 *** Allow clocks to persist through an Emacs restart ([[https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/][source]])
 #+begin_src emacs-lisp :tangle yes
@@ -414,7 +449,10 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
 - Replace ~open~ with ~xdg-open~ on Linux
 #+begin_src emacs-lisp :tangle yes
 (after! org
-  (push '("\\.docx?\\'" . "open %s") org-file-apps))
+  (push '("\\.docx?\\'" . "open %s") org-file-apps)
+  (push '("\\.pptx?\\'" . "open %s") org-file-apps)
+  (push '("\\.xlsx?\\'" . "open %s") org-file-apps)
+  )
 #+end_src
 
 * LaTeX
@@ -446,4 +484,7 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
   #+end_src
 
 
-* TODO Test task
+** Navigate by visual line instead of physical line
+Can't just set =evil-respect-visual-line-mode= because it has to be set prior to loading evil-mode. See [[https://archive.baty.net/2020/respecting-visual-lines-in-doom-emacs/][here]].
+#+begin_src emacs-lisp :tangle yes
+#+end_src
