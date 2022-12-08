@@ -103,14 +103,10 @@ font string. You generally only need these two:
 #+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-log-note-headings
-        '((done . "closing note %t")
-          (state . "state %-12s from %-12s %t")
+        '((done . "%t Closing note")
+          (state . "%t State %s from %S")
           (note . "%t")
-          (reschedule . "rescheduled from %s on %t")
-          (delschedule . "not scheduled, was %s on %t")
-          (redeadline . "new deadline from %s on %t")
-          (deldeadline . "removed deadline, was %s on %t")
-          (refile . "refiled on %t")
+          (refile . "%t Refiled")
           (clock-out . ""))))
 #+end_src
 
