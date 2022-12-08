@@ -1,5 +1,7 @@
 -- init.lua
 
+require('orgmode').setup_ts_grammar()
+
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.org = {
   install_info = {
@@ -10,11 +12,10 @@ parser_config.org = {
   filetype = 'org',
 }
 
-
 require('orgmode').setup({
-  org_agenda_files = {'~/Box/notes/**/*'},
-  org_default_notes_file = '~/Box/notes/inbox.org',
-  org_todo_keywords =  {'TODO(t)', 'WIP(w)', 'AWAIT(a)', 'BLOCKED(b)', 'PROJ(p)', '|', 'DONE(d)', 'CANCELED(c)'},
+  org_agenda_files = {'~/notes/**/*'},
+  org_default_notes_file = '~/notes/inbox.org',
+  org_todo_keywords =  {'TODO(t)', '|', 'DONE(d)', 'CANCELED(c)'},
   org_todo_keyword_faces = {
       -- BLOCKED = ':background red :foreground white :weight bold'
     -- WAITING = ':foreground blue :weight bold',
