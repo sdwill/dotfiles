@@ -1,7 +1,7 @@
 #+TITLE: Doom config
 
 * Basic stuff
-** Set name and identity
+** Name and identity
 #+begin_src emacs-lisp :tangle yes
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
@@ -140,9 +140,10 @@ font string. You generally only need these two:
           "~/Documents/notes/projects/irad_fy22.org"
           "~/Documents/notes/projects/rst.org"
           "~/Documents/notes/projects/ldfc.org"
-          "~/gdrive/notes/personal.org"
+          "~/notes/personal.org"
           )))
 #+end_src
+
 *** =org-super-agenda=
 - Set up custom agenda views
 #+begin_src emacs-lisp :tangle yes
@@ -334,6 +335,8 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
            "* TODO %?\n%U" :empty-lines 1)
           ("p" "Personal" entry (file+headline "~/gdrive/notes/personal.org" "Inbox")
            "* TODO %?\n%U" :empty-lines 1)
+          ("b" "Book" entry (file+headline "~/notes/books.org" "Inbox")
+           "* TODO %?\n%U" :empty-lines 1)
           )))
 ;; (setq org-capture-templates
 ;;       '(("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
@@ -445,3 +448,30 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
 (after! vterm
   (map! :leader "\\" (cmd! (+vterm/toggle nil))))
 #+end_src
+** Add command to send current line to vterm
+#+begin_src emacs-lisp :tangle yes
+(defun my/vterm-execute-current-line ()
+    "Send text of current line to vterm."
+    (interactive)
+    (require 'vterm)
+    (eval-when-compile (require 'subr-x))
+    (let ((command (string-trim (buffer-substring
+                                (save-excursion
+                                    (beginning-of-line)
+                                    (point))
+                                (save-excursion
+                                    (end-of-line)
+                                    (point))))))
+    (let ((buf (current-buffer)))
+        (unless (get-buffer vterm-buffer-name)
+        (vterm))
+        (display-buffer vterm-buffer-name t)
+        (switch-to-buffer-other-window vterm-buffer-name)
+        (vterm--goto-line -1)
+        (message command)
+        (vterm-send-string command)
+        )))
+#+end_src
+
+#+RESULTS:
+: my/vterm-execute-current-line
