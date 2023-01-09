@@ -415,6 +415,13 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
   (push '("\\.docx?\\'" . "open %s") org-file-apps))
 #+end_src
 
+** Refile notes to top of heading
+#+begin_src emacs-lisp :tangle yes
+(after! org
+  (setq org-reverse-note-order t)
+)
+#+end_src
+
 * LaTeX
 ** Don't raise/lower subscripts, see [[https://github.com/ymarco/doom-emacs-config/blob/master/latex-config.el][here]]
   #+begin_src emacs-lisp :tangle yes
