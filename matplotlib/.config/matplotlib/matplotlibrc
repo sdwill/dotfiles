@@ -1,19 +1,13 @@
 ### Backend
-# backend      : qt5agg
-
-### Axes
-#axes.grid : True
+backend      : qt5agg
 
 ### Fonts
-# text.usetex : True
 font.family : sans-serif
-# font.serif : Computer Modern Roman
-# font.family : Palatino Linotype
-font.size : 20
-mathtext.fontset : cm
+font.size : 12
+mathtext.fontset : dejavusans
 
 ### Figures and animations
-figure.figsize : 6.0, 6.0
+figure.figsize : 6.0, 4.0
 
 ### Saving
 savefig.bbox : tight
