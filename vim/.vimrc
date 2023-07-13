@@ -38,6 +38,7 @@ source ~/.vim/plugins/zen-mode.lua
 " source ~/.vim/plugins/vimade.vim
 " source ~/.vim/plugins/airline.vim
 source ~/.vim/plugins/lualine.lua
+source ~/.vim/plugins/which-key.lua
 
 " ----- Native LSP
 source ~/.vim/plugins/nvim-lsp-installer.lua
