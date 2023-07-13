@@ -183,16 +183,26 @@
 ** Agenda
 *** Agenda files
 #+begin_src emacs-lisp :tangle yes
-(after! org
-  (setq org-agenda-files
+(setq org-agenda-files-2022
         '("~/Documents/notes/journal/2022/todo.org"
           "~/Documents/notes/projects/irad_fy22.org"
           "~/Documents/notes/projects/apra_fy23.org"
-          "~/Documents/notes/projects/rst.org"
           "~/Documents/notes/projects/ldfc.org"
-          "~/Documents/notes/projects/exospec.org"
-          "~/Documents/notes/journal/2022/inbox.org"
-          )))
+          "~/Documents/notes/inbox.org"
+      ))
+
+(setq org-agenda-files-2023
+      '("~/Documents/notes/journal/2023/general.org"
+        "~/Documents/notes/journal/2023/rst.org"
+        "~/Documents/notes/journal/2023/habworlds.org"
+        "~/Documents/notes/projects/apra_fy23.org"
+        "~/Documents/notes/projects/ldfc.org"
+        "~/Documents/notes/inbox.org"
+        "~/Documents/notes/ideas.org"
+        ))
+
+;; (after! org (setq org-agenda-files (append org-agenda-files-2023 org-agenda-files-2022)))
+(after! org (setq org-agenda-files org-agenda-files-2023))
 #+end_src
 
 *** =org-super-agenda=
@@ -220,24 +230,19 @@
                             ;; :date today
                             ;; :scheduled today
                             :order 1)
-                            (:name "IRAD"
-                             :tag "irad"
+                           (:name "Inbox"
+                            :time-grid nil
+                            :file-path "inbox.org"
+                            :order 2)
+                            (:name "APRA"
+                             :file-path "apra_fy23.org"
                              :order 2)
                             (:name "RST"
                              :tag "rst"
                              :order 3)
                             (:name "General"
-                             :tag ("general" "admin")
+                             :tag ("general")
                              :order 4)
-                            (:name "Personal"
-                             :tag "personal"
-                             :order 6)
-                            (:name "Study"
-                             :tag "study"
-                             :order 97)
-                            (:name "Waiting"
-                             :todo "AWAIT"
-                             :order 98)
                            ))))))
           ("t" "Super tasks"
             ((alltodo "" ((org-agenda-overriding-header "")
@@ -287,6 +292,16 @@
 #+begin_src emacs-lisp :tangle yes
 (setq org-super-agenda-header-map (make-sparse-keymap))
   #+end_src
+
+*** Set custom keybinding for org-super-agenda that skips org-agenda dispatcher
+#+begin_src emacs-lisp :tangle yes
+(after! org-agenda
+  (map! :leader (:desc "org-super-agenda" "z" (cmd! (org-agenda nil "z")))))
+#+end_src
+
+#+RESULTS:
+| lambda | (&rest _) | (interactive) | (org-agenda nil z) |
+
 *** Get agenda as dynamic block
 - [[https://emacs.stackexchange.com/questions/58925/capture-org-agenda-and-show-some-entry-text-into-dynamic-block][Reference]]
 
@@ -402,7 +417,7 @@ See [[https://orgmode.org/worg/org-hacks.html][org hacks]]
 *** Capture location
 #+begin_src emacs-lisp :tangle yes
 (after! org
-  (setq +org-capture-todo-file "~/Documents/notes/journal/2022/inbox.org"))
+  (setq +org-capture-todo-file "~/Documents/notes/inbox.org"))
 #+end_src
 
 *** Capture templates
