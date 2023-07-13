@@ -21,9 +21,14 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "Roboto Mono" :size 14))
+;; (setq doom-font (font-spec :family "Iosevka" :size 14))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 14))
+;; (setq doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 14 :weight 'bold))
       ;; doom-variable-pitch-font (font-spec :family "sans" :size 13))
 #+end_src
+
+#+RESULTS:
+: #<font-spec nil nil JetBrains\ Mono nil nil nil nil nil 14 nil nil nil nil>
 
 ** Set font height for headers
 #+begin_src emacs-lisp :tangle yes
@@ -39,7 +44,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-nord-light)
+(setq doom-theme 'doom-solarized-light)
 #+end_src
 
 ** Disable autocompletion of dictionary words from company-ispell
