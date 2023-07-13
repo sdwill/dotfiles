@@ -110,16 +110,9 @@ source $ZSH/oh-my-zsh.sh
 # powerline setting
 # prompt_context() {}
 
-# Fix tilix VTE script
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-        source /etc/profile.d/vte.sh
-fi
-
 # Custom aliases
 export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 alias vi="nvim"
-
-# alias kitty="~/.local/kitty.app/bin/kitty"
 
 # Add Julia to path
 # export PATH="$PATH:/home/scott/Documents/julia-1.5.3/bin"
