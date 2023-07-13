@@ -125,8 +125,8 @@
 *** Map keybinding to insert inactive timestamp at current date/time
 #+begin_src emacs-lisp :tangle yes
 (after! org
-  (map! :localleader
-        (:prefix ("d")
+  (map! :leader
+        (:prefix ("md")
          (:desc "Insert current date+time" "i" (cmd! (org-time-stamp '(16) t))))))
 #+end_src
 
