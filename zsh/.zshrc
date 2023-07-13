@@ -68,9 +68,7 @@ ZSH_THEME="refined-conda"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
-  vscode
-  themes
+  # themes
   colored-man-pages
   zsh-syntax-highlighting
 )
@@ -156,17 +154,16 @@ export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
 # Add conda to path
 # export PATH="$HOME/anaconda3/bin:$PATH"  # commented out by conda initialize
 
+# Modified from the original lines inserted by conda due to slow terminal startup time, see here:
+# https://github.com/conda/conda/issues/7855
+#
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/swill/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
+if [ -f "/Users/swill/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+    . "/Users/swill/opt/anaconda3/etc/profile.d/conda.sh"
 else
-    if [ -f "/Users/swill/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/swill/opt/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/swill/opt/anaconda3/bin:$PATH"
-    fi
+    export PATH="/Users/swill/opt/anaconda3/bin:$PATH"
 fi
 unset __conda_setup
 # <<< conda initialize <<<
@@ -174,3 +171,7 @@ unset __conda_setup
 conda config --set changeps1 False  # Don't change prompt
 
 alias doom="~/.emacs.d/bin/doom"
+
+# Disable checking for automatic updates to improve startup time, see here:
+# https://superuser.com/questions/236953/zsh-starts-incredibly-slowly
+export DISABLE_AUTO_UPDATE="true"
