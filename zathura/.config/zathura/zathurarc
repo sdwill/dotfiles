@@ -1,0 +1,11 @@
+set font "monospace normal 20"
+
+set smooth-scroll "true"
+set scroll-full-overlap 0.01
+set scroll-step 100
+
+set window-height 1440
+set window-width 1280
+
+# Open document in fit-width mode by default
+set adjust-open "width"
