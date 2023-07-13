@@ -146,7 +146,7 @@
 #+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "WIP(w!)" "AWAIT(a@)" "BLOCKED(b@)" "IDEA(i)" "MAYBE" "|" "DONE(d@)" "CANCELED(c@)")
+        '((sequence "TODO(t)" "NEXT(n)" "WIP(w!)" "AWAIT(a@)" "BLOCKED(b@)" "IDEA(i)" "MAYBE" "|" "DONE(d@)" "NOTDOING(c@)")
           (sequence "MEETING(m)" "|" "ENDED(e)" "CANCELED(c@)" "SKIPPED(s@)")
           (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)")))
   )
