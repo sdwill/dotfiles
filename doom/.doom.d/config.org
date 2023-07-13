@@ -132,7 +132,7 @@
 (after!     org
   (setq org-log-note-headings
         '((done . "%t Closing note")
-          (state . "%t State %s from %S")
+          (state . "%t %S -> %s")
           (note . "%t")
           (reschedule . "%t Rescheduled from %s")
           (delschedule . "%t Removed scheduled time %s")
