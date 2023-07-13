@@ -6,6 +6,7 @@ source ~/.vim/general.vim
 source ~/.vim/guifont.vim
 source ~/.vim/keybindings.vim
 source ~/.vim/vim_plug.vim
+source ~/.vim/python.vim
 
 " source ~/.vim/plugins/dashboard_nvim.vim
 " source ~/.vim/plugins/markdown.vim
