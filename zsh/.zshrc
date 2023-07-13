@@ -131,8 +131,6 @@ if [ -n "${NVIM_LISTEN_ADDRESS+x}" ]; then
   export COLORTERM="truecolor"
 fi
 
-export HICAT_JACOBIAN_PATH="~/hicat_data/jacobians"
-
 # texlive path, see http://www.tug.org/texlive/quickinstall.html
 export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
 alias sutlmgr='sudo /usr/local/texlive/2021/bin/x86_64-linux/tlmgr'
@@ -171,6 +169,9 @@ unset __conda_setup
 conda config --set changeps1 False  # Don't change prompt
 
 alias doom="~/.emacs.d/bin/doom"
+
+# For catkit2, see https://github.com/spacetelescope/catkit2
+export FOR_DISABLE_CONSOLE_CTRL_HANDLER=1
 
 # Disable checking for automatic updates to improve startup time, see here:
 # https://superuser.com/questions/236953/zsh-starts-incredibly-slowly
