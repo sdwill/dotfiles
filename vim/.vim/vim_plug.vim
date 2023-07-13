@@ -25,7 +25,7 @@ Plug 'Asheq/close-buffers.vim'  " Close all invisible buffers
 Plug 'gcmt/taboo.vim'  " Assign custom tab names
 Plug 'folke/which-key.nvim'  " Keybinding aid
 " -----
-Plug 'lervag/wiki.vim'
+" Plug 'lervag/wiki.vim'
 " Plug 'ncm2/ncm2'
 " Plug 'roxma/nvim-yarp'
 Plug 'junegunn/vim-easy-align'  " Align tables
@@ -54,7 +54,7 @@ Plug 'ray-x/navigator.lua'
 
 " -----
 Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-orgmode/orgmode'
+" Plug 'nvim-orgmode/orgmode'
 " -----
 
 " enable ncm2 for all buffers

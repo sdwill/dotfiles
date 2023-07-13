@@ -26,9 +26,9 @@ source ~/.vim/plugins/todo-comments.lua
 source ~/.vim/plugins/toggleterm.lua
 source ~/.vim/plugins/autosave.lua
 " source ~/.vim/plugins/ncm2.vim
-source ~/.vim/plugins/wiki.vim
+" source ~/.vim/plugins/wiki.vim
 source ~/.vim/plugins/vim-easy-align.vim
-source ~/.vim/plugins/orgmode.lua
+" source ~/.vim/plugins/orgmode.lua
 source ~/.vim/plugins/treesitter.lua
 source ~/.vim/plugins/taboo.vim
 " source ~/.vim/plugins/vim-medieval.vim
