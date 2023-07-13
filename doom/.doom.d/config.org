@@ -83,9 +83,23 @@
 ** Set fold properties so that consult/search can properly expand headlines
 - [2022-08-15 Mon 11:27] See https://github.com/minad/consult/issues/563
 
+
+** Key remapping
+- [2023-02-08 Wed 10:28] There is a weird combination of behaviors involving Emacs, MacOS with modifier keys remapped at the system level, and external keyboards. See https://github.com/doomemacs/doomemacs/issues/3952.
 #+begin_src emacs-lisp :tangle yes
 (setq org-fold-core-style 'text-properties)
+(setq mac-command-modifier      'super
+      ns-command-modifier       'super
+      mac-option-modifier       'meta
+      ns-option-modifier        'meta
+      mac-right-option-modifier 'none
+      ns-right-option-modifier  'meta  ;; Default value was 'none
+      )
 #+end_src
+
+#+RESULTS:
+: meta
+
 * Org-mode
 ** Base directory
 #+begin_src emacs-lisp :tangle yes
