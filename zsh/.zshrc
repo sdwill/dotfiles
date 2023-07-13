@@ -176,3 +176,6 @@ export FOR_DISABLE_CONSOLE_CTRL_HANDLER=1
 # Disable checking for automatic updates to improve startup time, see here:
 # https://superuser.com/questions/236953/zsh-starts-incredibly-slowly
 export DISABLE_AUTO_UPDATE="true"
+
+# For zathura+vimtex, see vimtex documentation
+export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"

@@ -9,7 +9,17 @@ syntax enable
 
 " Viewer options: One may configure the viewer either by specifying a built-in
 " viewer method:
-let g:vimtex_view_method = 'skim'
+
+" Sioyek
+" let g:vimtex_view_method = 'sioyek'
+
+" TeXShop: having issues with viewer not updating after recompilation
+" let g:vimtex_view_method = 'texshop'
+" let g:vimtex_view_texshop_activate = 1  " Focus on TeXShop after compilation
+" let g:vimtex_view_texshop_sync = 1  " Forward sync to cursor position after compilation
+
+" Zathura
+let g:vimtex_view_method = 'zathura'
 
 " " Or with a generic interface:
 " let g:vimtex_view_general_viewer = 'okular'
@@ -27,18 +37,19 @@ let g:vimtex_compiler_method = 'latexmk'
 " want because it recompiles every time I make even the tiniest change.
 " Remap this to "single shot" compilation mode instead.
 nnoremap <localleader>bb :VimtexCompileSS<cr>
+nnoremap <localleader>bv :VimtexView<cr>
 
 " Disable automatic quickfix popup
 let g:vimtex_quickfix_mode = 0
 
-" Set up server for forward and reverse search.
-" See https://jdhao.github.io/2021/02/20/inverse_search_setup_neovim_vimtex/
-function! s:write_server_name() abort
-  let nvim_server_file = (has('win32') ? $TEMP : '/tmp') . '/vimtexserver.txt'
-  call writefile([v:servername], nvim_server_file)
-endfunction
+" " Set up server for forward and reverse search.
+" " See https://jdhao.github.io/2021/02/20/inverse_search_setup_neovim_vimtex/
+" function! s:write_server_name() abort
+"   let nvim_server_file = (has('win32') ? $TEMP : '/tmp') . '/vimtexserver.txt'
+"   call writefile([v:servername], nvim_server_file)
+" endfunction
 
-augroup vimtex_common
-  autocmd!
-  autocmd FileType tex call s:write_server_name()
-augroup END
+" augroup vimtex_common
+"   autocmd!
+"   autocmd FileType tex call s:write_server_name()
+" augroup END
