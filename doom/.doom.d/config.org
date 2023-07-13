@@ -500,6 +500,20 @@ See [[https://orgmode.org/worg/org-hacks.html][org hacks]]
               (clocktable-by-tag/insert-tag (plist-put (plist-put params :match tag) :tags tag)))
             tags)))
 #+end_src
+*** Jump to clock + narrow to subtree
+https://lists.gnu.org/archive/html/emacs-orgmode/2010-04/msg00343.html
+
+#+begin_src emacs-lisp :tangle yes
+(after! org
+  (defun my-clock-goto-narrow ()
+    (interactive)
+    (when (org-clock-is-active)
+      (org-clock-goto)
+      (org-narrow-to-subtree)))
+  (map! :leader (:prefix ("mc") (:desc "Go to current clock" "g" (cmd! (my-clock-goto-narrow)))))
+  )
+#+end_src
+
 ** File handling
 *** Open docx files with Word
 - See [[https://www.reddit.com/r/emacs/comments/96mdyj/creating_a_hyperlink_that_leads_to_a_word_document/][here]]
