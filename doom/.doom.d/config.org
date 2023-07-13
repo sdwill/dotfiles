@@ -25,6 +25,15 @@
       ;; doom-variable-pitch-font (font-spec :family "sans" :size 13))
 #+end_src
 
+** Set font height for headers
+#+begin_src emacs-lisp :tangle yes
+(after! org
+  (set-face-attribute 'org-level-1 nil :height 1.125)
+  (set-face-attribute 'org-level-2 nil :height 1.0675))
+#+end_src
+
+#+RESULTS:
+
 ** Set Doom theme
 #+begin_src emacs-lisp :tangle yes
 ;; There are two ways to load a theme. Both assume the theme is installed and
