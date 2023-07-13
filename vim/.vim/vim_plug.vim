@@ -23,6 +23,7 @@ Plug 'akinsho/nvim-toggleterm.lua'  " Terminals
 " Plug 'equalsraf/neovim-gui-shim'  " Shim for neovim-qt gui features
 Plug 'Asheq/close-buffers.vim'  " Close all invisible buffers
 Plug 'gcmt/taboo.vim'  " Assign custom tab names
+Plug 'folke/which-key.nvim'  " Keybinding aid
 " -----
 Plug 'lervag/wiki.vim'
 " Plug 'ncm2/ncm2'
