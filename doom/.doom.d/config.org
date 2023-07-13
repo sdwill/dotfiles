@@ -435,6 +435,8 @@ See [[https://orgmode.org/worg/org-hacks.html][org hacks]]
            "* MEETING %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
           ("p" "Personal" entry (file+headline "~/gdrive/notes/personal.org" "Inbox")
            "* TODO %?\n%U" :empty-lines 1)
+          ("i" "Idea" entry (file "~/Documents/notes/ideas.org")
+           "* IDEA %?\n%U" :empty-lines 1)
           )))
 ;; (setq org-capture-templates
 ;;       '(("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
@@ -448,6 +450,10 @@ See [[https://orgmode.org/worg/org-hacks.html][org hacks]]
 ;;         ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %? %i %a" :heading "Notes" :prepend t)
 ;;         ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %? %i %a" :heading "Changelog" :prepend t)))
 #+end_src
+
+#+RESULTS:
+| t | Todo | entry | (file +org-capture-todo-file) | * TODO %? |
+
 ** Clocking
 *** Allow clocks to persist through an Emacs restart ([[https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/][source]])
 #+begin_src emacs-lisp :tangle yes
