@@ -1,5 +1,5 @@
 ### Backend
-# backend      : qt5agg
+# backend      : agg
 
 ### Axes
 #axes.grid : True
