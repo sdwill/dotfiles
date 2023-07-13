@@ -189,3 +189,8 @@
        :config
        literate
        (default +bindings +smartparens))
+
+; (use-package-hook! evil
+;   :pre-init
+;   (setq evil-respect-visual-line-mode t) ;; sane j and k behavior
+;   t)
