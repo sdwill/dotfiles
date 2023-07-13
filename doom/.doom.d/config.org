@@ -80,14 +80,11 @@
 (global-display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
 #+end_src
-** Set fold properties so that consult/search can properly expand headlines
-- [2022-08-15 Mon 11:27] See https://github.com/minad/consult/issues/563
 
 
 ** Key remapping
 - [2023-02-08 Wed 10:28] There is a weird combination of behaviors involving Emacs, MacOS with modifier keys remapped at the system level, and external keyboards. See https://github.com/doomemacs/doomemacs/issues/3952.
 #+begin_src emacs-lisp :tangle yes
-(setq org-fold-core-style 'text-properties)
 (setq mac-command-modifier      'super
       ns-command-modifier       'super
       mac-option-modifier       'meta
@@ -165,6 +162,23 @@
 (after! org
   (setq org-startup-folded t))
 #+end_src
+
+*** Set fold properties so that consult/search can properly expand headlines
+- [2022-08-15 Mon 11:27] See https://github.com/minad/consult/issues/563
+
+#+begin_src emacs-lisp :tangle yes
+(setq org-fold-core-style 'text-properties)
+#+end_src
+
+*** Fold drawers
+- [2022-12-01 Thu 11:18] See [[https://www.reddit.com/r/emacs/comments/vaiogt/comment/ic2wfen/][reddit thread]]. After an update sometime this year, the TAB fold functionality started expanding drawers, which I don't want it to do.
+#+begin_src emacs-lisp :tangle no
+(setq org-cycle-hook
+      '(org-hide-drawer-all org-cycle-hide-archived-subtrees org-cycle-show-empty-lines org-cycle-optimize-window-after-visibility-change))
+#+end_src
+
+#+RESULTS:
+| org-hide-drawer-all | org-cycle-hide-archived-subtrees | org-cycle-show-empty-lines | org-cycle-optimize-window-after-visibility-change |
 
 ** Agenda
 *** Agenda files
