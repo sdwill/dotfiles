@@ -560,10 +560,10 @@ https://lists.gnu.org/archive/html/emacs-orgmode/2010-04/msg00343.html
     :after '(evil-window-split evil-window-vsplit) (projectile-find-file)))
   #+end_src
 
-** Map SPC-DEL to =:nohighlight= (*not currently working*)
+** Map SPC-DEL to =:nohighlight=
   #+begin_src emacs-lisp :tangle yes
-;; (after! evil
-;;   (map! :n :leader "DEL" #'evil-ex-nohighlight))
+(after! evil
+  (map! :leader "DEL" (cmd! (evil-ex-nohighlight))))
   #+end_src
 
 
