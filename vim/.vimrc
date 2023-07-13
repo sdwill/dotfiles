@@ -58,7 +58,7 @@ source ~/.vim/plugins/nvim-cmp.vim
 "   - https://github.com/altercation/solarized/issues/102
 " Colors can be restored by resetting filetype manually, e.g. :setf pandoc
 
-set background=dark
+set background=light
 
 " source ~/.vim/plugins/vim-colors-pencil.vim
 " source ~/.vim/plugins/vim-colors-github.vim
@@ -80,10 +80,10 @@ set background=dark
 " source ~/.vim/plugins/edge.vim
 " source ~/.vim/plugins/neon.lua
 " source ~/.vim/plugins/sonokai.vim
-source ~/.vim/plugins/tokyonight.lua
+" source ~/.vim/plugins/tokyonight.lua
 " source ~/.vim/plugins/kanagawa.lua
 " source ~/.vim/plugins/nightfox.lua
-" source ~/.vim/plugins/everforest.vim
+source ~/.vim/plugins/everforest.vim
 " source ~/.vim/plugins/rose-pine.lua
 " source ~/.vim/plugins/onenord.lua
 " source ~/.vim/plugins/zephyr.vim
