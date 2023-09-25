@@ -10,13 +10,15 @@ syntax enable
 " Viewer options: One may configure the viewer either by specifying a built-in
 " viewer method:
 
-" Sioyek
-" let g:vimtex_view_method = 'sioyek'
 
 " TeXShop: having issues with viewer not updating after recompilation
 " let g:vimtex_view_method = 'texshop'
 " let g:vimtex_view_texshop_activate = 1  " Focus on TeXShop after compilation
 " let g:vimtex_view_texshop_sync = 1  " Forward sync to cursor position after compilation
+"
+" Sioyek: like TeXShop, having issues with viewer not updating after
+" recompilation
+" let g:vimtex_view_method = 'sioyek'
 
 " Zathura
 let g:vimtex_view_method = 'zathura'
