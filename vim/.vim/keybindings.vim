@@ -76,7 +76,7 @@ nnoremap <Leader><BS> :noh<cr>
 
 " Easily open .vimrc file
 " From https://vi.stackexchange.com/questions/13105/keymap-for-open-vimrc-edit-save-and-reload
-nnoremap <F3> :tabe ~/.vimrc<CR>
+nnoremap <silent><F3> :tabe ~/.vimrc<CR> :tcd ~/dotfiles<CR>
 
 " Get path to current file, relative to working directory.  Add a forward
 " slash in the beginning for use with wiki.vim, so that the path is relative
