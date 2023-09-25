@@ -27,9 +27,6 @@
       ;; doom-variable-pitch-font (font-spec :family "sans" :size 13))
 #+end_src
 
-#+RESULTS:
-: #<font-spec nil nil JetBrains\ Mono nil nil nil nil nil 14 nil nil nil nil>
-
 ** Set font height for headers
 #+begin_src emacs-lisp :tangle yes
 (after! org
@@ -44,7 +41,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-solarized-light)
+(setq doom-theme 'doom-opera-light)
 #+end_src
 
 ** Disable autocompletion of dictionary words from company-ispell
@@ -81,7 +78,6 @@
 (setq display-line-numbers-type t)
 #+end_src
 
-
 ** Key remapping
 - [2023-02-08 Wed 10:28] There is a weird combination of behaviors involving Emacs, MacOS with modifier keys remapped at the system level, and external keyboards. See https://github.com/doomemacs/doomemacs/issues/3952.
 #+begin_src emacs-lisp :tangle yes
@@ -98,14 +94,14 @@
 : meta
 
 * Org-mode
-** Base directory
+** General
+*** Set base directory
 #+begin_src emacs-lisp :tangle yes
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Documents/notes")
 #+end_src
 
-** Basic setup
 *** Log DONE tasks in logbook
 #+begin_src emacs-lisp :tangle yes
 (after! org
@@ -205,8 +201,8 @@
 (after! org (setq org-agenda-files org-agenda-files-2023))
 #+end_src
 
-*** =org-super-agenda=
-- Set up custom agenda views
+*** org-super-agenda
+**** Set up custom agenda views
 #+begin_src emacs-lisp :tangle yes
 (use-package! org-super-agenda
   :after org-agenda
@@ -288,19 +284,17 @@
   (org-super-agenda-mode))
 #+end_src
 
-- Stop org-super-agenda from clobbering evil mode keybinds, see [[https://github.com/alphapapa/org-super-agenda/issues/50][here]]
+**** Stop org-super-agenda from clobbering evil mode keybinds
+- See [[https://github.com/alphapapa/org-super-agenda/issues/50][here]]
 #+begin_src emacs-lisp :tangle yes
 (setq org-super-agenda-header-map (make-sparse-keymap))
-  #+end_src
+#+end_src
 
-*** Set custom keybinding for org-super-agenda that skips org-agenda dispatcher
+**** Set custom keybinding that skips org-agenda dispatcher
 #+begin_src emacs-lisp :tangle yes
 (after! org-agenda
   (map! :leader (:desc "org-super-agenda" "z" (cmd! (org-agenda nil "z")))))
 #+end_src
-
-#+RESULTS:
-| lambda | (&rest _) | (interactive) | (org-agenda nil z) |
 
 *** Get agenda as dynamic block
 - [[https://emacs.stackexchange.com/questions/58925/capture-org-agenda-and-show-some-entry-text-into-dynamic-block][Reference]]
@@ -455,14 +449,18 @@ See [[https://orgmode.org/worg/org-hacks.html][org hacks]]
 | t | Todo | entry | (file +org-capture-todo-file) | * TODO %? |
 
 ** Clocking
-*** Allow clocks to persist through an Emacs restart ([[https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/][source]])
+*** Allow clocks to persist through an Emacs restart
+- [[https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/][Source]]
 #+begin_src emacs-lisp :tangle yes
 (after! org-clock
   (setq org-clock-persist t)
   (org-clock-persistence-insinuate))
 #+end_src
 
-*** Create clock table grouped by tag (*not currently working*) ([[https://gist.github.com/ironchicken/6b5424bc2024b3d0a58a8a130f73c2ee][source]])
+*** Create clock table grouped by tag
+- [[https://gist.github.com/ironchicken/6b5424bc2024b3d0a58a8a130f73c2ee][Source]]
+- *Not currently working*
+
 #+begin_src emacs-lisp :tangle yes
 (defun clocktable-by-tag/shift-cell (n)
   (let ((str ""))
@@ -571,7 +569,6 @@ https://lists.gnu.org/archive/html/emacs-orgmode/2010-04/msg00343.html
 (after! evil
   (map! :leader "DEL" (cmd! (evil-ex-nohighlight))))
   #+end_src
-
 
 ** Navigate by visual line instead of physical line
 Can't just set =evil-respect-visual-line-mode= because it has to be set prior to loading evil-mode. See [[https://archive.baty.net/2020/respecting-visual-lines-in-doom-emacs/][here]].
