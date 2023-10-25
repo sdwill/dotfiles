@@ -9,3 +9,6 @@ set window-width 1280
 
 # Open document in fit-width mode by default
 set adjust-open "width"
+
+# Disable the click-to-select box
+set selection-notification false
