@@ -16,7 +16,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'dkarter/bullets.vim'          " Utilities for bulleted lists
 Plug 'mhinz/vim-startify'           " Landing page
 " Plug 'glepnir/dashboard-nvim'  " Another landing page
-Plug 'Pocco81/AutoSave.nvim'  " Autosave!
+Plug 'Pocco81/auto-save.nvim'
 Plug 'akinsho/nvim-toggleterm.lua'  " Terminals
 " Plug 'numtostr/FTerm.nvim'  " Floating terminals
 " Plug 'voldikss/vim-floaterm'      " Floating terminal
