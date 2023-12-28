@@ -143,6 +143,7 @@ Plug 'navarasu/onedark.nvim'        " Another onedark scheme
 Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }"
 Plug 'EdenEast/nightfox.nvim'
 Plug 'rebelot/kanagawa.nvim'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 " -----
 
 Plug 'kyazdani42/nvim-web-devicons'

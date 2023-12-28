@@ -3,23 +3,17 @@
 (setq user-full-name "Scott D. Will"
       user-mail-address "scott.d.will@nasa.gov")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "JetBrains Mono" :size 14))
-      ;; doom-variable-pitch-font (font-spec :family "sans" :size 13))
+(setq doom-font (font-spec :family "Victor Mono" :size 16 :weight 'medium)
+      doom-variable-pitch-font (font-spec :family "IBM Plex Sans" :size 14))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-catppuccin)
+;; (setq doom-catppuccin-dark-variant "latte")
+;; (setq doom-theme 'doom-nord-light)
+;; (load-theme 'catppuccin-latte)
+(setq doom-theme 'catppuccin-latte)
 
 ;; (defun prog-mode-hook-setup ()
 ;;   (run-with-idle-timer
@@ -40,7 +34,7 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (global-display-line-numbers-mode)
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -54,26 +48,22 @@
   (setq org-duration-format 'h:mm))
 
 (after! org
-  (map! :localleader
-        (:prefix ("d")
+  (map! :leader
+        (:prefix ("md")
          (:desc "Insert current date+time" "i" (cmd! (org-time-stamp '(16) t))))))
 
 (after! org
   (setq org-log-note-headings
-        '((done . "closing note %t")
-          (state . "state %-12s from %-12s %t")
+        '((done . "%t Closing note")
+          (state . "%t State %s from %S")
           (note . "%t")
-          (reschedule . "rescheduled from %s on %t")
-          (delschedule . "not scheduled, was %s on %t")
-          (redeadline . "new deadline from %s on %t")
-          (deldeadline . "removed deadline, was %s on %t")
-          (refile . "refiled on %t")
+          (refile . "%t Refiled")
           (clock-out . ""))))
 
 (after! org
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "WIP(w)" "AWAIT(a)" "BLOCKED(b)" "IDEA(i)" "|" "DONE(d)" "CANCELED(c)")
-          (sequence "MEETING(m)" "|" "ENDED(e)" "CANCELED(c)" "SKIPPED(s)")
+        '((sequence "TODO(t)" "AWAIT(a)" "BLOCKED(b)" "IDEA(i)" "|" "DONE(d)" "CANCELED(c)")
+          (sequence "MEETING(m)" "EVENT(v)" "|" "ENDED(e)" "CANCELED(c)" "SKIPPED(s)")
           (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)")))
   )
 
@@ -86,7 +76,7 @@
           "~/Documents/notes/projects/irad_fy22.org"
           "~/Documents/notes/projects/rst.org"
           "~/Documents/notes/projects/ldfc.org"
-          "~/gdrive/notes/personal.org"
+          "~/notes/personal.org"
           )))
 
 (use-package! org-super-agenda
@@ -106,70 +96,18 @@
            ((agenda "" ((org-agenda-span 'day)
                         (org-super-agenda-groups
                          '(
-                           (:name "Today"
-                            :time-grid t
-                            ;; :date today
-                            ;; :scheduled today
-                            :order 1)
-                            (:name "IRAD"
-                             :tag "irad"
-                             :todo ("NEXT" "WIP")
-                             :order 2)
-                            (:name "RST"
-                             :tag "rst"
-                             :order 3)
-                            (:name "General"
-                             :tag ("general" "admin")
-                             :order 4)
-                            (:name "Personal"
-                             :tag "personal"
-                             :order 6)
-                            (:name "Study"
-                             :tag "study"
+                            (:name "Birthdays"
+                             :tag "birthdays"
                              :order 97)
-                            (:name "Waiting"
-                             :todo "AWAIT"
-                             :order 98)
                            ))))))
           ("t" "Super tasks"
             ((alltodo "" ((org-agenda-overriding-header "")
                          (org-super-agenda-groups
-                          '((:name "Meetings"
-                             :and (:todo "MEETING" :scheduled today)
-                             :discard (:todo "MEETING" :scheduled future)
-                             :order 10)
-                            (:name "IRAD"
-                             :tag "irad"
-                             :order 2)
-                            (:name "RST"
-                             :tag "rst"
-                             :order 3)
-                            (:name "General"
-                             :tag ("general" "admin")
-                             :order 1)
-                            (:name "Personal"
-                             :tag "personal"
-                             :order 6)
-                            (:name "Study"
-                             :tag "study"
-                             :order 97)
-                            (:name "Waiting"
-                             :todo "AWAIT"
-                             :order 98)
-                            (:name "Blocked"
-                             :todo "BLOCKED"
-                             :order 99)
+                          '(
                             (:name "Upcoming deadlines"
                              :deadline future
                              :order 99)
                              ))))))
-          ("w" "Weekly review"
-           agenda ""
-           ((org-agenda-start-day "-7d")
-            (org-agenda-span 7)
-            (org-agenda-start-on-weekday 1)
-            (org-agenda-start-with-log-mode t)
-            ))
           ))
   :config
   (org-super-agenda-mode))
@@ -263,6 +201,8 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
            "* TODO %?\n%U" :empty-lines 1)
           ("p" "Personal" entry (file+headline "~/gdrive/notes/personal.org" "Inbox")
            "* TODO %?\n%U" :empty-lines 1)
+          ("b" "Book" entry (file+headline "~/notes/books.org" "Inbox")
+           "* TODO %?\n%U" :empty-lines 1)
           )))
 ;; (setq org-capture-templates
 ;;       '(("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
@@ -325,6 +265,15 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
 (after! org
   (push '("\\.docx?\\'" . "open %s") org-file-apps))
 
+(after! org
+  (setq org-reverse-note-order t)
+)
+
+(after! org (setq org-image-actual-width 300))
+
+(setq image-file-name-extensions '("png" "jpeg" "jpg" "gif" "tiff" "tif" "xbm" "xpm" "pbm" "pgm" "ppm" "pnm" "svg" "heic")
+)
+
 (setq font-latex-fontify-script nil)
 
 ;; (add-hook 'evil-insert-state-exit-hook
@@ -337,5 +286,30 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
   (defadvice! prompt-for-buffer (&rest _)
     :after '(evil-window-split evil-window-vsplit) (projectile-find-file)))
 
-;; (after! evil
-;;   (map! :n :leader "DEL" #'evil-ex-nohighlight))
+(after! evil
+  (map! :leader "DEL" (cmd! (evil-ex-nohighlight))))
+
+(after! vterm
+  (map! :leader "\\" (cmd! (+vterm/toggle nil))))
+
+(defun my/vterm-execute-current-line ()
+    "Send text of current line to vterm."
+    (interactive)
+    (require 'vterm)
+    (eval-when-compile (require 'subr-x))
+    (let ((command (string-trim (buffer-substring
+                                (save-excursion
+                                    (beginning-of-line)
+                                    (point))
+                                (save-excursion
+                                    (end-of-line)
+                                    (point))))))
+    (let ((buf (current-buffer)))
+        (unless (get-buffer vterm-buffer-name)
+        (vterm))
+        (display-buffer vterm-buffer-name t)
+        (switch-to-buffer-other-window vterm-buffer-name)
+        (vterm--goto-line -1)
+        (message command)
+        (vterm-send-string command)
+        )))

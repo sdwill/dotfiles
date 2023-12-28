@@ -42,7 +42,7 @@ require('lualine').setup({
     -- theme = 'onedark',
     -- theme = 'auto',
   options = {
-    theme = 'tokyonight',
+    theme = 'auto',
     component_separators = '|',
     section_separators = { left = '', right = '' },
   },

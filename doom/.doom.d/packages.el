@@ -12,6 +12,9 @@
 (package! org-bullets)
 (package! autothemer) ;; Needed for catppuccin
 (package! catppuccin-theme)
+(package! org-modern)
+(package! mixed-pitch)
+(package! modus-themes)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

@@ -22,18 +22,69 @@ They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 font string. You generally only need these two:
 #+end_quote
 
-#+begin_src emacs-lisp :tangle yes
-(setq doom-font (font-spec :family "IBM Plex Mono" :size 14)
-      doom-variable-pitch-font (font-spec :family "Baskerville" :size 16))
+- Source: [[https://hugocisneros.com/org-config/]]
+#+begin_src emacs-lisp :tangle no
+;; (defun my/buffer-face-mode-variable ()
+;;   "Set font to a variable width (proportional) fonts in current buffer"
+;;   (interactive)
+;;   (set-face-attribute 'variable-pitch nil
+;;                       :family "Open Sans" :height 140)
+;;   (set-face-attribute 'fixed-pitch nil
+;;                       :family "Victor Mono" :height 140))
+;; (add-hook 'org-mode-hook 'my/buffer-face-mode-variable)
+
+(defun my/set-general-faces-org ()
+  (my/buffer-face-mode-variable)
+  (setq line-spacing 0.1)
+  (variable-pitch-mode +1)
+  (mapc
+   (lambda (face) ;; Other fonts that require it are set to fixed-pitch.
+     (set-face-attribute face nil :inherit 'fixed-pitch))
+   (list 'org-block
+         'org-table
+         'org-verbatim
+         'org-block-begin-line
+         'org-block-end-line
+         'org-meta-line
+         'org-date
+         'org-drawer
+         'org-property-value
+         'org-special-keyword
+         'org-document-info-keyword))
+  (mapc ;; This sets the fonts to a smaller size
+   (lambda (face)
+     (set-face-attribute face nil :height 1.0))
+   (list 'org-document-info-keyword
+         'org-block-begin-line
+         'org-block-end-line
+         'org-meta-line
+         'org-drawer
+         'org-property-value
+         )))
+
+(add-hook 'org-mode-hook 'my/set-general-faces-org)
 #+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp :tangle yes
+(setq doom-font (font-spec :family "Victor Mono" :size 16 :weight 'medium)
+      doom-variable-pitch-font (font-spec :family "IBM Plex Sans" :size 14))
+#+end_src
+
+#+RESULTS:
+: #<font-spec nil nil IBM\ Plex\ Sans nil nil nil nil nil 14 nil nil nil nil>
 
 ** Set Doom theme
 #+begin_src emacs-lisp :tangle yes
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'catppuccin-frappe)
-;; (load-theme 'catppuccin-frappe)
+;; (setq doom-theme 'doom-catppuccin)
+;; (setq doom-catppuccin-dark-variant "latte")
+;; (setq doom-theme 'doom-nord-light)
+;; (load-theme 'catppuccin-latte)
+(setq doom-theme 'catppuccin-latte)
 #+end_src
 
 ** Disable autocompletion of dictionary words from company-ispell
@@ -67,8 +118,12 @@ font string. You generally only need these two:
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (global-display-line-numbers-mode)
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type t)
 #+end_src
+
+#+RESULTS:
+: t
+
 * Org-mode
 ** Base directory
 #+begin_src emacs-lisp :tangle yes
@@ -114,11 +169,16 @@ font string. You generally only need these two:
 #+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "WIP(w)" "AWAIT(a)" "BLOCKED(b)" "IDEA(i)" "|" "DONE(d)" "CANCELED(c)")
-          (sequence "MEETING(m)" "|" "ENDED(e)" "CANCELED(c)" "SKIPPED(s)")
+        '((sequence "TODO(t)" "AWAIT(a)" "BLOCKED(b)" "IDEA(i)" "|" "DONE(d)" "CANCELED(c)")
+          (sequence "MEETING(m)" "EVENT(v)" "|" "ENDED(e)" "CANCELED(c)" "SKIPPED(s)")
           (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)")))
   )
 #+end_src
+
+#+RESULTS:
+| sequence | TODO(t)    | AWAIT(a) | BLOCKED(b) | IDEA(i) |          |             | DONE(d)    | CANCELED(c) |
+| sequence | MEETING(m) | EVENT(v) |            |         | ENDED(e) | CANCELED(c) | SKIPPED(s) |             |
+| sequence | [ ](T)     | [-](S)   | [?](W)     |         |          | [x](D)      |            |             |
 
 *** Hide markup
 #+begin_src emacs-lisp :tangle no
@@ -164,74 +224,25 @@ font string. You generally only need these two:
            ((agenda "" ((org-agenda-span 'day)
                         (org-super-agenda-groups
                          '(
-                           (:name "Today"
-                            :time-grid t
-                            ;; :date today
-                            ;; :scheduled today
-                            :order 1)
-                            (:name "IRAD"
-                             :tag "irad"
-                             :todo ("NEXT" "WIP")
-                             :order 2)
-                            (:name "RST"
-                             :tag "rst"
-                             :order 3)
-                            (:name "General"
-                             :tag ("general" "admin")
-                             :order 4)
-                            (:name "Personal"
-                             :tag "personal"
-                             :order 6)
-                            (:name "Study"
-                             :tag "study"
+                            (:name "Birthdays"
+                             :tag "birthdays"
                              :order 97)
-                            (:name "Waiting"
-                             :todo "AWAIT"
-                             :order 98)
                            ))))))
           ("t" "Super tasks"
             ((alltodo "" ((org-agenda-overriding-header "")
                          (org-super-agenda-groups
-                          '((:name "Meetings"
-                             :and (:todo "MEETING" :scheduled today)
-                             :discard (:todo "MEETING" :scheduled future)
-                             :order 10)
-                            (:name "IRAD"
-                             :tag "irad"
-                             :order 2)
-                            (:name "RST"
-                             :tag "rst"
-                             :order 3)
-                            (:name "General"
-                             :tag ("general" "admin")
-                             :order 1)
-                            (:name "Personal"
-                             :tag "personal"
-                             :order 6)
-                            (:name "Study"
-                             :tag "study"
-                             :order 97)
-                            (:name "Waiting"
-                             :todo "AWAIT"
-                             :order 98)
-                            (:name "Blocked"
-                             :todo "BLOCKED"
-                             :order 99)
+                          '(
                             (:name "Upcoming deadlines"
                              :deadline future
                              :order 99)
                              ))))))
-          ("w" "Weekly review"
-           agenda ""
-           ((org-agenda-start-day "-7d")
-            (org-agenda-span 7)
-            (org-agenda-start-on-weekday 1)
-            (org-agenda-start-with-log-mode t)
-            ))
           ))
   :config
   (org-super-agenda-mode))
 #+end_src
+
+#+RESULTS:
+: t
 
 - Stop org-super-agenda from clobbering evil mode keybinds, see [[https://github.com/alphapapa/org-super-agenda/issues/50][here]]
 #+begin_src emacs-lisp :tangle yes
@@ -421,6 +432,40 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
   (setq org-reverse-note-order t)
 )
 #+end_src
+** Org-modern
+#+begin_src emacs-lisp :tangle no
+(add-hook 'org-mode-hook #'org-modern-mode)
+(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+#+end_src
+
+#+RESULTS:
+| +org-exclude-agenda-buffers-from-workspace-h | +org-defer-mode-in-agenda-buffers-h | org-modern-agenda |
+** Mixed-pitch
+#+begin_src emacs-lisp :tangle no
+(use-package! mixed-pitch
+  :hook
+  (text-mode . mixed-pitch-mode))
+#+end_src
+
+#+RESULTS:
+| er/add-text-mode-expansions | mixed-pitch-mode | visual-line-mode | display-line-numbers-mode | vi-tilde-fringe-mode | text-mode-hook-identify |
+** Images
+*** Set default display width
+#+begin_src emacs-lisp :tangle yes
+(after! org (setq org-image-actual-width 300))
+#+end_src
+
+#+RESULTS:
+: 300
+
+#+begin_src elisp
+(setq image-file-name-extensions '("png" "jpeg" "jpg" "gif" "tiff" "tif" "xbm" "xpm" "pbm" "pgm" "ppm" "pnm" "svg" "heic")
+)
+#+end_src
+
+#+RESULTS:
+| png | jpeg | jpg | gif | tiff | tif | xbm | xpm | pbm | pgm | ppm | pnm | svg | heic |
+
 
 * LaTeX
 ** Don't raise/lower subscripts, see [[https://github.com/ymarco/doom-emacs-config/blob/master/latex-config.el][here]]

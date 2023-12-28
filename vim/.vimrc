@@ -76,10 +76,11 @@ set background=dark
 " With treesitter support
 " source ~/.vim/plugins/one-nvim.vim
 " source ~/.vim/plugins/navarasu-onedark.vim
+source ~/.vim/plugins/catppuccin.lua
 " source ~/.vim/plugins/edge.vim
 " source ~/.vim/plugins/neon.lua
 " source ~/.vim/plugins/sonokai.vim
-source ~/.vim/plugins/tokyonight.lua
+" source ~/.vim/plugins/tokyonight.lua
 " source ~/.vim/plugins/kanagawa.lua
 " source ~/.vim/plugins/nightfox.lua
 " source ~/.vim/plugins/everforest.vim
