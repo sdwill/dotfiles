@@ -72,9 +72,6 @@ font string. You generally only need these two:
       doom-variable-pitch-font (font-spec :family "IBM Plex Sans" :size 14))
 #+end_src
 
-#+RESULTS:
-: #<font-spec nil nil IBM\ Plex\ Sans nil nil nil nil nil 14 nil nil nil nil>
-
 ** Set Doom theme
 #+begin_src emacs-lisp :tangle yes
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -84,7 +81,7 @@ font string. You generally only need these two:
 ;; (setq doom-catppuccin-dark-variant "latte")
 ;; (setq doom-theme 'doom-nord-light)
 ;; (load-theme 'catppuccin-latte)
-(setq doom-theme 'catppuccin-latte)
+(setq doom-theme 'doom-solarized-light)
 #+end_src
 
 ** Disable autocompletion of dictionary words from company-ispell
@@ -121,15 +118,12 @@ font string. You generally only need these two:
 (setq display-line-numbers-type t)
 #+end_src
 
-#+RESULTS:
-: t
-
 * Org-mode
 ** Base directory
 #+begin_src emacs-lisp :tangle yes
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Documents/notes")
+(setq org-directory "~/notes")
 #+end_src
 
 ** Basic setup
@@ -191,145 +185,6 @@ font string. You generally only need these two:
   (setq org-startup-folded t))
 #+end_src
 
-** Agenda
-*** Agenda files
-#+begin_src emacs-lisp :tangle yes
-(after! org
-  (setq org-agenda-files
-        '("~/Documents/notes/journal/2022/"
-          "~/Documents/notes/projects/irad_fy22.org"
-          "~/Documents/notes/projects/rst.org"
-          "~/Documents/notes/projects/ldfc.org"
-          "~/notes/personal.org"
-          )))
-#+end_src
-
-*** =org-super-agenda=
-- Set up custom agenda views
-#+begin_src emacs-lisp :tangle yes
-(use-package! org-super-agenda
-  :after org-agenda
-  :init
-  (setq org-agenda-skip-scheduled-if-done t
-        org-agenda-skip-deadline-if-done t
-        org-agenda-include-deadlines t
-        org-agenda-block-separator nil
-        org-agenda-compact-blocks t
-        org-agenda-start-day nil ;; i.e. today
-        org-agenda-span 1
-        org-agenda-start-on-weekday nil
-        org-agenda-start-with-log-mode t)
-  (setq org-agenda-custom-commands
-        '(("z" "Super agenda"
-           ((agenda "" ((org-agenda-span 'day)
-                        (org-super-agenda-groups
-                         '(
-                            (:name "Birthdays"
-                             :tag "birthdays"
-                             :order 97)
-                           ))))))
-          ("t" "Super tasks"
-            ((alltodo "" ((org-agenda-overriding-header "")
-                         (org-super-agenda-groups
-                          '(
-                            (:name "Upcoming deadlines"
-                             :deadline future
-                             :order 99)
-                             ))))))
-          ))
-  :config
-  (org-super-agenda-mode))
-#+end_src
-
-#+RESULTS:
-: t
-
-- Stop org-super-agenda from clobbering evil mode keybinds, see [[https://github.com/alphapapa/org-super-agenda/issues/50][here]]
-#+begin_src emacs-lisp :tangle yes
-(setq org-super-agenda-header-map (make-sparse-keymap))
-  #+end_src
-*** Get agenda as dynamic block
-- [[https://emacs.stackexchange.com/questions/58925/capture-org-agenda-and-show-some-entry-text-into-dynamic-block][Reference]]
-
-  #+begin_src emacs-lisp :tangle yes
-(defun org-dblock-write:sjm/org-insert-agenda (params)
-  "Writes agenda items with some some text from the entry as context
-to dynamic block.
-Parameters are:
-
-:key
-
-  If key is a string of length 1, it is used as a key in
-  `org-agenda-custom-commands` and triggers that command.  If it
-  is a longer string it is used as a tags/todo match string.
-
-:leaders
-
-  String to insert before context text.  Defaults to two spaces \"  \".
-  Do not use asterisk \"* \".
-
-:count
-
-  Maximum number of lines to include, defaults to
-  org-agenda-entry-text-maxlines
-
-:replace-what
-
-  Regex to replace.  Defaults to heading asterisk characters and
-  first uppercase word (TODO label): \"^\\* [A-Z-]* \"
-
-:replace-with
-
-  String to replace the org-heading star with.
-  Defaults to \"- \" such that headings become list items.
-
-Somewhat adapted from org-batch-agenda.
-"
-  (let ((data)
-    (cmd-key (or (plist-get params :key) "b"))
-    (org-agenda-entry-text-leaders (or (plist-get params :leaders) "  "))
-    (org-agenda-entry-text-maxlines (or (plist-get params :count)
-                        org-agenda-entry-text-maxlines))
-    (replace-this (or (plist-get params :repalce-this) "^\\* [A-Z-]* "))
-    (replace-with (or (plist-get params :replace-with) "- "))
-    (org-agenda-sticky))
-    (save-window-excursion ; Return to current  buffer and window when done.
-      (if (> (length cmd-key) 1) ; If key is more than one character, THEN
-      (org-tags-view nil cmd-key) ; Invoke tags view, ELSE
-    (org-agenda nil cmd-key)) ; Invoke agenda view using key provided.
-    (setq data (buffer-string)) ; copy agenda buffer contents to data
-    (with-temp-buffer ; Using a temporary buffer to manipulate text.
-      (insert data) ; place agenda data into buffer.
-      (goto-char (point-max)) ; end-of-buffer
-      (beginning-of-line 1)   ; beggining of last line.
-      (while (not (bobp)) ; while not begging of buffer
-        (when (org-get-at-bol 'org-hd-marker) ; get text property.
-          (sjm/org-agenda-entry-text)) ; Insert item context underneath.
-        (beginning-of-line 0)) ; Go to previous line
-      (setq data (buffer-string)))) ; Copy buffer, close tmp buf & excursion.
-    ;; Paste data, replacing asterisk as per replace-this with replace-with.
-    (insert (replace-regexp-in-string replace-this replace-with data))))
-
-                    ;
-(defun sjm/org-agenda-entry-text ()
-  "Insert some text from the current agenda item as context.
-Adapted from `org-agenda-entry-text-show-here', relies upon
-`org-agenda-get-some-entry-text' for the bulk of the work."
-  (save-excursion ; return to current place in buffer.
-    (let (m txt o) ; declare some local variables.
-    (setq m (org-get-at-bol 'org-hd-marker)) ; get text property
-    (unless (marker-buffer m) ; get buffer that marker points into.
-      (error "No marker points to an entry here"))
-    ;; get some entry text, remove any properties and append a new-line.
-    (setq txt (concat "\n" (org-no-properties
-                (org-agenda-get-some-entry-text
-                 m org-agenda-entry-text-maxlines
-                 org-agenda-entry-text-leaders))))
-    (when (string-match "\\S-" txt)
-      (forward-line 1)
-      (insert txt "\n\n")))))
-#+end_src
-
 ** Capture
 *** Capture location
 #+begin_src emacs-lisp :tangle yes
@@ -366,64 +221,12 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
 | t | Todo | entry | (file+headline +org-capture-todo-file Inbox) | * TODO %? |
 
 ** Clocking
-*** Allow clocks to persist through an Emacs restart ([[https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/][source]])
+*** Allow clocks to persist through an Emacs restart
+[[https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/][Source]]
 #+begin_src emacs-lisp :tangle yes
 (after! org-clock
   (setq org-clock-persist t)
   (org-clock-persistence-insinuate))
-#+end_src
-
-*** Create clock table grouped by tag (*not currently working*) ([[https://gist.github.com/ironchicken/6b5424bc2024b3d0a58a8a130f73c2ee][source]])
-#+begin_src emacs-lisp :tangle yes
-(defun clocktable-by-tag/shift-cell (n)
-  (let ((str ""))
-    (dotimes (i n)
-      (setq str (concat str "| ")))
-    str))
-
-(defun clocktable-by-tag/insert-tag (params)
-  (let ((tag (plist-get params :tags)))
-    (insert "|--\n")
-    (insert (format "| %s | *Tag time* |\n" tag))
-    (let ((total 0))
-      (mapcar
-       (lambda (file)
-         (let ((clock-data (with-current-buffer (find-file-noselect file)
-                             (org-clock-get-table-data (buffer-name) params))))
-           (when (> (nth 1 clock-data) 0)
-             (setq total (+ total (nth 1 clock-data)))
-             (insert (format "| | File *%s* | %.2f |\n"
-                             (file-name-nondirectory file)
-                             (/ (nth 1 clock-data) 60.0)))
-             (dolist (entry (nth 2 clock-data))
-               (insert (format "| | . %s%s | %s %.2f |\n"
-                               (org-clocktable-indent-string (nth 0 entry))
-                               (nth 1 entry)
-                               (clocktable-by-tag/shift-cell (nth 0 entry))
-                               (/ (nth 4 entry) 60.0)))))))
-       (org-agenda-files))
-      (save-excursion
-        (re-search-backward "*Tag time*")
-        (org-table-next-field)
-        (org-table-blank-field)
-        (insert (format "*%.2f*" (/ total 60.0)))))
-    (org-table-align)))
-
-(defun org-dblock-write:clocktable-by-tag (params)
-  (insert "| Tag | Headline | Time (h) |\n")
-  (insert "|     |          | <r>  |\n")
-  (let ((tags (plist-get params :tags)))
-    (mapcar (lambda (tag)
-              (clocktable-by-tag/insert-tag (plist-put (plist-put params :match tag) :tags tag)))
-            tags)))
-#+end_src
-** File handling
-*** Open docx files with Word
-- See [[https://www.reddit.com/r/emacs/comments/96mdyj/creating_a_hyperlink_that_leads_to_a_word_document/][here]]
-- Replace ~open~ with ~xdg-open~ on Linux
-#+begin_src emacs-lisp :tangle yes
-(after! org
-  (push '("\\.docx?\\'" . "open %s") org-file-apps))
 #+end_src
 
 ** Refile notes to top of heading
@@ -433,13 +236,14 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
 )
 #+end_src
 ** Org-modern
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle yes
 (add-hook 'org-mode-hook #'org-modern-mode)
 (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+(setq org-pretty-entities t)
 #+end_src
 
 #+RESULTS:
-| +org-exclude-agenda-buffers-from-workspace-h | +org-defer-mode-in-agenda-buffers-h | org-modern-agenda |
+: t
 ** Mixed-pitch
 #+begin_src emacs-lisp :tangle no
 (use-package! mixed-pitch
@@ -447,8 +251,6 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
   (text-mode . mixed-pitch-mode))
 #+end_src
 
-#+RESULTS:
-| er/add-text-mode-expansions | mixed-pitch-mode | visual-line-mode | display-line-numbers-mode | vi-tilde-fringe-mode | text-mode-hook-identify |
 ** Images
 *** Set default display width
 #+begin_src emacs-lisp :tangle yes
@@ -463,10 +265,6 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
 )
 #+end_src
 
-#+RESULTS:
-| png | jpeg | jpg | gif | tiff | tif | xbm | xpm | pbm | pgm | ppm | pnm | svg | heic |
-
-
 * LaTeX
 ** Don't raise/lower subscripts, see [[https://github.com/ymarco/doom-emacs-config/blob/master/latex-config.el][here]]
   #+begin_src emacs-lisp :tangle yes
@@ -474,13 +272,8 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
   #+end_src
 
 * Evil-mode
-** Save when leaving insert mode ([[https://emacs.stackexchange.com/questions/50925/saving-file-everytime-leaving-insert-mode-in-evil-mode][source]])
-#+begin_src emacs-lisp :tangle yes
-;; (add-hook 'evil-insert-state-exit-hook
-;;           (lambda ()
-;;             (call-interactively #'evil-write)))
-#+end_src
-** When splitting window, prompt for which buffer to open ([[https://tecosaur.github.io/emacs-config/config.html][source]])
+** When splitting window, prompt for which buffer to open 
+[[https://tecosaur.github.io/emacs-config/config.html][Source]]
   #+begin_src emacs-lisp :tangle yes
 (after! evil
   (setq evil-vsplit-window-right t
@@ -494,36 +287,3 @@ Adapted from `org-agenda-entry-text-show-here', relies upon
 (after! evil
   (map! :leader "DEL" (cmd! (evil-ex-nohighlight))))
   #+end_src
-* vterm
-** Remap toggle keybinding
-#+begin_src emacs-lisp :tangle yes
-(after! vterm
-  (map! :leader "\\" (cmd! (+vterm/toggle nil))))
-#+end_src
-** Add command to send current line to vterm
-#+begin_src emacs-lisp :tangle yes
-(defun my/vterm-execute-current-line ()
-    "Send text of current line to vterm."
-    (interactive)
-    (require 'vterm)
-    (eval-when-compile (require 'subr-x))
-    (let ((command (string-trim (buffer-substring
-                                (save-excursion
-                                    (beginning-of-line)
-                                    (point))
-                                (save-excursion
-                                    (end-of-line)
-                                    (point))))))
-    (let ((buf (current-buffer)))
-        (unless (get-buffer vterm-buffer-name)
-        (vterm))
-        (display-buffer vterm-buffer-name t)
-        (switch-to-buffer-other-window vterm-buffer-name)
-        (vterm--goto-line -1)
-        (message command)
-        (vterm-send-string command)
-        )))
-#+end_src
-
-#+RESULTS:
-: my/vterm-execute-current-line
