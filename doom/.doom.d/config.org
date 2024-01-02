@@ -22,10 +22,18 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "Iosevka" :size 14))
-(setq doom-font (font-spec :family "JetBrains Mono" :size 14))
-;; (setq doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 14 :weight 'bold))
-      ;; doom-variable-pitch-font (font-spec :family "sans" :size 13))
+(setq myfont "Monaco")
+(setq doom-font (font-spec :family myfont :size 14))
+
+;; ;; This will override the sans-serif fonts used by certain themes like Selenized
+;; (setq doom-variable-pitch-font (font-spec :family myfont :size 14 :weight 'bold))
+
+;; ;; Disable underlining the dates, for themes that do this (like selenized)
+;; (set-face-underline 'org-date nil)
 #+end_src
+
+#+RESULTS:
+: #<font-spec nil nil Monaco nil nil nil nil nil 14 nil nil nil nil>
 
 ** Set font height for headers
 #+begin_src emacs-lisp :tangle yes
@@ -41,8 +49,32 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-opera-light)
+(setq doom-theme 'doom-solarized-light)
 #+end_src
+
+- Override the bright gray color used in the solarized theme and make it darker to improve readability
+#+begin_src emacs-lisp :tangle yes
+(custom-set-faces!
+  `(org-headline-done :foreground "#879696")
+  )
+#+end_src
+
+#+RESULTS:
+| doom--customize-themes-h-35 |
+
+** solarized-emacs: disable variable-pitch
+#+begin_src emacs-lisp :tangle no
+;; make the fringe stand out from the background
+(setq solarized-distinct-fringe-background nil)
+
+;; make the modeline high contrast
+(setq solarized-high-contrast-mode-line nil)
+
+;; Don't change the font for some headings and titles
+(setq solarized-use-variable-pitch nil)
+#+end_src
+
+#+RESULTS:
 
 ** Disable autocompletion of dictionary words from company-ispell
 - Implementation 1: see [[https://www.reddit.com/r/emacs/comments/p2iwbv/turn_off_companyispell/][here]]
@@ -205,8 +237,9 @@
 **** Set up custom agenda views
 #+begin_src emacs-lisp :tangle yes
 (use-package! org-super-agenda
-  :after org-agenda
   :init
+  (org-super-agenda-mode)
+  :config
   (setq org-agenda-skip-scheduled-if-done t
         org-agenda-skip-deadline-if-done t
         org-agenda-include-deadlines t
@@ -280,131 +313,14 @@
             (org-agenda-start-with-log-mode t)
             ))
           ))
-  :config
-  (org-super-agenda-mode))
+  (map! :leader (:desc "org-super-agenda" "z" (cmd! (org-agenda nil "z"))))
+  )
 #+end_src
 
 **** Stop org-super-agenda from clobbering evil mode keybinds
 - See [[https://github.com/alphapapa/org-super-agenda/issues/50][here]]
 #+begin_src emacs-lisp :tangle yes
 (setq org-super-agenda-header-map (make-sparse-keymap))
-#+end_src
-
-**** Set custom keybinding that skips org-agenda dispatcher
-#+begin_src emacs-lisp :tangle yes
-(after! org-agenda
-  (map! :leader (:desc "org-super-agenda" "z" (cmd! (org-agenda nil "z")))))
-#+end_src
-
-*** Get agenda as dynamic block
-- [[https://emacs.stackexchange.com/questions/58925/capture-org-agenda-and-show-some-entry-text-into-dynamic-block][Reference]]
-
-  #+begin_src emacs-lisp :tangle yes
-(defun org-dblock-write:sjm/org-insert-agenda (params)
-  "Writes agenda items with some some text from the entry as context
-to dynamic block.
-Parameters are:
-
-:key
-
-  If key is a string of length 1, it is used as a key in
-  `org-agenda-custom-commands` and triggers that command.  If it
-  is a longer string it is used as a tags/todo match string.
-
-:leaders
-
-  String to insert before context text.  Defaults to two spaces \"  \".
-  Do not use asterisk \"* \".
-
-:count
-
-  Maximum number of lines to include, defaults to
-  org-agenda-entry-text-maxlines
-
-:replace-what
-
-  Regex to replace.  Defaults to heading asterisk characters and
-  first uppercase word (TODO label): \"^\\* [A-Z-]* \"
-
-:replace-with
-
-  String to replace the org-heading star with.
-  Defaults to \"- \" such that headings become list items.
-
-Somewhat adapted from org-batch-agenda.
-"
-  (let ((data)
-    (cmd-key (or (plist-get params :key) "b"))
-    (org-agenda-entry-text-leaders (or (plist-get params :leaders) "  "))
-    (org-agenda-entry-text-maxlines (or (plist-get params :count)
-                        org-agenda-entry-text-maxlines))
-    (replace-this (or (plist-get params :repalce-this) "^\\* [A-Z-]* "))
-    (replace-with (or (plist-get params :replace-with) "- "))
-    (org-agenda-sticky))
-    (save-window-excursion ; Return to current  buffer and window when done.
-      (if (> (length cmd-key) 1) ; If key is more than one character, THEN
-      (org-tags-view nil cmd-key) ; Invoke tags view, ELSE
-    (org-agenda nil cmd-key)) ; Invoke agenda view using key provided.
-    (setq data (buffer-string)) ; copy agenda buffer contents to data
-    (with-temp-buffer ; Using a temporary buffer to manipulate text.
-      (insert data) ; place agenda data into buffer.
-      (goto-char (point-max)) ; end-of-buffer
-      (beginning-of-line 1)   ; beggining of last line.
-      (while (not (bobp)) ; while not begging of buffer
-        (when (org-get-at-bol 'org-hd-marker) ; get text property.
-          (sjm/org-agenda-entry-text)) ; Insert item context underneath.
-        (beginning-of-line 0)) ; Go to previous line
-      (setq data (buffer-string)))) ; Copy buffer, close tmp buf & excursion.
-    ;; Paste data, replacing asterisk as per replace-this with replace-with.
-    (insert (replace-regexp-in-string replace-this replace-with data))))
-
-                    ;
-(defun sjm/org-agenda-entry-text ()
-  "Insert some text from the current agenda item as context.
-Adapted from `org-agenda-entry-text-show-here', relies upon
-`org-agenda-get-some-entry-text' for the bulk of the work."
-  (save-excursion ; return to current place in buffer.
-    (let (m txt o) ; declare some local variables.
-    (setq m (org-get-at-bol 'org-hd-marker)) ; get text property
-    (unless (marker-buffer m) ; get buffer that marker points into.
-      (error "No marker points to an entry here"))
-    ;; get some entry text, remove any properties and append a new-line.
-    (setq txt (concat "\n" (org-no-properties
-                (org-agenda-get-some-entry-text
-                 m org-agenda-entry-text-maxlines
-                 org-agenda-entry-text-leaders))))
-    (when (string-match "\\S-" txt)
-      (forward-line 1)
-      (insert txt "\n\n")))))
-#+end_src
-*** Color agenda blocks and make height proportional to duration
-See [[https://orgmode.org/worg/org-hacks.html][org hacks]]
-#+begin_src emacs-lisp :tangle yes
-(defun org-agenda-log-mode-colorize-block ()
-  "Set different line spacing based on clock time duration."
-  (save-excursion
-    (let* ((colors (cl-case (alist-get 'background-mode (frame-parameters))
-                                 ('light
-                                  (list "#F6B1C3" "#FFFF9D" "#BEEB9F" "#ADD5F7"))
-                                 ('dark
-                                  (list "#aa557f" "DarkGreen" "DarkSlateGray" "DarkSlateBlue"))))
-           pos
-           duration)
-      (nconc colors colors)
-      (goto-char (point-min))
-      (while (setq pos (next-single-property-change (point) 'duration))
-        (goto-char pos)
-        (when (and (not (equal pos (point-at-eol)))
-                   (setq duration (org-get-at-bol 'duration)))
-          ;; larger duration bar height
-          (let ((line-height ( / duration 30))
-                (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
-            (overlay-put ov 'face `(:background ,(car colors) :foreground "black"))
-            (setq colors (cdr colors))
-            (overlay-put ov 'line-height line-height)
-            (overlay-put ov 'line-spacing (1- line-height))))))))
-
-(add-hook 'org-agenda-finalize-hook #'org-agenda-log-mode-colorize-block)
 #+end_src
 
 ** Capture
@@ -457,53 +373,6 @@ See [[https://orgmode.org/worg/org-hacks.html][org hacks]]
   (org-clock-persistence-insinuate))
 #+end_src
 
-*** Create clock table grouped by tag
-- [[https://gist.github.com/ironchicken/6b5424bc2024b3d0a58a8a130f73c2ee][Source]]
-- *Not currently working*
-
-#+begin_src emacs-lisp :tangle yes
-(defun clocktable-by-tag/shift-cell (n)
-  (let ((str ""))
-    (dotimes (i n)
-      (setq str (concat str "| ")))
-    str))
-
-(defun clocktable-by-tag/insert-tag (params)
-  (let ((tag (plist-get params :tags)))
-    (insert "|--\n")
-    (insert (format "| %s | *Tag time* |\n" tag))
-    (let ((total 0))
-      (mapcar
-       (lambda (file)
-         (let ((clock-data (with-current-buffer (find-file-noselect file)
-                             (org-clock-get-table-data (buffer-name) params))))
-           (when (> (nth 1 clock-data) 0)
-             (setq total (+ total (nth 1 clock-data)))
-             (insert (format "| | File *%s* | %.2f |\n"
-                             (file-name-nondirectory file)
-                             (/ (nth 1 clock-data) 60.0)))
-             (dolist (entry (nth 2 clock-data))
-               (insert (format "| | . %s%s | %s %.2f |\n"
-                               (org-clocktable-indent-string (nth 0 entry))
-                               (nth 1 entry)
-                               (clocktable-by-tag/shift-cell (nth 0 entry))
-                               (/ (nth 4 entry) 60.0)))))))
-       (org-agenda-files))
-      (save-excursion
-        (re-search-backward "*Tag time*")
-        (org-table-next-field)
-        (org-table-blank-field)
-        (insert (format "*%.2f*" (/ total 60.0)))))
-    (org-table-align)))
-
-(defun org-dblock-write:clocktable-by-tag (params)
-  (insert "| Tag | Headline | Time (h) |\n")
-  (insert "|     |          | <r>  |\n")
-  (let ((tags (plist-get params :tags)))
-    (mapcar (lambda (tag)
-              (clocktable-by-tag/insert-tag (plist-put (plist-put params :match tag) :tags tag)))
-            tags)))
-#+end_src
 *** Jump to clock + narrow to subtree
 https://lists.gnu.org/archive/html/emacs-orgmode/2010-04/msg00343.html
 
@@ -541,7 +410,6 @@ https://lists.gnu.org/archive/html/emacs-orgmode/2010-04/msg00343.html
                            "html,button,input,select,textarea {  color: #484C66;}html {  font-size: 90%;  line-height: 1.4;}*,*:before,*:after {  -moz-box-sizing: border-box;  -webkit-box-sizing: border-box;  box-sizing: border-box;}a {  white-space: pre;  white-space: pre-wrap;  white-space: pre-line;  white-space: -pre-wrap;  white-space: -o-pre-wrap;  white-space: -moz-pre-wrap;  white-space: -hp-pre-wrap;  word-wrap: break-word;  text-decoration: none;}a:hover {  color: #0A4C89;}/* * Remove text-shadow in selection highlight: h5bp.com/i * These selection rule sets have to be separate. * Customize the background color to match your design. */::-moz-selection {  background: #0A4C89;  color: #FFF;  text-shadow: none;}::selection {  background: #0A4C89;  color: #FFF;  text-shadow: none;}/* * A better looking default horizontal rule */hr {  display: block;  height: 1px;  border: 0;  border-top: 1px dashed #CCC;  margin: 1em 0;  padding: 0;}/* * Remove the gap between images, videos, audio and canvas and the bottom of * their containers: h5bp.com/i/440 */audio,canvas,img,video {  vertical-align: middle;}/* * Remove default fieldset styles. */fieldset {  border: 0;  margin: 0;  padding: 0;}/* * Allow only vertical resizing of textareas. */textarea {  resize: vertical;}/* ==========================================================================   Author's custom styles   ========================================================================== */.todo,.done,.tag {  font-family: \"Source Pro\", Monaco, \"Courier New\", monospace;  padding: 0 0.3em;  background-color: #EEE;  border: 1px solid #CCC;}.todo {  color: #DD4433;}.done {  color: #44934B;}.tag {  font-size: 80%;  font-weight: normal;  margin: 0 0.3em;  display: none;}.timestamp {  color: #BEBEBE;}.timestamp-kwd {  color: #5F9EA0;}.right {  margin-left: auto;  margin-right: 0px;  text-align: right;}.left {  margin-left: 0px;  margin-right: auto;  text-align: left;}.center {  margin-left: auto;  margin-right: auto;  text-align: center;}.underline {  text-decoration: underline;}#postamble p,#preamble p {  font-size: 90%;  margin: .2em;}pre,code {  font-family: \"Source Pro\", Monaco, \"Courier New\", monospace;  padding-left: 0.3em;  padding-right: 0.3em;}pre {  font-size: 90%;  padding: 8pt;  overflow: auto;  white-space: pre;  word-wrap: normal;}pre.src {  position: relative;}pre.src:before {  display: none;  position: absolute;  background-color: #FFF;  top: 0.5em;  right: 0.5em;  padding: 4px;  border: 1px solid #CCC;}pre.src-sh:before {  content: \"Shell Script\";}pre.src-bash:before {  content: \"Bash Script\";}pre.src-emacs-lisp:before {  content: \"Emacs Lisp\";}pre.src-R:before {  content: \"R\";}pre.src-perl:before {  content: \"Perl\";}pre.src-java:before {  content: \"Java\";}pre.src-sql:before {  content: \"SQL\";}pre.src-c:before {  content: \"C\";}pre.src-cpp:before {  content: \"C++\";}pre.src-html:before {  content: \"HTML\";}table {  border-collapse: collapse;  display: block;  overflow-x: auto;}caption.t-above {  caption-side: top;}caption.t-bottom {  caption-side: bottom;}td, th {  vertical-align: top;  border: 1px solid #CCC;  padding: 0.5em;}th.right {  text-align: center;}th.left {  text-align: center;}th.center {  text-align: center;}td.right {  text-align: right;}td.left {  text-align: left;}td.center {  text-align: center;}dt {  font-weight: bold;}#footnotes {  border-top: 5px solid #0A4C89;  margin-bottom: 5em;}#footnotes h2 {  display: none;}#text-footnotes {  margin-top: 1em;}.footpara:nth-child(2) {  display: inline;}.footpara {  display: block;}.footdef sup:before {  content: \"[\";}.footdef sup:after {  content: \"]\";}.footdef p {  display: inline;}figure {  margin: 0;}figure img {  max-width: 100%;}figcaption {  text-align: center;  font-size: 0.8rem;}.inlinetask {  padding: 10px;  border: 2px solid gray;  margin: 10px;  background: #ffffcc;}#org-div-home-and-up {  text-align: right;  font-size: 70%;  white-space: nowrap;}textarea {  overflow-x: auto;}.linenr {  font-size: smaller;}.code-highlighted {  background-color: #ffff00;}.org-info-js_info-navigation {  border-style: none;}#org-info-js_console-label {  font-size: 10px;  font-weight: bold;  white-space: nowrap;}.org-info-js_search-highlight {  background-color: #ffff00;  color: #000000;  font-weight: bold;}p.verse,blockquote {  margin: 0;  padding: 0;  padding-left: 3%;  border-left: 5px solid #0A4C89;}body {  font-family: Lora, Palatino, Georgia, serif;  width: 92%;  max-width: 1024px;  margin: 0 auto;  background-color: #FFF;}h2 {  line-height: 1.62em;}.title {  margin: 0 0 2em 0;  line-height: 2em;  border-bottom: 5px solid #0A4C89;  text-align: center;}#postamble {  font-size: 80%;  line-height: 1.4em;  text-align: right;}h1, h2, h3, h4, h5, h6 {  font-family: \"Source Sans Pro\", sans-serif;  color: #222;}.outline-2 {  margin-bottom: 4em;}.outline-2 h2 {  border-bottom: 1px solid #CCC;}.outline-text-2 code, pre {  background-color: #EEE;}#table-of-contents {  display: none;  margin-left: 0.5em;}#text-table-of-contents ul {  padding-left: 1.8em;}#text-table-of-contents li {  list-style-type: circle;  margin: 0.4em 0;}#text-table-of-contents ul ul {  margin: 0;}#text-table-of-contents li li {  font-weight: normal;  font-size: 90%;  margin: 0;}#content {  overflow: hidden;  *zoom: 1;}/* ==========================================================================   EXAMPLE Media Queries for Responsive Design.   These examples override the primary ('mobile first') styles.   Modify as content requires.   ========================================================================== */@media only screen and (min-width: 35em) {  /* Style adjustments for viewports that meet the condition */}@media print, (-o-min-device-pixel-ratio: 5 / 4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {  /* Style adjustments for high resolution devices */}/* ==========================================================================   Print styles.   Inlined to avoid required HTTP connection: h5bp.com/r   ========================================================================== */@media print {  * {    background: transparent !important;    color: #000 !important;    /* Black prints faster: h5bp.com/s */    box-shadow: none !important;    text-shadow: none !important;  }  a,  a:visited {    text-decoration: underline;  }  a[href]:after {    content: \" (\" attr(href) \")\";  }  abbr[title]:after {    content: \" (\" attr(title) \")\";  }  /*   * Don't show links for images, or javascript/internal links   */  .ir a:after,  a[href^=\"javascript:\"]:after,  a[href^=\"#\"]:after {    content: \"\";  }  pre,  blockquote {    /* border: 1px solid #999; */    page-break-inside: avoid;  }  thead {    display: table-header-group;    /* h5bp.com/t */  }  tr,  img {    page-break-inside: avoid;  }  img {    max-width: 100% !important;  }  @page {    margin: 0.5cm;  }  p,  h2,  h3 {    orphans: 3;    widows: 3;  }  h2,  h3 {    page-break-after: avoid;  }  #table-of-contents {    display: block;    width: initial;    border: none;  }  #table-of-contents a {    text-decoration: none;  }}/* large screen */@media screen and (min-width: 40rem) {  html {    font-size: 100%;  }  #table-of-contents {    display: block;    padding: 1em;    width: 32%;    min-width: 18em;    float: right;    background-color: #EEE;    position: relative;    /* required by z-index */    z-index: 5000;    border: 1px solid #CCC;  }  .tag {    display: initial;  }}\n"
                            "</style>\n")))
 #+end_src
-
 * LaTeX
 ** Don't raise/lower subscripts, see [[https://github.com/ymarco/doom-emacs-config/blob/master/latex-config.el][here]]
   #+begin_src emacs-lisp :tangle yes

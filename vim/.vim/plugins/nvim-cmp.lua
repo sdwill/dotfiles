@@ -76,6 +76,7 @@ sources = cmp.config.sources({
     { name = 'luasnip' }, -- For luasnip users.
     -- { name = 'ultisnips' }, -- For ultisnips users.
     -- { name = 'snippy' }, -- For snippy users.
+    { name = 'omni' },
 }, {
   -- { name = 'buffer' },
 })
