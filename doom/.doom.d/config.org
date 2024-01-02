@@ -221,17 +221,28 @@
 
 (setq org-agenda-files-2023
       '("~/Documents/notes/journal/2023/general.org"
-        "~/Documents/notes/journal/2023/rst.org"
-        "~/Documents/notes/journal/2023/habworlds.org"
+        "~/Documents/notes/projects/rst.org"
+        "~/Documents/notes/projects/habworlds.org"
         "~/Documents/notes/projects/apra_fy23.org"
         "~/Documents/notes/projects/ldfc.org"
         "~/Documents/notes/inbox.org"
         "~/Documents/notes/ideas.org"
         ))
 
+(setq org-agenda-files-2024
+      '("~/Documents/notes/journal/2024/general.org"
+        "~/Documents/notes/projects/rst.org"
+        "~/Documents/notes/projects/habworlds.org"
+        "~/Documents/notes/projects/apra_fy23.org"
+        "~/Documents/notes/inbox.org"
+        ))
+
 ;; (after! org (setq org-agenda-files (append org-agenda-files-2023 org-agenda-files-2022)))
 (after! org (setq org-agenda-files org-agenda-files-2023))
 #+end_src
+
+#+RESULTS:
+| ~/Documents/notes/journal/2023/general.org | ~/Documents/notes/projects/rst.org | ~/Documents/notes/projects/habworlds.org | ~/Documents/notes/projects/apra_fy23.org | ~/Documents/notes/projects/ldfc.org | ~/Documents/notes/inbox.org | ~/Documents/notes/ideas.org |
 
 *** org-super-agenda
 **** Set up custom agenda views
