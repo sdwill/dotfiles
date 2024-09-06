@@ -142,25 +142,6 @@ export EDITOR=$(which nvim)
 # Add sphinx to path
 export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
 
-# Add conda to path
-# export PATH="$HOME/anaconda3/bin:$PATH"  # commented out by conda initialize
-
-# Modified from the original lines inserted by conda due to slow terminal startup time, see here:
-# https://github.com/conda/conda/issues/7855
-#
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/swill/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ -f "/Users/swill/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-    . "/Users/swill/opt/anaconda3/etc/profile.d/conda.sh"
-else
-    export PATH="/Users/swill/opt/anaconda3/bin:$PATH"
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-conda config --set changeps1 False  # Don't change prompt
-
 alias doom="~/.emacs.d/bin/doom"
 
 # For catkit2, see https://github.com/spacetelescope/catkit2
@@ -172,3 +153,23 @@ export DISABLE_AUTO_UPDATE="true"
 
 # For zathura+vimtex, see vimtex documentation
 export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/swill/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/swill/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/Users/swill/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/swill/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/Users/swill/miniforge3/etc/profile.d/mamba.sh" ]; then
+    . "/Users/swill/miniforge3/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
+
