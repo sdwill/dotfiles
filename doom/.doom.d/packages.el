@@ -9,10 +9,11 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
 (package! org-super-agenda)
-(package! nano-theme)
 (package! autothemer)
 (package! catppuccin-theme)
 (package! solarized-theme)
+;; (package! org-bullets)
+;; (package! org-modern)
 ;; (package! everforest :recipe (:repo "https://git.sr.ht/~theorytoe/everforest-theme"))
 
 ;; To install a package directly from a remote git repo, you must specify a
