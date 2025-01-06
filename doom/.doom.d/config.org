@@ -237,8 +237,16 @@
         "~/Documents/notes/inbox.org"
         ))
 
+(setq org-agenda-files-2025
+      '("~/Documents/notes/journal/2025/general.org"
+        "~/Documents/notes/journal/2025/leave.org"
+        "~/Documents/notes/projects/hwo.org"
+        "~/Documents/notes/projects/apra_fy23.org"
+        "~/Documents/notes/inbox.org"
+        ))
+
 ;; (after! org (setq org-agenda-files (append org-agenda-files-2023 org-agenda-files-2022)))
-(after! org (setq org-agenda-files org-agenda-files-2024))
+(after! org (setq org-agenda-files org-agenda-files-2025))
 #+end_src
 
 *** org-super-agenda
@@ -368,9 +376,6 @@
 ;;         ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %? %i %a" :heading "Notes" :prepend t)
 ;;         ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %? %i %a" :heading "Changelog" :prepend t)))
 #+end_src
-
-#+RESULTS:
-| t | Todo | entry | (file +org-capture-todo-file) | * TODO %? |
 
 ** Clocking
 *** Allow clocks to persist through an Emacs restart
