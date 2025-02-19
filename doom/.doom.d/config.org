@@ -242,12 +242,16 @@
         "~/Documents/notes/journal/2025/leave.org"
         "~/Documents/notes/projects/hwo.org"
         "~/Documents/notes/projects/apra_fy23.org"
+        "~/Documents/notes/projects/rst.org"
         "~/Documents/notes/inbox.org"
         ))
 
 ;; (after! org (setq org-agenda-files (append org-agenda-files-2023 org-agenda-files-2022)))
 (after! org (setq org-agenda-files org-agenda-files-2025))
 #+end_src
+
+#+RESULTS:
+| ~/Documents/notes/journal/2025/general.org | ~/Documents/notes/journal/2025/leave.org | ~/Documents/notes/projects/hwo.org | ~/Documents/notes/projects/apra_fy23.org | ~/Documents/notes/projects/rst.org | ~/Documents/notes/inbox.org |
 
 *** org-super-agenda
 **** Set up custom agenda views
@@ -359,10 +363,8 @@
            "* MEETING %?\n%U" :empty-lines 1)
           ("M" "Meeting (interrupt)" entry (file +org-capture-todo-file)
            "* MEETING %<%m/%d> %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
-          ("p" "Personal" entry (file+headline "~/gdrive/notes/personal.org" "Inbox")
-           "* TODO %?\n%U" :empty-lines 1)
-          ("i" "Idea" entry (file "~/Documents/notes/ideas.org")
-           "* IDEA %?\n%U" :empty-lines 1)
+          ("W" "Work (interrupt)" entry (file +org-capture-todo-file)
+           "* %<%m/%d> %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
           )))
 ;; (setq org-capture-templates
 ;;       '(("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
@@ -376,6 +378,9 @@
 ;;         ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %? %i %a" :heading "Notes" :prepend t)
 ;;         ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %? %i %a" :heading "Changelog" :prepend t)))
 #+end_src
+
+#+RESULTS:
+| t | Todo | entry | (file +org-capture-todo-file) | * TODO %? |
 
 ** Clocking
 *** Allow clocks to persist through an Emacs restart
