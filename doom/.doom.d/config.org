@@ -22,7 +22,7 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "Iosevka" :size 14))
-(setq myfont "JetBrains Mono")
+(setq myfont "VictorMono Nerd Font")
 (setq doom-font (font-spec :family myfont :size 14))
 ;; ;; This will override the sans-serif fonts used by certain themes like Selenized
 ;; (setq doom-variable-pitch-font (font-spec :family myfont :size 14 :weight 'bold))
@@ -45,11 +45,11 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-monokai-pro)
+(setq doom-theme 'doom-nord-light)
 #+end_src
 
 #+RESULTS:
-: doom-monokai-pro
+: doom-nord-light
 
 - Override the bright gray color used in the solarized theme and make it darker to improve readability
 #+begin_src emacs-lisp :tangle yes
