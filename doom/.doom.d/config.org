@@ -97,7 +97,7 @@
 #+end_src
 ** Start in maximized window
 - [[https://emacs.stackexchange.com/a/3017/23435][Source]]
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 #+end_src
 
