@@ -137,7 +137,8 @@ export VISUAL=$(which nvim)
 export EDITOR=$(which nvim)
 
 # Add FZF completions
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 
 # Add sphinx to path
 export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
