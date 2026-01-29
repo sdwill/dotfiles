@@ -9,10 +9,13 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
 (package! org-bullets)
+(package! exec-path-from-shell)
 (package! org-super-agenda)
 ; (package! autothemer) ;; Needed for catppuccin
 ; (package! catppuccin-theme)
-(package! org-modern)
+;; (package! org-modern)
+;; (package! org-modern-indent
+;;   :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 ; (package! mixed-pitch)
 
 ;; To install a package directly from a remote git repo, you must specify a

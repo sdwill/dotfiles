@@ -23,53 +23,12 @@ font string. You generally only need these two:
 #+end_quote
 
 - Source: [[https://hugocisneros.com/org-config/]]
-#+begin_src emacs-lisp :tangle no
-;; (defun my/buffer-face-mode-variable ()
-;;   "Set font to a variable width (proportional) fonts in current buffer"
-;;   (interactive)
-;;   (set-face-attribute 'variable-pitch nil
-;;                       :family "Open Sans" :height 140)
-;;   (set-face-attribute 'fixed-pitch nil
-;;                       :family "Victor Mono" :height 140))
-;; (add-hook 'org-mode-hook 'my/buffer-face-mode-variable)
-
-(defun my/set-general-faces-org ()
-  (my/buffer-face-mode-variable)
-  (setq line-spacing 0.1)
-  (variable-pitch-mode +1)
-  (mapc
-   (lambda (face) ;; Other fonts that require it are set to fixed-pitch.
-     (set-face-attribute face nil :inherit 'fixed-pitch))
-   (list 'org-block
-         'org-table
-         'org-verbatim
-         'org-block-begin-line
-         'org-block-end-line
-         'org-meta-line
-         'org-date
-         'org-drawer
-         'org-property-value
-         'org-special-keyword
-         'org-document-info-keyword))
-  (mapc ;; This sets the fonts to a smaller size
-   (lambda (face)
-     (set-face-attribute face nil :height 1.0))
-   (list 'org-document-info-keyword
-         'org-block-begin-line
-         'org-block-end-line
-         'org-meta-line
-         'org-drawer
-         'org-property-value
-         )))
-
-(add-hook 'org-mode-hook 'my/set-general-faces-org)
-#+end_src
-
-#+RESULTS:
-
 #+begin_src emacs-lisp :tangle yes
-(setq doom-font (font-spec :family "Victor Mono" :size 16 :weight 'medium)
-      doom-variable-pitch-font (font-spec :family "IBM Plex Sans" :size 14))
+;; (setq doom-font (font-spec :family "Victor Mono" :size 16 :weight 'medium)
+;;       doom-variable-pitch-font (font-spec :family "IBM Plex Sans" :size 14))
+(setq doom-font (font-spec :family "Monaco" :size 14)
+   doom-variable-pitch-font (font-spec :family "Arial" :size 14)
+   doom-unicode-font (font-spec :family "Fira Code" :size 14))
 #+end_src
 
 ** Set Doom theme
@@ -130,7 +89,6 @@ font string. You generally only need these two:
 *** Log DONE tasks in logbook
 #+begin_src emacs-lisp :tangle yes
 (after! org
-  (setq org-log-done 'time)
   (setq org-log-into-drawer t))
 #+end_src
 
@@ -185,6 +143,13 @@ font string. You generally only need these two:
   (setq org-startup-folded t))
 #+end_src
 
+*** Insert a newline before headlines
+#+begin_src emacs-lisp :tangle yes
+(setq org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
+#+end_src
+
+#+RESULTS:
+: ((heading . t) (plain-list-item . auto))
 
 ** Agenda
 *** Agenda files
@@ -326,15 +291,23 @@ font string. You generally only need these two:
   (setq org-reverse-note-order t)
 )
 #+end_src
-** Org-modern
-#+begin_src emacs-lisp :tangle yes
+** org-modern
+#+begin_src emacs-lisp :tangle no
 (add-hook 'org-mode-hook #'org-modern-mode)
 (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 (setq org-pretty-entities t)
+(setq org-modern-block-fringe 0) ; Disable the horizontal block offset
+#+end_src
+
+** org-bullets
+#+begin_src emacs-lisp :tangle yes
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+end_src
 
 #+RESULTS:
-: t
+| #[nil ((org-bullets-mode 1)) nil] | er/add-org-mode-expansions | #[(&rest _) ((add-hook 'save-place-after-find-file-hook #'+org-make-last-point-visible-h nil t)) (t)] | +lookup--init-org-mode-handlers-h | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-fold-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2] | #[(&rest _) ((zz/adjust-org-company-backends)) nil] | doom-disable-show-paren-mode-h | doom-disable-show-trailing-whitespace-h | evil-org-mode | org-eldoc-load | toc-org-enable | embrace-org-mode-hook | +literate-enable-recompile-h |
+
 ** Mixed-pitch
 #+begin_src emacs-lisp :tangle no
 (use-package! mixed-pitch
@@ -355,9 +328,18 @@ font string. You generally only need these two:
 (setq image-file-name-extensions '("png" "jpeg" "jpg" "gif" "tiff" "tif" "xbm" "xpm" "pbm" "pgm" "ppm" "pnm" "svg" "heic")
 )
 #+end_src
+* exec-path-from-shell
+#+begin_src emacs-lisp :tangle yes
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+ #+end_src
+
+ #+RESULTS:
+ : ((MANPATH . ) (PATH . /opt/homebrew/Caskroom/miniconda/base/bin:/opt/homebrew/Caskroom/miniconda/base/condabin:/usr/local/opt/sphinx-doc/bin:/Users/scott/bin:/usr/local/texlive/2021/bin/x86_64-linux:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/TeX/texbin:/Users/scott/.config/emacs/bin:/Applications/iTerm.app/Contents/Resources/utilities))
 
 * LaTeX
-** Don't raise/lower subscripts, see [[https://github.com/ymarco/doom-emacs-config/blob/master/latex-config.el][here]]
+** Don't raise/lower subscripts
+- See [[https://github.com/ymarco/doom-emacs-config/blob/master/latex-config.el][here]]
   #+begin_src emacs-lisp :tangle yes
 (setq font-latex-fontify-script nil)
   #+end_src
