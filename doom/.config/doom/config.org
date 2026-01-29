@@ -185,23 +185,117 @@ font string. You generally only need these two:
   (setq org-startup-folded t))
 #+end_src
 
+
+** Agenda
+*** Agenda files
+#+begin_src emacs-lisp :tangle yes
+(after! org (setq org-agenda-files
+                  '("~/Documents/notes/guitar.org"
+                    "~/Documents/notes/personal.org"
+                    "~/Documents/notes/todo.org"
+                    "~/Documents/notes/books.org")))
+#+end_src
+
+#+RESULTS:
+| ~/Documents/notes/guitar.org | ~/Documents/notes/personal.org | ~/Documents/notes/todo.org | ~/Documents/notes/books.org |
+
+*** org-super-agenda
+**** Set up custom agenda views
+#+begin_src emacs-lisp :tangle yes
+(use-package! org-super-agenda
+  :after org-agenda
+  :init
+  (setq org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-include-deadlines t
+        org-agenda-block-separator nil
+        org-agenda-compact-blocks t
+        org-agenda-start-day nil ;; i.e. today
+        org-agenda-span 1
+        org-agenda-start-on-weekday nil
+        org-agenda-start-with-log-mode t)
+  (setq org-agenda-custom-commands
+        '(("z" "Super agenda"
+           ((agenda "" ((org-agenda-span 'day)
+                        (org-super-agenda-groups
+                         '(
+                           (:name "Today"
+                            :time-grid nil
+                            ;; :date today
+                            ;; :scheduled today
+                            :order 1)
+                           (:name "Guitar"
+                            :time-grid nil
+                            :file-path "guitar.org"
+                            :order 2)
+                           (:name "Books"
+                            :time-grid nil
+                            :file-path "guitar.org"
+                            :order 2)
+                           (:name "Personal"
+                            :time-grid nil
+                            :file-path "guitar.org"
+                            :order 2)
+                           ))))))
+          ("w" "Weekly review"
+           agenda ""
+           ((org-agenda-start-day "-7d")
+            (org-agenda-span 7)
+            (org-agenda-start-on-weekday 1)
+            (org-agenda-start-with-log-mode t)
+            ))
+          ))
+  :config
+  (org-super-agenda-mode))
+#+end_src
+
+#+RESULTS:
+: t
+
+**** Stop org-super-agenda from clobbering evil mode keybinds
+- See [[https://github.com/alphapapa/org-super-agenda/issues/50][here]]
+#+begin_src emacs-lisp :tangle yes
+(setq org-super-agenda-header-map (make-sparse-keymap))
+#+end_src
+
+#+RESULTS:
+| keymap |
+
+**** Set custom keybinding that skips org-agenda dispatcher
+#+begin_src emacs-lisp :tangle yes
+(after! org-agenda
+  (map! :leader (:desc "org-super-agenda" "z" (cmd! (org-agenda nil "z")))))
+#+end_src
+
+#+RESULTS:
+: #[(&rest _) ((org-agenda nil "z")) nil nil nil nil]
+*** Adjust agenda font
+#+begin_src emacs-lisp :tangle yes
+(custom-set-faces!
+  '(org-agenda-done :inherit default))
+#+end_src
+
+#+RESULTS:
+| doom--customize-themes-h-46 |
+
 ** Capture
 *** Capture location
 #+begin_src emacs-lisp :tangle yes
 (after! org
-  (setq +org-capture-todo-file "~/Documents/notes/journal/2022/todo.org"))
+  (setq +org-capture-todo-file "~/Documents/notes/todo.org"))
 #+end_src
+
+#+RESULTS:
+: ~/Documents/notes/todo.org
 
 *** Capture templates
 #+begin_src emacs-lisp :tangle yes
 (after! org
   (setq org-capture-templates
         '(
-          ("t" "Todo" entry (file+headline +org-capture-todo-file "Inbox")
+          ("t" "Todo" entry (file +org-capture-todo-file)
            "* TODO %?\n%U" :empty-lines 1)
-          ("p" "Personal" entry (file+headline "~/gdrive/notes/personal.org" "Inbox")
-           "* TODO %?\n%U" :empty-lines 1)
-          ("b" "Book" entry (file+headline "~/notes/books.org" "Inbox")
+          ("b" "Book" entry (file+headline "~/Documents/notes/books.org" "Inbox")
            "* TODO %?\n%U" :empty-lines 1)
           )))
 ;; (setq org-capture-templates
@@ -216,9 +310,6 @@ font string. You generally only need these two:
 ;;         ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %? %i %a" :heading "Notes" :prepend t)
 ;;         ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %? %i %a" :heading "Changelog" :prepend t)))
 #+end_src
-
-#+RESULTS:
-| t | Todo | entry | (file+headline +org-capture-todo-file Inbox) | * TODO %? |
 
 ** Clocking
 *** Allow clocks to persist through an Emacs restart

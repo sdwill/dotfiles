@@ -9,6 +9,7 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
 (package! org-bullets)
+(package! org-super-agenda)
 ; (package! autothemer) ;; Needed for catppuccin
 ; (package! catppuccin-theme)
 (package! org-modern)
