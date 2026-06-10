@@ -26,10 +26,15 @@ font string. You generally only need these two:
 #+begin_src emacs-lisp :tangle yes
 ;; (setq doom-font (font-spec :family "Victor Mono" :size 16 :weight 'medium)
 ;;       doom-variable-pitch-font (font-spec :family "IBM Plex Sans" :size 14))
-(setq doom-font (font-spec :family "Monaco" :size 14)
+(setq doom-font (font-spec :family "IBM Plex Mono" :size 14)
    doom-variable-pitch-font (font-spec :family "Arial" :size 14)
    doom-unicode-font (font-spec :family "Fira Code" :size 14))
+(setq-default line-spacing 0.2)
+(setq-default left-margin-width 0 right-margin-width 5)
 #+end_src
+
+#+RESULTS:
+: 5
 
 ** Set Doom theme
 #+begin_src emacs-lisp :tangle yes
@@ -40,8 +45,11 @@ font string. You generally only need these two:
 ;; (setq doom-catppuccin-dark-variant "latte")
 ;; (setq doom-theme 'doom-nord-light)
 ;; (load-theme 'catppuccin-latte)
-(setq doom-theme 'doom-solarized-light)
+(setq doom-theme 'doom-ayu-light)
 #+end_src
+
+#+RESULTS:
+: doom-ayu-light
 
 ** Disable autocompletion of dictionary words from company-ispell
 - Implementation 1: see [[https://www.reddit.com/r/emacs/comments/p2iwbv/turn_off_companyispell/][here]]
@@ -65,9 +73,12 @@ font string. You generally only need these two:
 #+end_src
 ** Start in maximized window
 - [[https://emacs.stackexchange.com/a/3017/23435][Source]]
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 #+end_src
+
+#+RESULTS:
+: ((fullscreen . maximized) (left-fringe . 8) (right-fringe . 8))
 
 ** Relative line numbers
 #+begin_src emacs-lisp :tangle yes
@@ -234,7 +245,7 @@ font string. You generally only need these two:
 
 #+RESULTS:
 : #[(&rest _) ((org-agenda nil "z")) nil nil nil nil]
-*** Adjust agenda font
+*** Adjust agenda font color
 #+begin_src emacs-lisp :tangle yes
 (custom-set-faces!
   '(org-agenda-done :inherit default))
@@ -242,6 +253,19 @@ font string. You generally only need these two:
 
 #+RESULTS:
 | doom--customize-themes-h-46 |
+
+*** Configure org-agenda clockreport mode
+#+begin_src emacs-lisp :tangle yes
+;; Add a newline above the clock report
+(setq org-agenda-clock-report-header "
+Clock Summary:") 
+
+;; Turn off links and adjust maxlevel
+(setq org-agenda-clockreport-parameter-plist '(:link nil :maxlevel 3 :fileskip0 t :stepskip0 t))
+#+end_src
+
+#+RESULTS:
+| :link | nil | :maxlevel | 3 | :fileskip0 | t | :stepskip0 | t |
 
 ** Capture
 *** Capture location
@@ -288,9 +312,12 @@ font string. You generally only need these two:
 ** Refile notes to top of heading
 #+begin_src emacs-lisp :tangle yes
 (after! org
-  (setq org-reverse-note-order t)
+  (setq org-reverse-note-order nil)
 )
 #+end_src
+
+#+RESULTS:
+
 ** org-modern
 #+begin_src emacs-lisp :tangle no
 (add-hook 'org-mode-hook #'org-modern-mode)
@@ -328,6 +355,29 @@ font string. You generally only need these two:
 (setq image-file-name-extensions '("png" "jpeg" "jpg" "gif" "tiff" "tif" "xbm" "xpm" "pbm" "pgm" "ppm" "pnm" "svg" "heic")
 )
 #+end_src
+** Prepend date when changing TODO status
+[2026-03-13 Fri 15:18]
+#+begin_src emacs-lisp :tangle no
+(defun my/prepend-done-date ()
+  "Prepend a YYYYMMDD completion date to the headline when marked DONE."
+  (when (string= org-state "DONE")
+    (let ((date-str (format-time-string "%Y%m%d")))
+      (save-excursion
+        (org-back-to-heading t)
+        (when (looking-at org-complex-heading-regexp)
+          (let* ((title-start (match-beginning 4))
+                 (title       (match-string 4)))
+            ;; Only prepend if not already prefixed with a date
+            (unless (string-match-p "^[0-9]\\{8\\} " title)
+              (goto-char title-start)
+              (insert date-str " "))))))))
+
+(add-hook 'org-after-todo-state-change-hook #'my/prepend-done-date)
+#+end_src
+
+#+RESULTS:
+| my/prepend-done-date |
+
 * exec-path-from-shell
 #+begin_src emacs-lisp :tangle yes
 (when (memq window-system '(mac ns x))
