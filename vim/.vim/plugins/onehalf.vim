@@ -1,3 +1,0 @@
-" ----- sonph/onehalf
-colorscheme onehalfdark
-" -----
