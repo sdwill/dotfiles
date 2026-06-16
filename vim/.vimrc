@@ -17,7 +17,7 @@ source ~/.vim/plugins/bullets.vim
 source ~/.vim/plugins/goyo.vim
 source ~/.vim/plugins/vim-maximizer.vim
 " source ~/.vim/plugins/vim-latex.vim
-source ~/.vim/plugins/vimtex.vim
+" source ~/.vim/plugins/vimtex.vim
 
 " source ~/.vim/plugins/fzf.vim
 source ~/.vim/plugins/telescope.lua
@@ -25,33 +25,11 @@ source ~/.vim/plugins/telescope-file-browser.lua
 source ~/.vim/plugins/todo-comments.lua
 source ~/.vim/plugins/toggleterm.lua
 source ~/.vim/plugins/autosave.lua
-" source ~/.vim/plugins/ncm2.vim
-" source ~/.vim/plugins/wiki.vim
 source ~/.vim/plugins/vim-easy-align.vim
-" source ~/.vim/plugins/orgmode.lua
-source ~/.vim/plugins/treesitter.lua
 source ~/.vim/plugins/taboo.vim
-" source ~/.vim/plugins/vim-medieval.vim
-" vimrc/.vim/plugins/bufferline.lua
 source ~/.vim/plugins/zen-mode.lua
 
-" source ~/.vim/plugins/vimade.vim
-" source ~/.vim/plugins/airline.vim
 source ~/.vim/plugins/lualine.lua
-" source ~/.vim/plugins/which-key.lua
-
-" ----- Native LSP
-source ~/.vim/plugins/nvim-lsp-installer.lua
-source ~/.vim/plugins/nvim-lspconfig.lua
-source ~/.vim/plugins/nvim-cmp.lua
-source ~/.vim/plugins/nvim-cmp.vim
-" source ~/.vim/plugins/navigator.lua
-" source ~/.vim/plugins/lspsaga.lua
-" source ~/.vim/lsp/lua-ls.lua
-" source ~/.vim/lsp/nvim-lsputils.lua
-" -----
-
-" source ~/.vim/plugins/ctrlspace.vim
 
 " ----- Color schemes: more at https://vimcolorschemes.com/
 " NOTE: setting any of these colorschemes will cause bold/italics in Markdown to disappear after reloading .vimrc. See:
@@ -89,18 +67,6 @@ source ~/.vim/plugins/everforest.vim
 " source ~/.vim/plugins/onenord.lua
 " source ~/.vim/plugins/zephyr.vim
 " -----
-
-" ----- Transparent background. Must be called AFTER colorscheme.
-" See https://stackoverflow.com/questions/37712730/set-vim-background-transparent
-" hi Normal guibg=NONE ctermbg=NONE
-" hi NonText guibg=NONE
-" -----
-
-" autocmd FileType markdown * lua require('cmp').setup.buffer {
-" \   sources = {
-" \     { name = 'buffer' },
-" \   }
-" \ }
 
 " NOTE! Involves reloading lightline, so will cause an error if lightline doesn't exist
 source ~/.vim/reload-config.vim

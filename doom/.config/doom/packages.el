@@ -9,9 +9,9 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
 (package! org-super-agenda)
-(package! autothemer)
-(package! catppuccin-theme)
-(package! solarized-theme)
+;; (package! autothemer)
+;; (package! catppuccin-theme)
+;; (package! solarized-theme)
 ;; (package! org-bullets)
 ;; (package! org-modern)
 ;; (package! everforest :recipe (:repo "https://git.sr.ht/~theorytoe/everforest-theme"))

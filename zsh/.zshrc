@@ -136,10 +136,6 @@ export PATH="$HOME/bin:$PATH"
 export VISUAL=$(which nvim)
 export EDITOR=$(which nvim)
 
-# Add FZF completions
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source <(fzf --zsh)
-
 # Add sphinx to path
 export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
 
@@ -157,16 +153,37 @@ export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/swill/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+    if [ -f "/Users/swill/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/Users/swill/miniforge3/etc/profile.d/conda.sh"
     else
-        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+        export PATH="/Users/swill/miniforge3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# Add /opt/local/bin to PATH (for ASD-managed machines)
+export PATH="/opt/local/bin:$PATH"
+
+# Add local home-brew install to PATH
+export PATH="~/homebrew/bin:$PATH" 
+
+# Add EmacsMac (from macports) to PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# From fzf install:
+# "Append this line to ~/.zshrc to enable fzf keybindings for Zsh:"
+source /opt/local/share/fzf/shell/key-bindings.zsh
+
+# "Append this line to ~/.zshrc to enable fuzzy auto-completion for Zsh:"
+source /opt/local/share/fzf/shell/completion.zsh
+
+# >>> Added by Spyder >>>
+alias uninstall-spyder=/Users/swill/Library/spyder-6/uninstall-spyder.sh
+# <<< Added by Spyder <<<
+
+alias code="~/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"

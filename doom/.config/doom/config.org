@@ -22,14 +22,19 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "Iosevka" :size 14))
-(setq myfont "VictorMono Nerd Font")
-(setq doom-font (font-spec :family myfont :size 14))
+(setq myfont "RobotoMono Nerd Font")
+;; (setq myfont "RobotoMono Nerd Font")
+(setq doom-font (font-spec :family myfont :size 15))
+(setq line-spacing 0.2)
 ;; ;; This will override the sans-serif fonts used by certain themes like Selenized
 ;; (setq doom-variable-pitch-font (font-spec :family myfont :size 14 :weight 'bold))
 
 ;; ;; Disable underlining the dates, for themes that do this (like selenized)
 ;; (set-face-underline 'org-date nil)
 #+end_src
+
+#+RESULTS:
+: 0.2
 
 ** Set font height for headers
 #+begin_src emacs-lisp :tangle yes
@@ -123,6 +128,15 @@
 
 #+RESULTS:
 : meta
+** Get GUI emacs to load doom config [unused]
+#+begin_src emacs-lisp :tangle no
+(use-package! exec-path-from-shell
+  :when (memq window-system '(mac ns x))
+  :config
+  (exec-path-from-shell-initialize))
+#+end_src
+
+#+RESULTS:
 
 * Org-mode
 ** General
@@ -206,24 +220,81 @@
 
 #+RESULTS:
 | org-hide-drawer-all | org-cycle-hide-archived-subtrees | org-cycle-show-empty-lines | org-cycle-optimize-window-after-visibility-change |
+*** Function: extract clock entry when switching tasksfrom
+#+begin_src emacs-lisp :tangle yes
+(defun my/org-move-logbook-to-new-heading (new-title)
+  "Move the current line's LOGBOOK drawer to a new Org heading.
+Prompts for NEW-TITLE, prepends the current MMDD date to it,
+and adds a timestamp using the start time of the CLOCK entry."
+  (interactive "sNew task name: ")
+  (save-excursion
+    (org-back-to-heading t)
+    (let ((case-fold-search t)
+          logbook-start
+          logbook-end
+          clock-start-str
+          clock-timestamp)
+      
+      ;; 1. Locate and parse the LOGBOOK drawer under the current heading
+      (if (re-search-forward "^[ \t]*:LOGBOOK:[ \t]*$" (save-excursion (outline-next-heading) (point)) t)
+          (progn
+            (setq logbook-start (match-beginning 0))
+            ;; Find the corresponding :END:
+            (if (re-search-forward "^[ \t]*:END:[ \t]*$" (save-excursion (outline-next-heading) (point)) t)
+                (setq logbook-end (match-end 0))
+              (error "LOGBOOK drawer has no closing :END:")))
+        (error "No :LOGBOOK: drawer found in this entry"))
+
+      ;; 2. Extract the first CLOCK entry timestamp within this drawer
+      (goto-char logbook-start)
+      (if (re-search-forward "CLOCK: \\(\\[[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}[^]]+\\]\\)" logbook-end t)
+          (setq clock-start-str (match-string 1))
+        (error "No CLOCK entry found inside the :LOGBOOK: drawer"))
+
+      ;; 3. Convert the clock string into an active/inactive Org timestamp format for the bottom
+      ;; Extracted string is already formatted like "[YYYY-MM-DD Day HH:MM]"
+      (setq clock-timestamp clock-start-str)
+
+      ;; 4. Save the full text of the logbook drawer before deleting it
+      (let ((logbook-text (buffer-substring-no-properties logbook-start logbook-end)))
+        
+        ;; Delete the original LOGBOOK drawer and any trailing whitespace/newlines
+        (goto-char logbook-start)
+        (delete-region logbook-start logbook-end)
+        (when (looking-at "[ \t]*\n")
+          (delete-region (point) (match-end 0)))
+
+        ;; 5. Move to the end of the current subtree to insert the new heading
+        (org-end-of-subtree t t)
+        (unless (bolp) (insert "\n"))
+        
+        ;; 6. Construct and insert the new heading structure
+        (let* ((mmdd (format-time-string "%m%d"))
+               (heading-stars (make-string (org-current-level) ?*)))
+          (insert (format "\n%s %s %s\n" heading-stars mmdd new-title))
+          (insert logbook-text "\n")
+          (insert clock-timestamp "\n\n")
+          )))))
+
+#+end_src
 
 ** Agenda
 *** Agenda files
 #+begin_src emacs-lisp :tangle yes
 (setq org-agenda-files-2022
         '("~/Documents/notes/journal/2022/todo.org"
-          "~/Documents/notes/projects/irad_fy22.org"
-          "~/Documents/notes/projects/apra_fy23.org"
-          "~/Documents/notes/projects/ldfc.org"
+          "~/Documents/notes/projects_23-25/irad_fy22.org"
+          "~/Documents/notes/projects_23-25/apra_fy23.org"
+          "~/Documents/notes/projects_23-25/ldfc.org"
           "~/Documents/notes/inbox.org"
       ))
 
 (setq org-agenda-files-2023
       '("~/Documents/notes/journal/2023/general.org"
-        "~/Documents/notes/projects/rst.org"
-        "~/Documents/notes/projects/hwo.org"
-        "~/Documents/notes/projects/apra_fy23.org"
-        "~/Documents/notes/projects/ldfc.org"
+        "~/Documents/notes/projects_23-25/rst.org"
+        "~/Documents/notes/projects_23-25/hwo.org"
+        "~/Documents/notes/projects_23-25/apra_fy23.org"
+        "~/Documents/notes/projects_23-25/ldfc.org"
         "~/Documents/notes/inbox.org"
         "~/Documents/notes/ideas.org"
         ))
@@ -231,27 +302,31 @@
 (setq org-agenda-files-2024
       '("~/Documents/notes/journal/2024/general.org"
         "~/Documents/notes/journal/2024/leave.org"
-        "~/Documents/notes/projects/rst.org"
-        "~/Documents/notes/projects/hwo.org"
-        "~/Documents/notes/projects/apra_fy23.org"
+        "~/Documents/notes/projects_23-25/rst.org"
+        "~/Documents/notes/projects_23-25/hwo.org"
+        "~/Documents/notes/projects_23-25/apra_fy23.org"
         "~/Documents/notes/inbox.org"
         ))
 
 (setq org-agenda-files-2025
       '("~/Documents/notes/journal/2025/general.org"
         "~/Documents/notes/journal/2025/leave.org"
-        "~/Documents/notes/projects/hwo.org"
-        "~/Documents/notes/projects/apra_fy23.org"
-        "~/Documents/notes/projects/rst.org"
+        "~/Documents/notes/projects_23-25/hwo.org"
+        "~/Documents/notes/projects_23-25/apra_fy23.org"
+        "~/Documents/notes/projects_23-25/rst.org"
+        "~/Documents/notes/inbox.org"
+        ))
+
+(setq org-agenda-files-2026
+      '("~/Documents/notes/journal/2026/general.org"
+        "~/Documents/notes/journal/2026/leave.org"
+        "~/Documents/notes/journal/2026/hwo.org"
         "~/Documents/notes/inbox.org"
         ))
 
 ;; (after! org (setq org-agenda-files (append org-agenda-files-2023 org-agenda-files-2022)))
-(after! org (setq org-agenda-files org-agenda-files-2025))
+(after! org (setq org-agenda-files org-agenda-files-2026))
 #+end_src
-
-#+RESULTS:
-| ~/Documents/notes/journal/2025/general.org | ~/Documents/notes/journal/2025/leave.org | ~/Documents/notes/projects/hwo.org | ~/Documents/notes/projects/apra_fy23.org | ~/Documents/notes/projects/rst.org | ~/Documents/notes/inbox.org |
 
 *** org-super-agenda
 **** Set up custom agenda views
@@ -358,13 +433,13 @@
           ("t" "Todo" entry (file +org-capture-todo-file)
            "* TODO %?\n%U" :empty-lines 1)
           ("T" "Todo (interrupt)" entry (file +org-capture-todo-file)
-           "* TODO %<%m/%d> %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
+           "* TODO %<%m%d> %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
           ("m" "Meeting" entry (file +org-capture-todo-file)
            "* MEETING %?\n%U" :empty-lines 1)
           ("M" "Meeting (interrupt)" entry (file +org-capture-todo-file)
-           "* MEETING %<%m/%d> %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
+           "* MEETING %<%m%d> %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
           ("W" "Work (interrupt)" entry (file +org-capture-todo-file)
-           "* %<%m/%d> %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
+           "* %<%m%d> %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
           )))
 ;; (setq org-capture-templates
 ;;       '(("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
@@ -381,6 +456,15 @@
 
 #+RESULTS:
 | t | Todo | entry | (file +org-capture-todo-file) | * TODO %? |
+%U |:empty-lines |1 |
+| T | Todo (interrupt) | entry | (file +org-capture-todo-file) | * TODO %<%m%d> %? |
+%U |:empty-lines |1 |:clock-in |t |:clock-keep |t |:jump-to-captured |t |
+| m | Meeting | entry | (file +org-capture-todo-file) | * MEETING %? |
+%U |:empty-lines |1 |
+| M | Meeting (interrupt) | entry | (file +org-capture-todo-file) | * MEETING %<%m%d> %? |
+%U |:empty-lines |1 |:clock-in |t |:clock-keep |t |:jump-to-captured |t |
+| W | Work (interrupt) | entry | (file +org-capture-todo-file) | * %<%m%d> %? |
+%U |:empty-lines |1 |:clock-in |t |:clock-keep |t |:jump-to-captured |t |
 
 ** Clocking
 *** Allow clocks to persist through an Emacs restart

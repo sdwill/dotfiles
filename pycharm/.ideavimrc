@@ -44,7 +44,6 @@ set hidden
 set encoding=utf-8
 "---
 filetype plugin on
-set scrolloff=10  " Keep cursor 10 lines from screen border when scrolling
 set wildignore+=.git,.hg,.svn,.idea,.pytest_cache,__pycache__,.DS_Store,tags
 set clipboard=unnamedplus  " Yank/paste from system clipboard by default
 set linebreak  " Don't split words when softwrapping
