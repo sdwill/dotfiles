@@ -1,15 +1,13 @@
 # Neovim Config Cheat Sheet
 
-## Plugin Management (lazy.nvim)
+## Plugin Management (Native vim.pack)
 
 | Command | Action |
 |---------|--------|
-| `:Lazy` | Open plugin manager UI |
-| `:Lazy install` | Install missing plugins |
-| `:Lazy update` | Update all plugins |
-| `:Lazy clean` | Remove unused plugins |
-| `:Lazy sync` | Install + update + clean |
-| `:Lazy profile` | Show startup time profile |
+| `:PackStatus` | Show all plugins and installation status |
+| `:PackUpdate` | Update all plugins to latest version |
+| `:PackClean` | Remove plugins not in config |
+| `:TSBootstrap` | Install/update Treesitter parsers |
 
 ## LSP Keybindings
 
@@ -72,7 +70,6 @@
 | `:TSUpdate` | Update all parsers |
 | `:TSInstall <lang>` | Install parser for language |
 | `:TSModuleInfo` | Show loaded modules |
-| `:TSPlaygroundToggle` | Toggle syntax tree view (if installed) |
 
 ### Incremental Selection
 
@@ -137,7 +134,7 @@
 | `:Obsession` | Start recording session |
 | `:Obsession!` | Stop recording |
 | `:Obsession <file>` | Save to specific file |
-| `vim -S` | Restore session |
+| `nvim -S Session.vim` | Restore session |
 
 ## Which-key
 
@@ -152,9 +149,8 @@
 | Command | Action |
 |---------|--------|
 | `:checkhealth` | Check Neovim installation |
-| `:checkhealth lazy` | Check lazy.nvim |
-| `:checkhealth nvim-treesitter` | Check Treesitter |
 | `:LspInfo` | Show LSP client info |
+| `:TSModuleInfo` | Check Treesitter status |
 
 ## Useful Vim Commands
 
@@ -166,3 +162,14 @@
 | `:set <option>?` | Show option value |
 | `:e!` | Reload file from disk |
 | `:source %` | Reload current file |
+
+## Color Schemes
+
+Switch themes:
+```vim
+:colorscheme everforest  " soft, default
+:colorscheme edge
+:colorscheme sonokai
+:colorscheme tokyonight
+:colorscheme kanagawa
+```

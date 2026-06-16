@@ -1,152 +1,159 @@
-# Neovim Config Cleanup Summary
+# Neovim Config Summary
 
-## What Changed
+## Current Setup (Neovim 0.12+)
 
-### Plugins: 50+ → 24
+### Plugin Manager: Native vim.pack ✨
+- **No external plugin manager needed**
+- Plugins installed to `~/.local/share/nvim/site/pack/plugins/start/`
+- Custom bootstrap script handles installation
+- Simple commands: `:PackStatus`, `:PackUpdate`, `:PackClean`
 
-**Kept:**
-- **Core editing**: vim-surround, vim-obsession
-- **LSP & Completion**: nvim-lspconfig, nvim-cmp (with native vim.snippet)
-- **Treesitter**: nvim-treesitter
-- **Navigation**: Telescope + file browser
-- **UI**: lualine, startify, which-key, nvim-web-devicons, taboo
-- **Writing**: todo-comments
-- **Focus**: zen-mode
-- **Terminal**: toggleterm, auto-save
-- **Themes**: everforest, edge, sonokai, tokyonight, kanagawa
+### Modern APIs
+- **LSP**: Uses `vim.lsp.config` (new 0.12 API)
+- **Snippets**: Native `vim.snippet` (no LuaSnip)
+- **Packages**: Native `vim.pack` (no lazy.nvim)
 
-**Removed:**
-- ❌ `nvim-lsp-installer` (deprecated)
-- ❌ `LuaSnip` (replaced by native `vim.snippet`)
-- ❌ `vim-fugitive` (Git integration)
-- ❌ Writing plugins: pandoc, vimtex, bullets, vim-medieval
-- ❌ Navigation: ranger, vim-sneak
-- ❌ Utilities: vim-commentary, vim-easy-align, close-buffers, vim-maximizer
-- ❌ UI: goyo (replaced by zen-mode), vim-which-key (replaced by which-key.nvim)
-- ❌ Icons: vim-devicons (replaced by nvim-web-devicons)
-- ❌ 18 unused color schemes
-- ❌ All VSCode-specific checks
+### Plugins: 24 Total
 
-### Configuration Structure
+**Core Editing**
+- vim-surround, vim-obsession
 
-**Old:**
-```
-vim/
-├── .vimrc (VimScript)
-└── .vim/
-    ├── vim_plug.vim
-    ├── general.vim
-    ├── keybindings.vim
-    └── plugins/*.vim
+**LSP & Completion**
+- nvim-lspconfig (helpers only, uses vim.lsp.config)
+- nvim-cmp + sources (nvim-lsp, buffer, path, cmdline)
+- Native vim.snippet for snippets
 
-nvim/.config/nvim/
-└── init.vim → sources ~/.vimrc
-```
+**Treesitter**
+- nvim-treesitter
 
-**New:**
-```
-nvim/.config/nvim/
-├── init.lua                # Entry point
-├── lua/
-│   ├── config/
-│   │   ├── options.lua     # Settings
-│   │   ├── keymaps.lua     # Keybindings
-│   │   ├── autocmds.lua    # Autocommands
-│   │   └── lazy.lua        # Plugin manager setup
-│   └── plugins/            # One file per plugin/category
-│       ├── colorschemes.lua
-│       ├── editing.lua
-│       ├── treesitter.lua
-│       ├── lsp.lua
-│       ├── completion.lua
-│       ├── telescope.lua
-│       ├── ui.lua
-│       └── ... (8 more)
-└── README.md
-```
+**Navigation**
+- Telescope + file-browser
+- plenary.nvim (dependency)
 
-### Modern Neovim Features Used
+**UI**
+- lualine, startify, which-key, nvim-web-devicons, taboo
 
-✅ **Native `vim.snippet`** (Neovim 0.10+) - No more LuaSnip needed
-✅ **lazy.nvim** - Modern plugin manager with lazy loading
-✅ **All Lua configuration** - No VimScript
-✅ **Modular structure** - Each plugin in its own file
-✅ **Built-in LSP client** - Via nvim-lspconfig
-✅ **Treesitter** - Better syntax highlighting
+**Features**
+- todo-comments, zen-mode, toggleterm, auto-save
 
-### Key Bindings (Unchanged)
-
-All your existing keybindings work the same:
-- `<Space>` = Leader
-- `,` = Local leader  
-- `<leader>w` = Save
-- `<leader>q` = Quit
-- `<leader>g` = Zen mode
-- `<C-p>` = Find files
-- `<C-f>` = Live grep
-- `<leader>1-9` = Jump to tabs
-- `F3` = Open config
-- And many more...
-
-### What You Need to Do
-
-1. **Launch Neovim** - plugins install automatically
-2. **Optional**: Install LSP servers for languages you use
-   - Example: `pip install pyright` for Python
-   - Add config in `lua/plugins/lsp.lua`
-3. **Optional**: Run `:TSUpdate` to update Treesitter parsers
-
-### Files Created
-
-New config files (24 total):
-- `nvim/.config/nvim/init.lua`
-- `nvim/.config/nvim/lua/config/*.lua` (4 files)
-- `nvim/.config/nvim/lua/plugins/*.lua` (10 files)
-- `nvim/.config/nvim/README.md`
-- `nvim/MIGRATION.md`
-- `nvim/SUMMARY.md` (this file)
-
-Old config files (untouched):
-- `vim/.vimrc`
-- `vim/.vim/*`
+**Themes**
+- everforest (default), edge, sonokai, tokyonight, kanagawa
 
 ## Quick Start
 
 ```bash
-# Launch Neovim (plugins auto-install on first run)
+# First launch - plugins auto-install
 nvim
 
 # Check plugin status
-:Lazy
+:PackStatus
+
+# Update Treesitter parsers
+:TSBootstrap
 
 # Update all plugins
-:Lazy update
-
-# Check LSP status
-:LspInfo
-
-# Check Treesitter
-:TSModuleInfo
-
-# Get help on a keymap
-# Press <leader> and wait - which-key shows options
+:PackUpdate
 ```
 
-## Philosophy
+## Key Commands
 
-This config follows modern Neovim best practices:
-- ✅ Minimal - only essential plugins
-- ✅ Pure Lua - no VimScript
-- ✅ Modular - easy to understand and modify
-- ✅ Fast - lazy loading where appropriate
-- ✅ Native - uses built-in features when available
-- ✅ Current - all plugins actively maintained
+### Plugin Management
+- `:PackStatus` - Show all plugins
+- `:PackUpdate` - Update everything
+- `:PackClean` - Remove unused plugins
+- `:TSBootstrap` - Update Treesitter parsers
+
+### LSP
+- `gd` - Go to definition
+- `K` - Show hover
+- `<leader>rn` - Rename
+- `<leader>ca` - Code action
+- See [CHEATSHEET.md](CHEATSHEET.md) for full list
+
+### Navigation
+- `<C-p>` - Find files
+- `<C-f>` - Live grep
+- `<leader><Space>` - Telescope menu
+
+## Configuration Structure
+
+```
+~/.config/nvim/
+├── init.lua                    # Entry point
+├── lua/
+│   ├── config/
+│   │   ├── bootstrap.lua       # Plugin installation
+│   │   ├── options.lua         # Settings
+│   │   ├── keymaps.lua         # Keybindings
+│   │   ├── autocmds.lua        # Autocommands
+│   │   └── plugins.lua         # Plugin loader
+│   └── plugins/
+│       ├── lsp.lua             # vim.lsp.config setup
+│       ├── completion.lua      # nvim-cmp
+│       ├── treesitter.lua
+│       ├── telescope.lua
+│       ├── lualine.lua
+│       ├── which-key.lua
+│       ├── todo-comments.lua
+│       ├── zen-mode.lua
+│       ├── toggleterm.lua
+│       └── autosave.lua
+└── [README, CHEATSHEET, docs]
+```
+
+## Adding LSP Servers
+
+1. **Install the server**:
+   ```bash
+   pip install pyright              # Python
+   npm i -g typescript-language-server  # TypeScript
+   rustup component add rust-analyzer   # Rust
+   ```
+
+2. **Edit `lua/plugins/lsp.lua`**:
+   ```lua
+   vim.lsp.config("pyright", {
+     cmd = { "pyright-langserver", "--stdio" },
+     filetypes = { "python" },
+     root_markers = { "pyproject.toml", ".git" },
+     capabilities = capabilities,
+     on_attach = on_attach,
+   })
+   vim.lsp.enable("pyright")
+   ```
+
+3. **Restart Neovim**
+
+## Why This Setup?
+
+✅ **Native** - Uses Neovim's built-in vim.pack
+✅ **Simple** - No plugin manager complexity
+✅ **Fast** - Direct plugin loading, no overhead
+✅ **Modern** - Latest Neovim 0.12 APIs
+✅ **Minimal** - Only 24 essential plugins
+✅ **Pure Lua** - No VimScript
+✅ **Modular** - Easy to understand and customize
+
+## Documentation
+
+- [README.md](nvim/.config/nvim/README.md) - Full overview
+- [CHEATSHEET.md](nvim/.config/nvim/CHEATSHEET.md) - Quick reference
+- [MIGRATION_0.12.md](nvim/MIGRATION_0.12.md) - Upgrade guide
+- [MIGRATION.md](nvim/MIGRATION.md) - Original migration from vim-plug
+
+## History
+
+1. **Original**: vim-plug + VimScript + 50+ plugins
+2. **v1**: lazy.nvim + Lua + 24 plugins
+3. **v2 (current)**: Native vim.pack + vim.lsp.config + 24 plugins
+
+Each iteration simplified and modernized the config while maintaining functionality.
 
 ## Next Steps
 
-1. **Test the config** - launch `nvim` and let plugins install
-2. **Add LSP servers** - for languages you use
-3. **Customize** - edit files in `lua/config/` and `lua/plugins/`
-4. **Remove old config** - once you're happy with the new one
+1. ✅ Launch Neovim (plugins auto-install)
+2. ✅ Run `:TSBootstrap` to update parsers
+3. ✅ Add LSP servers for your languages
+4. ✅ Customize as needed
 
-Enjoy your clean, modern Neovim setup! 🎉
+Enjoy your ultra-minimal, modern Neovim setup! 🚀

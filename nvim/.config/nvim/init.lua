@@ -1,28 +1,17 @@
--- Modern Neovim configuration
--- Minimal setup using lazy.nvim package manager
+-- Modern Neovim configuration using native vim.pack
+-- Compatible with Neovim 0.12+
 
--- Set leader keys before loading plugins
+-- Set leader keys before anything else
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
--- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
+-- Bootstrap plugin manager (installs plugins on first run)
+require("config.bootstrap")
 
 -- Load core settings
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
 
--- Load plugins
-require("config.lazy")
+-- Load plugin configurations
+require("config.plugins")
