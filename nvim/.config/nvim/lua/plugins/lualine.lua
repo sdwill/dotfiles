@@ -5,11 +5,12 @@ if not ok then
 end
 
 lualine.setup({
-  options = {
-    theme = "auto",
-    component_separators = "|",
-    section_separators = { left = "", right = "" },
-  },
+   options = {
+     theme = "auto",
+     component_separators = "|",
+     section_separators = { left = "", right = "" }, -- Restore fancy separators
+     icons_enabled = true,  -- Enable icons
+   },
   sections = {
     lualine_a = {
       { "mode", separator = { left = "" }, right_padding = 2 },

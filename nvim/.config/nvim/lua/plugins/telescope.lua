@@ -7,6 +7,8 @@ end
 telescope.setup({
   defaults = {
     file_ignore_patterns = { ".git" },
+    -- Disable icons if you don't have a Nerd Font installed
+    -- Set to false to avoid missing glyphs
     color_devicons = true,
     layout_config = {
       width = 0.95,

@@ -50,34 +50,35 @@ vim.diagnostic.config({
 -- LSP server configurations using vim.lsp.config
 -- See :help vim.lsp.config for available options
 
--- Example: Lua language server
-vim.lsp.config("lua_ls", {
-  cmd = { "lua-language-server" },
-  filetypes = { "lua" },
-  root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml", ".git" },
-  capabilities = capabilities,
-  on_attach = on_attach,
-  settings = {
-    Lua = {
-      runtime = {
-        version = "LuaJIT",
-      },
-      diagnostics = {
-        globals = { "vim" },
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false,
-      },
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-})
-
--- Enable configured servers
-vim.lsp.enable("lua_ls")
+-- Example: Lua language server (commented out by default)
+-- Uncomment if you want Lua LSP and have lua-language-server installed
+-- Install: brew install lua-language-server (or via MacPorts/other)
+--
+-- vim.lsp.config("lua_ls", {
+--   cmd = { "lua-language-server" },
+--   filetypes = { "lua" },
+--   root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml", ".git" },
+--   capabilities = capabilities,
+--   on_attach = on_attach,
+--   settings = {
+--     Lua = {
+--       runtime = {
+--         version = "LuaJIT",
+--       },
+--       diagnostics = {
+--         globals = { "vim" },
+--       },
+--       workspace = {
+--         library = vim.api.nvim_get_runtime_file("", true),
+--         checkThirdParty = false,
+--       },
+--       telemetry = {
+--         enable = false,
+--       },
+--     },
+--   },
+-- })
+-- vim.lsp.enable("lua_ls")
 
 -- Add more language servers here following the same pattern:
 -- 1. Define with vim.lsp.config(name, config_table)
