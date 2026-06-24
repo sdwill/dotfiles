@@ -139,3 +139,5 @@ source "$HOME/.cargo/env"
 # Add texlive 2021 to path
 export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
 . "$HOME/.cargo/env"
+
+. "$HOME/.local/bin/env"

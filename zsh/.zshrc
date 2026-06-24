@@ -174,3 +174,5 @@ unset __conda_setup
 conda config --set changeps1 False  # Don't change prompt
 
 alias doom="~/.emacs.d/bin/doom"
+
+. "$HOME/.local/bin/env"
