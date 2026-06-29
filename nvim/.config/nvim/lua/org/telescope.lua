@@ -48,6 +48,9 @@ function M.search_headlines()
         end,
       }),
       sorter = conf.generic_sorter({}),
+      -- Disable default sorting to maintain file order
+      default_selection_index = 1,
+      sorting_strategy = "ascending",
       attach_mappings = function(prompt_bufnr, map)
         actions.select_default:replace(function()
           actions.close(prompt_bufnr)
