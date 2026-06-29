@@ -11,6 +11,7 @@ local plugins = {
 
   -- Treesitter
   "nvim-treesitter/nvim-treesitter",
+  "nvim-orgmode/tree-sitter-org",
 
   -- LSP
   "neovim/nvim-lspconfig",

@@ -1,0 +1,57 @@
+#+TITLE: Org-Mode Test File
+#+AUTHOR: Scott Will
+
+* DONE Phase 1 Testing
+[2026-06-29 Sun 14:45]
+
+This is a test file for the org-mode implementation.
+
+** TODO Test structural editing
+- dd on this headline should delete entire subtree
+- Alt-j/Alt-k should move headlines up/down
+
+*** Child headline 1
+This is content under child 1.
+
+*** Child headline 2
+This is content under child 2.
+
+** TODO Test promote/demote
+- << should promote (remove star)
+- >> should demote (add star)
+
+** NEXT Test folding
+- TAB should cycle fold states
+- File should start folded
+
+** DONE Test TODO cycling
+- SPC m t should cycle through TODO states
+- TODO -> NEXT -> WIP -> AWAIT -> BLOCKED -> IDEA -> MAYBE -> DONE -> (none) -> TODO
+
+* MEETING Test meeting keywords
+These should also cycle correctly.
+
+* Test checkboxes
+- [x] Checkbox item 1
+- [x] Checkbox item 2
+- [x] Completed checkbox
+
+* Test timestamps
+[2026-06-29 Sun]
+
+Insert timestamps with:
+- SPC m d i (inactive timestamp)
+
+* Test search
+SPC m / should open Telescope with all headlines.
+
+** Nested headline 1
+*** Nested headline 2
+**** Deep nested headline
+
+* Notes
+:LOGBOOK:
+- This is a drawer that should fold
+:END:
+
+This is regular content.
