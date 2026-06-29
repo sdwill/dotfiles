@@ -44,15 +44,19 @@ function M.foldexpr()
     return ">" .. #stars
   end
 
-  -- Check if it's a drawer
-  if line:match("^%s*:") and (line:match(":LOGBOOK:") or line:match(":PROPERTIES:") or line:match(":END:")) then
-    if line:match(":END:") then
-      return "<1"
+  -- Drawers create nested folds within the headline
+  -- This allows them to be independently folded/unfolded
+  if line:match("^%s*:[A-Z]+:") then
+    -- Drawer start (e.g., :LOGBOOK:, :PROPERTIES:)
+    if not line:match(":END:") then
+      return "a1" -- Add 1 to current fold level (nested fold)
     else
-      return "a1"
+      -- Drawer end (:END:)
+      return "s1" -- Subtract 1 from current fold level (close nested fold)
     end
   end
 
+  -- Everything else stays at same level as previous line
   return "="
 end
 
