@@ -22,7 +22,12 @@ function M.setup_buffer(bufnr)
   -- Use tree-sitter for folding
   vim.api.nvim_buf_set_option(bufnr, "foldmethod", "expr")
   vim.api.nvim_buf_set_option(bufnr, "foldexpr", "v:lua.require'org.fold'.foldexpr()")
-  vim.api.nvim_buf_set_option(bufnr, "foldtext", "v:lua.require'org.fold'.foldtext()")
+
+  -- Empty foldtext preserves syntax highlighting (see neovim PR #20750)
+  vim.api.nvim_buf_set_option(bufnr, "foldtext", "")
+
+  -- Set fillchars to use space for fold, so "..." appears naturally at end
+  vim.opt_local.fillchars = { fold = " " }
 end
 
 -- Fold expression function for vim folding
@@ -51,11 +56,11 @@ function M.foldexpr()
   return "="
 end
 
--- Custom fold text
+-- Custom fold text (not used - we use empty foldtext for syntax highlighting)
+-- Empty foldtext preserves syntax highlighting (see neovim PR #20750)
+-- Keeping this function for reference but it's not called
 function M.foldtext()
-  local line = vim.fn.getline(vim.v.foldstart)
-  local fold_size = vim.v.foldend - vim.v.foldstart + 1
-  return line .. " ... (" .. fold_size .. " lines)"
+  return ""
 end
 
 -- Check if cursor is on a headline
