@@ -430,41 +430,12 @@ and adds a timestamp using the start time of the CLOCK entry."
 (after! org
   (setq org-capture-templates
         '(
-          ("t" "Todo" entry (file +org-capture-todo-file)
-           "* TODO %?\n%U" :empty-lines 1)
-          ("T" "Todo (interrupt)" entry (file +org-capture-todo-file)
-           "* TODO %<%m%d> %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
-          ("m" "Meeting" entry (file +org-capture-todo-file)
-           "* MEETING %?\n%U" :empty-lines 1)
-          ("M" "Meeting (interrupt)" entry (file +org-capture-todo-file)
-           "* MEETING %<%m%d> %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
+        ("t" "Todo" entry (file +org-capture-todo-file)
+           "* TODO %?\n%<<%Y-%m-%d %a +1d>>\n%U" :empty-lines 1)
           ("W" "Work (interrupt)" entry (file +org-capture-todo-file)
            "* %<%m%d> %?\n%U" :empty-lines 1 :clock-in t :clock-keep t :jump-to-captured t)
           )))
-;; (setq org-capture-templates
-;;       '(("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
-;;          "* TODO %?\n %i\n %a" :prepend t)
-;;         ("n" "Personal notes" entry (file+headline +org-capture-notes-file "Inbox") "* %u %? %i %a" :prepend t)
-;;         ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file) "* %U %? %i %a" :prepend t)
-;;         ("p" "Templates for projects") ("pt" "Project-local todo" entry (file+headline +org-capture-project-todo-file "Inbox") "* TODO %? %i %a" :prepend t)
-;;         ("pn" "Project-local notes" entry (file+headline +org-capture-project-notes-file "Inbox") "* %U %? %i %a" :prepend t)
-;;         ("pc" "Project-local changelog" entry (file+headline +org-capture-project-changelog-file "Unreleased") "* %U %? %i %a" :prepend t)
-;;         ("o" "Centralized templates for projects") ("ot" "Project todo" entry #'+org-capture-central-project-todo-file "* TODO %? %i %a" :heading "Tasks" :prepend nil)
-;;         ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %? %i %a" :heading "Notes" :prepend t)
-;;         ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %? %i %a" :heading "Changelog" :prepend t)))
 #+end_src
-
-#+RESULTS:
-| t | Todo | entry | (file +org-capture-todo-file) | * TODO %? |
-%U |:empty-lines |1 |
-| T | Todo (interrupt) | entry | (file +org-capture-todo-file) | * TODO %<%m%d> %? |
-%U |:empty-lines |1 |:clock-in |t |:clock-keep |t |:jump-to-captured |t |
-| m | Meeting | entry | (file +org-capture-todo-file) | * MEETING %? |
-%U |:empty-lines |1 |
-| M | Meeting (interrupt) | entry | (file +org-capture-todo-file) | * MEETING %<%m%d> %? |
-%U |:empty-lines |1 |:clock-in |t |:clock-keep |t |:jump-to-captured |t |
-| W | Work (interrupt) | entry | (file +org-capture-todo-file) | * %<%m%d> %? |
-%U |:empty-lines |1 |:clock-in |t |:clock-keep |t |:jump-to-captured |t |
 
 ** Clocking
 *** Allow clocks to persist through an Emacs restart
