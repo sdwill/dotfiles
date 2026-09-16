@@ -187,3 +187,7 @@ alias uninstall-spyder=/Users/swill/Library/spyder-6/uninstall-spyder.sh
 # <<< Added by Spyder <<<
 
 alias code="~/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+
+# Activate vim mode
+bindkey -v
+export KEYTIMEOUT=0.1
